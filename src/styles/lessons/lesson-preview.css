@@ -1,0 +1,36 @@
+.lesson-preview-container {
+  position: relative;
+}
+
+.lesson-preview {
+  display: flex;
+  align-items: center;
+  background-color: cadetblue;
+}
+
+.lesson-preview-bg {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: cornflowerblue;
+  opacity: 0;
+  transition: 0.5s;
+  z-index: 500;
+}
+
+.lesson-preview-bg:hover {
+  opacity: 0.5;
+}
+
+#yt-icon {
+  height: 32px;
+  width: 32px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+#resume-lesson-button {
+  margin-left: auto;
+  margin-right: 10px;
+}

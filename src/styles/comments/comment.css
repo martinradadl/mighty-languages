@@ -1,0 +1,31 @@
+.comment-container {
+    display: flex;
+    background-color: white;
+    margin-top: 10px;
+    padding: 10px;
+}
+
+.comment-user {
+    width: 50px;
+    height: 50px;
+    border: 2px solid black;
+    border-radius: 50%;
+}
+
+.comment {
+    margin-left: 10px;
+}
+
+.comment > p {
+    margin: 5px 0px;
+}
+
+.comment-options {
+    display: flex;
+    margin-top: 10px;
+    gap: 10px;
+}
+
+.comment-options > p {
+    margin: 0;
+}

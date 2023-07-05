@@ -1,0 +1,34 @@
+
+.course-preview-container {
+    display: flex;
+    margin: 10px 20px;
+    border: 1px solid gray;
+}
+
+.course-preview-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.course-preview-details > h3 {
+    margin: 5px 20px;
+}
+
+.course-preview-details > p {
+    margin: 5px 20px;
+}
+
+.admin-course-options { 
+    display: flex;
+    margin: 5px 20px;
+}
+
+.course-preview-img {
+    height: auto;
+    width: 40%;
+}
+
+.course-rating {
+    margin-left: auto;
+    margin-right: 10px;
+}

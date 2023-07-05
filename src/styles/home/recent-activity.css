@@ -1,0 +1,45 @@
+
+.recent-activity-container {
+    margin: 20px;
+}
+
+.course-progress-container {
+    background-color:white;
+    border: 1px solid gray;
+    padding: 10px;
+}
+
+.course-progress-container > h3 {
+    margin: 0px;
+}
+
+.course-progress-details {
+    display: flex;
+    align-items: center;
+    gap: 20px
+}
+
+.progress-bar {
+    position: relative;
+    background-color:lightblue;
+    width: 200px;
+    height: 8px;
+    border-radius: 4px;
+}
+
+.current-progress {
+    position: absolute;
+    background-color: green;
+    width: 100px;
+    height: 8px;
+    border-radius: 4px;
+}
+
+#resume-button { 
+    margin-left: auto;
+    height: 32px;
+    background-color: blue;
+    color:antiquewhite;
+    border: none;
+    border-radius: 4px;
+}

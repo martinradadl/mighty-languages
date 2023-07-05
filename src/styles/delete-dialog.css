@@ -1,0 +1,16 @@
+.delete-dialog-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#delete-button-submit {
+    background-color: blue;
+    color: aliceblue;
+    margin: 20px;
+    height: 40px;
+    width: 40px;
+    border: 0px;
+    border-radius: 4px;
+    font-size: 14px;
+}
