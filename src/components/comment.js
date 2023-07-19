@@ -4,6 +4,7 @@ import { AiFillDislike, AiFillLike } from "react-icons/ai";
 
 export const Comment = (props) => {
   const { comment } = props;
+  console.log(comment.user);
   return (
     <div className="comment-container">
       <div className="comment-user" />

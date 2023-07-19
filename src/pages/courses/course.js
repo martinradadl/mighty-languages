@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { LessonPreview } from "../../components/lesson-preview";
+import { LessonPreview } from "../lesson/lesson-preview";
 import "../../styles/courses/course.css";
 import axios from "axios";
 import { AddLessonDialog } from "../lesson/add-lesson-dialog";
@@ -24,7 +24,6 @@ export const Course = () => {
   if (course === null) {
     return <p>Loading...</p>;
   }
-  console.log(course);
   return (
     <div className="course-container">
       <h2>{course.title}</h2>
@@ -32,14 +31,14 @@ export const Course = () => {
       <div className="lessons-list-container">
         <div>Lecciones</div>
         {course.lessons.map((lesson, index) => {
-          console.log(lesson);
           return (
             <div
-              onClick={() => {
+              onClick={(e) => {
+                e.stopPropagation();
                 navigate(`/courses/${course._id}/lessons/${lesson._id}`);
               }}
             >
-              <LessonPreview isCurrentLesson={index === 0} item={lesson} />
+              <LessonPreview isCurrentLesson={index === 0} lesson={lesson} courseId={course._id}/>
             </div>
           );
         })}

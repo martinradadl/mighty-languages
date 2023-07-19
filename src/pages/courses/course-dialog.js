@@ -12,6 +12,7 @@ export const CourseDialog = (props) => {
     isOpen,
     courseForm,
     dialogTrigger,
+    submitButtonText,
   } = props;
   return (
     <Fragment>
@@ -28,38 +29,38 @@ export const CourseDialog = (props) => {
               width: "20px",
             }}
           />
-          <Dialog.Title className="course-form-title">Agregar / Editar Curso</Dialog.Title>
+          {/* <Dialog.Title className="course-form-title">Agregar / Editar Curso</Dialog.Title> */}
           <div className="course-dialog-content">
-            <p className="add-course-form-item">
+            <p className="course-form-item">
               <b>TÍTULO*</b>
             </p>
             <input
-              className="add-course-form-input"
+              className="course-form-input"
               onChange={handleChange}
               name="title"
               value={courseForm.title}
             />
-            <p className="add-course-form-item">
+            <p className="course-form-item">
               <b>URL DE LA IMAGEN</b>
             </p>
             <input
-              className="add-course-form-input"
+              className="course-form-input"
               onChange={handleChange}
               name="imageURL"
               value={courseForm.imageURL}
             />
-            <p className="add-course-form-item">
+            <p className="course-form-item">
               <b>DESCRIPCIÓN*</b>
             </p>
             <textarea
               rows="3"
-              className="add-course-form-description"
+              className="course-form-description"
               onChange={handleChange}
               name="description"
               value={courseForm.description}
             />
-            <button id="add-course-submit" onClick={onSubmit}>
-              <b>Agregar Curso</b>
+            <button id="course-submit" onClick={onSubmit}>
+              <b>{submitButtonText}</b>
             </button>
           </div>
         </Dialog.Panel>

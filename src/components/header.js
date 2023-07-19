@@ -7,7 +7,7 @@ import { ProfileDialog } from "../pages/profile/profile-dialog";
 import { AuthDialog } from "./authentication/auth-dialog";
 
 export const Header = () => {
-  const { isAuthenticated } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   return (
     <nav width="100%">
       <div className="left-side-header">
@@ -20,11 +20,7 @@ export const Header = () => {
         </Link>
       </div>
       <div className="right-side-header">
-        {isAuthenticated ? (
-          <ProfileDialog />
-        ) : (
-          <AuthDialog />
-        )}
+        {user !== null ? <ProfileDialog /> : <AuthDialog />}
       </div>
     </nav>
   );

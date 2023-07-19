@@ -42,10 +42,10 @@ export const DeleteCourseDialog = () => {
           <div className="delete-dialog-container">
             <p>¿Deseas eliminar este curso?</p>
             <div style={{ display: "flex" }}>
-              <button id="delete-button-submit" onClick={deleteCourse}>
+              <button className="delete-button-submit" id="yes-button" onClick={deleteCourse}>
                 Sí
               </button>
-              <button id="delete-button-submit" onClick={closeModal}>
+              <button className="delete-button-submit" onClick={closeModal}>
                 No
               </button>
             </div>

@@ -19,15 +19,17 @@ export const DeleteLessonDialog = () => {
 
   return (
     <Fragment>
-      <div
+      <div className="dialog-trigger"
         onClick={(e) => {
           openModal();
           e.stopPropagation();
         }}
       >
-        <AiFillDelete />
+        Eliminar Lección
       </div>
-      <Dialog className="dialog-container" open={isOpen} onClose={closeModal}>
+      <Dialog className="dialog-container" open={isOpen} onClose={(e)=>{
+        e.stopPropagation()
+        closeModal()}}>
         <Dialog.Panel className="dialog">
           <AiOutlineClose
             onClick={closeModal}
@@ -42,10 +44,10 @@ export const DeleteLessonDialog = () => {
           <div className="delete-dialog-container">
             <p>¿Deseas eliminar esta lección?</p>
             <div style={{ display: "flex" }}>
-              <button id="delete-button-submit" onClick={deleteCourse}>
+              <button className="delete-button-submit" id="yes-button" onClick={deleteCourse}>
                 Sí
               </button>
-              <button id="delete-button-submit" onClick={closeModal}>
+              <button className="delete-button-submit" onClick={closeModal}>
                 No
               </button>
             </div>

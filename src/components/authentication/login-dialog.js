@@ -37,7 +37,7 @@ export const LoginForm = (props) => {
           closeModal();
         })
         .catch((e) => {
-          console.log(e);
+          alert(e.message);
         });
     }
   };

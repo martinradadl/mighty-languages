@@ -65,6 +65,7 @@ export const AddLessonDialog = () => {
             </button>
           </div>
         ),
+        submitButtonText: "Agregar Lección",
       }}
     />
   );

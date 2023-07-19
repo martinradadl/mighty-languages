@@ -1,50 +1,62 @@
 .add-lesson-button-container {
-    margin-left: auto;
-    margin-right: 20px;
-    margin-top: 20px;
-  }
-  
-  #add-lesson-button {
-    height: 32px;
-    background-color: blue;
-    color: antiquewhite;
-    border: none;
-    border-radius: 4px;
-  }
-  
-  .lesson-form-item {
-    margin-bottom: 8px;
-    font-size: 12px;
-  }
-  
-  .lesson-form-input {
-    margin-bottom: 8px;
-    height: 40px;
-    width: 320px;
-    padding: 0px 12px;
-    border-color: blue;
-    border-width: 1px;
-    font-size: 16px;
-  }
-  
-  .add-course-form-description {
-    margin-bottom: 8px;
-    height: 60px;
-    width: 320px;
-    padding: 0px 12px;
-    border-color: blue;
-    border-width: 1px;
-    font-size: 16px;
-  }
-  
-  #lesson-submit {
-    background-color: blue;
-    color: aliceblue;
-    margin-top: 32px;
-    height: 40px;
-    border: 0px;
-    border-radius: 4px;
-    font-size: 14px;
-    width: 100%;
-  }
-  
+  margin-left: auto;
+  margin-right: 20px;
+  margin-top: 20px;
+}
+
+#add-lesson-button {
+  height: 32px;
+  background-color: blue;
+  color: antiquewhite;
+  border: none;
+  border-radius: 4px;
+}
+
+.lesson-dialog-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.lesson-form-item {
+  margin-bottom: 8px;
+  font-size: 12px;
+}
+
+.lesson-form-input {
+  margin-bottom: 8px;
+  height: 40px;
+  padding: 0px 12px;
+  border-color: blue;
+  border-width: 1px;
+  font-size: 16px;
+}
+
+#lesson-submit {
+  background-color: blue;
+  color: aliceblue;
+  margin-top: 32px;
+  height: 40px;
+  border: 0px;
+  border-radius: 4px;
+  font-size: 14px;
+  width: 100%;
+}
+
+.dialog-trigger {
+  cursor: pointer;
+  padding: 4px;
+
+}
+
+.dialog-trigger:first-child {
+  border-radius: 4px 4px 0 0;
+}
+
+.dialog-trigger:last-child {
+  border-radius: 0 0 4px 4px;
+}
+
+.dialog-trigger:hover {
+  transition: 0.7s;
+  background-color: aquamarine;
+}

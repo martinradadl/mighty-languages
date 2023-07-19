@@ -1,16 +1,36 @@
-.delete-dialog-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+
+
+.dialog-trigger:hover {
+    background-color: aquamarine;
+    transition: 0.7s;
 }
 
-#delete-button-submit {
-    background-color: blue;
-    color: aliceblue;
-    margin: 20px;
-    height: 40px;
-    width: 40px;
-    border: 0px;
-    border-radius: 4px;
-    font-size: 14px;
+.dialog-container {
+  position: absolute;
+  top: 100px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow-y: auto;
+}
+
+.delete-dialog-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.delete-button-submit {
+  background-color: blue;
+  color: aliceblue;
+  margin: 20px;
+  height: 40px;
+  width: 100px;
+  border: 0px;
+  border-radius: 4px;
+  font-size: 14px;
+} 
+
+#yes-button {
+    background-color: red;
 }

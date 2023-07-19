@@ -61,6 +61,7 @@ export const EditCourseDialog = (props) => {
             <AiFillEdit />
           </div>
         ),
+        submitButtonText: "Editar Curso",
       }}
     />
   );

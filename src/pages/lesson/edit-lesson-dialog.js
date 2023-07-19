@@ -51,15 +51,16 @@ export const EditLessonDialog = (props) => {
         isOpen,
         lessonForm,
         dialogTrigger: (
-          <div
+          <div className="dialog-trigger"
             onClick={(e) => {
               e.stopPropagation();
               openModal();
             }}
           >
-            <AiFillEdit />
+            Editar Lección
           </div>
         ),
+        submitButtonText: "Editar Lección",
       }}
     />
   );

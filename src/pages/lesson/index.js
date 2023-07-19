@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Comment } from "../../components/comment";
 import { CommentInput } from "../../components/comment-input";
 import { Form } from "../../components/questionnaire/form";
 import "../../styles/lessons/lesson.css";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { AuthContext } from "../../context/auth-context";
 
 function openLessonTab(evt, selectedLink) {
   // Declare all variables
@@ -31,6 +32,7 @@ export const Lesson = () => {
   const params = useParams();
   const [lesson, setLesson] = useState(null);
   const [comments, setComments] = useState(null);
+  const { user } = useContext(AuthContext);
 
   useEffect(() => {
     axios
@@ -59,7 +61,6 @@ export const Lesson = () => {
   if (lesson === null) {
     return <p>Loading...</p>;
   }
-  console.log(lesson);
   return (
     <div style={{ margin: "5px 20px" }}>
       <h1>{lesson.title}</h1>
@@ -89,7 +90,11 @@ export const Lesson = () => {
         <Form />
       </div>
       <div id="comments" class="lesson-tabcontent">
-        <CommentInput />
+        {user !== null ? (
+          <CommentInput />
+        ) : (
+          <span>Si quieres comentar por favor inicia sesión</span>
+        )}
         {comments === null
           ? null
           : comments.map((comment) => {

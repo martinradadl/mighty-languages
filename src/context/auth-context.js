@@ -9,10 +9,11 @@ export const AuthContext = createContext({
 export const AuthProvider = (props) => {
   const { children } = props;
   const [user, setUser] = useState(null);
-  
+
   const logout = () => {
     setUser(null);
   };
+  
   return (
     <AuthContext.Provider value={{ user, setUser, logout }}>
       {children}

@@ -18,6 +18,7 @@
   right: 0;
   bottom: 0;
   overflow-y: auto;
+  z-index: 20;
 }
 
 .dialog {
@@ -40,12 +41,12 @@
   flex-direction: column;
 }
 
-.add-course-form-item {
+.course-form-item {
   margin-bottom: 8px;
   font-size: 12px;
 }
 
-.add-course-form-input {
+.course-form-input {
   margin-bottom: 8px;
   height: 40px;
   padding: 0px 12px;
@@ -54,7 +55,7 @@
   font-size: 16px;
 }
 
-.add-course-form-description {
+.course-form-description {
   margin-bottom: 8px;
   height: 60px;
   padding: 0px 12px;
@@ -63,7 +64,7 @@
   font-size: 16px;
 }
 
-#add-course-submit {
+#course-submit {
   background-color: blue;
   color: aliceblue;
   margin-top: 32px;

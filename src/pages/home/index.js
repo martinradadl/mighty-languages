@@ -9,7 +9,7 @@ import axios from "axios";
 const coursesArray = [null, null, null, null, null];
 
 export const Home = () => {
-  const { isAuthenticated } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const [courses, setCourses] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
@@ -29,7 +29,7 @@ export const Home = () => {
 
   return (
     <div className="home-container">
-      {isAuthenticated ? <RecentActivity /> : null}
+      { user !== null? <RecentActivity /> : null}
       <h2>Cursos</h2>
       {courses.map((elem) => {
         return <CoursePreview item={elem} />;

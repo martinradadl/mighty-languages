@@ -2,9 +2,12 @@ import React, { Fragment, useContext, useState } from "react";
 import { Dialog } from "@headlessui/react";
 import "../../styles/profile/profile-dialog.css";
 import { AiOutlineClose } from "react-icons/ai";
+import { AuthContext } from "../../context/auth-context";
 
 export const ProfileDialog = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { logout } = useContext(AuthContext)
+
   function closeModal() {
     setIsOpen(false);
   }
@@ -15,8 +18,7 @@ export const ProfileDialog = () => {
 
   return (
     <Fragment>
-      <button type="button" id="view-profile-button"  onClick={openModal}>
-        
+      <button type="button" id="view-profile-button" onClick={openModal}>
         <b>Ver Perfil</b>
       </button>
       <Dialog className="dialog-container" open={isOpen} onClose={closeModal}>
@@ -38,7 +40,7 @@ export const ProfileDialog = () => {
               width: "80px",
               borderRadius: "50%",
               backgroundColor: "blue",
-              margin: "auto"
+              margin: "auto",
             }}
           />
           <p className="profile-item">
@@ -47,6 +49,9 @@ export const ProfileDialog = () => {
           <p className="profile-item">
             <b>Email: martin420@gmail.com</b>
           </p>
+          <button id="auth-submit-button" onClick={logout}>
+            <b>Cerrar Sesión</b>
+          </button>
         </Dialog.Panel>
       </Dialog>
     </Fragment>
