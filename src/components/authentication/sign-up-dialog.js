@@ -1,9 +1,7 @@
-import React, { Fragment, useContext, useState } from "react";
-import { Dialog } from "@headlessui/react";
+import {React, useState} from "react";
 import "../../styles/authentication.css";
-import { AiOutlineClose } from "react-icons/ai";
-import { AuthContext } from "../../context/auth-context";
-import axios from "axios";
+import { useDispatch } from "react-redux";
+import usersActions from "../../redux/actions/users";
 
 const signUpFormInitialState = {
   name: "",
@@ -14,9 +12,8 @@ const signUpFormInitialState = {
 
 export const SignUpForm = (props) => {
   const { closeModal } = props;
-  const [isOpen, setIsOpen] = useState(false);
   const [signUpForm, setSignUpForm] = useState(signUpFormInitialState);
-  const { setUser } = useContext(AuthContext);
+  const dispatch = useDispatch();
 
   const handleChange = (event) => {
     setSignUpForm({
@@ -33,15 +30,16 @@ export const SignUpForm = (props) => {
     ) {
       alert("Faltan campos por llenar");
     } else {
-      axios
-        .post("http://localhost:3001/register", {
+      dispatch(
+        usersActions.register({
           name: signUpForm.name,
           email: signUpForm.email,
           password: signUpForm.password,
           profile_pic: signUpForm.profile_pic,
         })
-        .then((res) => {
-          setUser(res.data);
+      )
+        .unwrap()
+        .then(() => {
           setSignUpForm(signUpFormInitialState);
           closeModal();
         })

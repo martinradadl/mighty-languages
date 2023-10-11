@@ -1,9 +1,7 @@
-import React, { Fragment, useContext, useState } from "react";
+import React, { Fragment, useState } from "react";
 import { Dialog } from "@headlessui/react";
 import "../../styles/authentication.css";
 import { AiOutlineClose } from "react-icons/ai";
-import { AuthContext } from "../../context/auth-context";
-import axios from "axios";
 import { LoginForm } from "./login-dialog";
 import { SignUpForm } from "./sign-up-dialog";
 
@@ -30,16 +28,7 @@ export const AuthDialog = () => {
       </button>
       <Dialog className="dialog-container" open={isOpen} onClose={closeModal}>
         <Dialog.Panel className="dialog">
-          <AiOutlineClose
-            onClick={closeModal}
-            style={{
-              position: "absolute",
-              top: "24px",
-              right: "24px",
-              height: "20px",
-              width: "20px",
-            }}
-          />
+          <AiOutlineClose className="close-modal-button" onClick={closeModal} />
           <Dialog.Title className="auth-form-title">Bienvenido</Dialog.Title>
           {activeView === "login" ? (
             <LoginForm closeModal={closeModal} />

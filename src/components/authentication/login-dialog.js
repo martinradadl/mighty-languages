@@ -1,9 +1,7 @@
-import React, { Fragment, useContext, useState } from "react";
-import { Dialog } from "@headlessui/react";
+import React, { useState } from "react";
 import "../../styles/authentication.css";
-import { AiOutlineClose } from "react-icons/ai";
-import { AuthContext } from "../../context/auth-context";
-import axios from "axios";
+import { useDispatch } from "react-redux";
+import usersActions from "../../redux/actions/users";
 
 const loginFormInitialState = {
   email: "",
@@ -13,7 +11,7 @@ const loginFormInitialState = {
 export const LoginForm = (props) => {
   const { closeModal } = props;
   const [loginForm, setLoginForm] = useState(loginFormInitialState);
-  const { setUser } = useContext(AuthContext);
+  const dispatch = useDispatch();
 
   const handleChange = (event) => {
     setLoginForm({
@@ -26,13 +24,14 @@ export const LoginForm = (props) => {
     if (loginForm.email === "" || loginForm.password === "") {
       alert("Faltan campos por llenar");
     } else {
-      axios
-        .post("http://localhost:3001/login", {
+      dispatch(
+        usersActions.login({
           email: loginForm.email,
           password: loginForm.password,
         })
-        .then((res) => {
-          setUser(res.data);
+      )
+        .unwrap()
+        .then(() => {
           setLoginForm(loginFormInitialState);
           closeModal();
         })
