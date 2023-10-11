@@ -1,26 +1,32 @@
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { CoursePreview } from "../../components/course-preview";
+import React, { useCallback, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { CoursePreview } from "./course-preview";
 import { AddCourseDialog } from "./add-course-dialog";
-import axios from "axios";
-
-const coursesArray = [null, null, null, null, null];
+import { useSelector, useDispatch } from "react-redux";
+import coursesActions from "../../redux/actions/courses";
+import debounce from "lodash.debounce";
 
 export const Courses = () => {
-  const [courses, setCourses] = useState([]);
+  const dispatch = useDispatch();
+  const { status, coursesList } = useSelector((state) => state.courses);
+  const user = useSelector((state) => state.users.selectedUser);
   const navigate = useNavigate();
+
+  const handleGetCourses = useCallback(() => {
+    if (user !== null) {
+      dispatch(coursesActions.getCourses(user._id));
+    } else {
+      dispatch(coursesActions.getCourses());
+    }
+  }, [user, dispatch]);
+
+  const debouncedHandleGetCourses = debounce(handleGetCourses, 500);
+
   useEffect(() => {
-    axios
-      .get("http://localhost:3001/courses")
-      .then((res) => {
-        setCourses(res.data);
-      })
-      .catch((e) => {
-        setCourses(null);
-        alert(e);
-      });
-  }, []);
-  if (courses === null) {
+    debouncedHandleGetCourses();
+  }, [handleGetCourses]);
+
+  if (status === "loading" || coursesList === null) {
     return <p>Loading...</p>;
   }
   return (
@@ -32,14 +38,15 @@ export const Courses = () => {
           style={{ margin: "20px", height: "20px" }}
         />
         <AddCourseDialog />
-        {courses.map((item) => {
+        {coursesList.map((item, i) => {
           return (
             <div
+              key={i}
               onClick={() => {
                 navigate(`/courses/${item._id}`);
               }}
             >
-              <CoursePreview item={item} />
+              <CoursePreview course={item} />
             </div>
           );
         })}

@@ -31,4 +31,6 @@
 .course-rating {
     margin-left: auto;
     margin-right: 10px;
+    margin-top: 10px;
+    min-width: 80px;
 }

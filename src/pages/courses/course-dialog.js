@@ -19,16 +19,7 @@ export const CourseDialog = (props) => {
       {dialogTrigger}
       <Dialog className="dialog-container" open={isOpen} onClose={closeModal}>
         <Dialog.Panel className="dialog">
-          <AiOutlineClose
-            onClick={closeModal}
-            style={{
-              position: "absolute",
-              top: "24px",
-              right: "24px",
-              height: "20px",
-              width: "20px",
-            }}
-          />
+          <AiOutlineClose className="close-modal-button" onClick={closeModal} />
           {/* <Dialog.Title className="course-form-title">Agregar / Editar Curso</Dialog.Title> */}
           <div className="course-dialog-content">
             <p className="course-form-item">

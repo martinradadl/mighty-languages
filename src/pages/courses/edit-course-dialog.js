@@ -2,11 +2,14 @@ import React, { Fragment, useState } from "react";
 import axios from "axios";
 import "../../styles/courses/course-dialog.css";
 import { CourseDialog } from "./course-dialog";
-import { AiFillEdit, } from "react-icons/ai";
+import { AiFillEdit } from "react-icons/ai";
+import { useDispatch } from "react-redux";
+import coursesActions from "../../redux/actions/courses";
 
 export const EditCourseDialog = (props) => {
   const { selectedCourse } = props;
   const [isOpen, setIsOpen] = useState(false);
+  const dispatch = useDispatch();
   const [courseForm, setCourseForm] = useState(selectedCourse);
 
   function closeModal() {
@@ -25,16 +28,17 @@ export const EditCourseDialog = (props) => {
     if (courseForm.title === "" || courseForm.description === "") {
       alert("Faltan campos por llenar");
     } else {
-      axios
-        .put(`http://localhost:3001/courses/${selectedCourse.id}`, {
+      dispatch(
+        coursesActions.editCourse({
+          _id: selectedCourse._id,
           title: courseForm.title,
-          description: courseForm.description,
-          lessons: [],
-          rating: 0,
           imageURL: courseForm.imageURL,
+          description: courseForm.description,
+          rating: selectedCourse.rating,
         })
-        .then((res) => {
-          console.log(res.data);
+      )
+        .unwrap()
+        .then(() => {
           closeModal();
         })
         .catch((e) => {

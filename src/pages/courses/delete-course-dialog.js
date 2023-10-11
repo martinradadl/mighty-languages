@@ -1,11 +1,14 @@
-import React, { Fragment, useContext, useState } from "react";
-import axios from "axios";
+import React, { Fragment, useState } from "react";
 import { Dialog } from "@headlessui/react";
 import { AiOutlineClose, AiFillDelete } from "react-icons/ai";
 import "../../styles/delete-dialog.css";
+import { useDispatch } from "react-redux";
+import coursesActions from "../../redux/actions/courses";
 
-export const DeleteCourseDialog = () => {
+export const DeleteCourseDialog = (props) => {
+  const { selectedCourse } = props;
   const [isOpen, setIsOpen] = useState(false);
+  const dispatch = useDispatch();
 
   function closeModal() {
     setIsOpen(false);
@@ -15,7 +18,16 @@ export const DeleteCourseDialog = () => {
     setIsOpen(true);
   }
 
-  const deleteCourse = () => {};
+  const deleteCourse = () => {
+    dispatch(coursesActions.deleteCourse(selectedCourse._id))
+      .unwrap()
+      .then(() => {
+        closeModal();
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
 
   return (
     <Fragment>
@@ -27,30 +39,30 @@ export const DeleteCourseDialog = () => {
       >
         <AiFillDelete />
       </div>
-      <Dialog className="dialog-container" open={isOpen} onClose={closeModal}>
-        <Dialog.Panel className="dialog">
-          <AiOutlineClose
-            onClick={closeModal}
-            style={{
-              position: "absolute",
-              top: "24px",
-              right: "24px",
-              height: "20px",
-              width: "20px",
-            }}
-          />
-          <div className="delete-dialog-container">
-            <p>¿Deseas eliminar este curso?</p>
-            <div style={{ display: "flex" }}>
-              <button className="delete-button-submit" id="yes-button" onClick={deleteCourse}>
-                Sí
-              </button>
-              <button className="delete-button-submit" onClick={closeModal}>
-                No
-              </button>
+      <Dialog className="dialog-backdrop" open={isOpen} onClose={closeModal}>
+        <div className="dialog-container">
+          <Dialog.Panel className="dialog">
+            <AiOutlineClose
+              className="close-modal-button"
+              onClick={closeModal}
+            />
+            <div className="delete-dialog-container">
+              <p>¿Deseas eliminar este curso?</p>
+              <div style={{ display: "flex" }}>
+                <button
+                  className="delete-button-submit"
+                  id="yes-button"
+                  onClick={deleteCourse}
+                >
+                  Sí
+                </button>
+                <button className="delete-button-submit" onClick={closeModal}>
+                  No
+                </button>
+              </div>
             </div>
-          </div>
-        </Dialog.Panel>
+          </Dialog.Panel>
+        </div>
       </Dialog>
     </Fragment>
   );
