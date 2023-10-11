@@ -1,13 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { AiFillYoutube, AiOutlineEllipsis } from "react-icons/ai";
 import "../../styles/lessons/lesson-preview.css";
 import { EditLessonDialog } from "./edit-lesson-dialog";
 import { LessonPreviewDropdown } from "./lesson-preview-dropdown";
-import { useNavigate } from "react-router-dom";
+import { DeleteLessonDialog } from "./delete-lesson-dialog";
 
 export const LessonPreview = (props) => {
   const { isCurrentLesson, lesson } = props;
-  const navigate = useNavigate();
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
 
   return (
     <div className="lesson-preview-container">
@@ -18,8 +19,20 @@ export const LessonPreview = (props) => {
           {isCurrentLesson ? (
             <button id="resume-lesson-button">Continuar</button>
           ) : null}
-          <LessonPreviewDropdown lesson={lesson} />
-          
+          <LessonPreviewDropdown
+            openEditDialog={setIsEditDialogOpen}
+            openDeleteDialog={setIsDeleteDialogOpen}
+          />
+          <EditLessonDialog
+            selectedLesson={lesson}
+            isOpen={isEditDialogOpen}
+            setIsOpen={setIsEditDialogOpen}
+          />
+          <DeleteLessonDialog
+            isOpen={isDeleteDialogOpen}
+            setIsOpen={setIsDeleteDialogOpen}
+            id={lesson._id}
+          />
         </div>
       </div>
     </div>

@@ -1,20 +1,20 @@
-import React, { Fragment, useContext, useState } from "react";
-import axios from "axios";
-import { Dialog } from "@headlessui/react";
-import { AiOutlineClose } from "react-icons/ai";
+import React, { useState } from "react";
 import "../../styles/lessons/lesson-dialog.css";
 import { useParams } from "react-router-dom";
 import { LessonDialog } from "./lesson-dialog";
+import { useDispatch } from "react-redux";
+import lessonsActions from "../../redux/actions/lessons";
 
 const lessonFormInitialState = {
   title: "",
-  videosURL: [],
+  videos: [""],
 };
 
 export const AddLessonDialog = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [lessonForm, setLessonForm] = useState(lessonFormInitialState);
   const params = useParams();
+  const dispatch = useDispatch();
 
   function closeModal() {
     setIsOpen(false);
@@ -25,23 +25,34 @@ export const AddLessonDialog = () => {
     setIsOpen(true);
   }
 
-  const handleChange = (event) => {
-    setLessonForm({ ...lessonForm, [event.target.name]: event.target.value });
+  const handleChange = (e) => {
+    setLessonForm({ ...lessonForm, [e.target.name]: e.target.value });
+  };
+
+  const handleVideosChange = (e) => {
+    const videosCopy = [...lessonForm.videos];
+    const videoIndex = e.target.name.split("-")[1];
+    videosCopy[videoIndex] = e.target.value;
+    setLessonForm({ ...lessonForm, videos: videosCopy });
+  };
+
+  const addVideo = () => {
+    setLessonForm({ ...lessonForm, videos: [...lessonForm.videos, ""] });
   };
 
   const onSubmit = () => {
-    if (lessonForm.title === "" || lessonForm.videosURL.length === 0) {
+    if (lessonForm.title === "" || lessonForm.videos.length === 0) {
       alert("Faltan campos por llenar");
     } else {
-      axios
-        .post(`http://localhost:3001/courses/${params.id}/lessons`, {
+      dispatch(
+        lessonsActions.addLesson({
           title: lessonForm.title,
-          description: lessonForm.videosURL,
-          quiz: [],
-          comments: [],
+          videos: lessonForm.videos,
+          course_id: params.id,
         })
-        .then((res) => {
-          console.log(res.data);
+      )
+        .unwrap()
+        .then(() => {
           closeModal();
         })
         .catch((e) => {
@@ -55,6 +66,7 @@ export const AddLessonDialog = () => {
         openModal,
         closeModal,
         handleChange,
+        handleVideosChange,
         onSubmit,
         isOpen,
         lessonForm,
@@ -66,6 +78,7 @@ export const AddLessonDialog = () => {
           </div>
         ),
         submitButtonText: "Agregar Lección",
+        addVideo,
       }}
     />
   );

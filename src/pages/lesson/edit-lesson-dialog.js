@@ -3,11 +3,13 @@ import axios from "axios";
 import "../../styles/lessons/lesson-dialog.css";
 import { AiFillEdit } from "react-icons/ai";
 import { LessonDialog } from "./lesson-dialog";
+import { useDispatch } from "react-redux";
+import lessonsActions from "../../redux/actions/lessons";
 
 export const EditLessonDialog = (props) => {
-  const { selectedLesson } = props;
-  const [isOpen, setIsOpen] = useState(false);
+  const { selectedLesson, isOpen, setIsOpen } = props;
   const [lessonForm, setLessonForm] = useState(selectedLesson);
+  const dispatch = useDispatch();
 
   function closeModal() {
     setIsOpen(false);
@@ -21,23 +23,31 @@ export const EditLessonDialog = (props) => {
     setLessonForm({ ...lessonForm, [event.target.name]: event.target.value });
   };
 
+  const handleVideosChange = (e) => {
+    const videosCopy = [...lessonForm.videos];
+    const videoIndex = e.target.name.split("-")[1];
+    videosCopy[videoIndex] = e.target.value;
+    setLessonForm({ ...lessonForm, videos: videosCopy });
+  };
+
   const onSubmit = () => {
-    if (lessonForm.title === "" || lessonForm.videosURL.length === 0) {
+    if (lessonForm.title === "" || lessonForm.videos.length === 0) {
       alert("Faltan campos por llenar");
     } else {
-      axios
-        .put(`http://localhost:3001/courses/${selectedLesson.id}`, {
+      dispatch(
+        lessonsActions.editLesson({
+          _id: selectedLesson._id,
           title: lessonForm.title,
-          description: lessonForm.videosURL,
-          quiz: [],
-          comments: [],
+          videos: lessonForm.videos,
+          course_id: selectedLesson.course_id,
         })
-        .then((res) => {
-          console.log(res.data);
+      )
+        .unwrap()
+        .then(() => {
           closeModal();
         })
         .catch((e) => {
-          console.log(e);
+          console.log(e.message);
         });
     }
   };
@@ -47,19 +57,10 @@ export const EditLessonDialog = (props) => {
         openModal,
         closeModal,
         handleChange,
+        handleVideosChange,
         onSubmit,
         isOpen,
         lessonForm,
-        dialogTrigger: (
-          <div className="dialog-trigger"
-            onClick={(e) => {
-              e.stopPropagation();
-              openModal();
-            }}
-          >
-            Editar Lección
-          </div>
-        ),
         submitButtonText: "Editar Lección",
       }}
     />

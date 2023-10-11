@@ -2,11 +2,9 @@ import { Menu } from "@headlessui/react";
 import { AiOutlineEllipsis } from "react-icons/ai";
 import "../../styles/lessons/lesson-preview.css";
 import React from "react";
-import { EditLessonDialog } from "./edit-lesson-dialog";
-import { DeleteLessonDialog } from "./delete-lesson-dialog";
 
 export const LessonPreviewDropdown = (props) => {
-  const { lesson } = props;
+  const { openEditDialog, openDeleteDialog } = props;
   return (
     <Menu as="div">
       <Menu.Button
@@ -19,10 +17,26 @@ export const LessonPreviewDropdown = (props) => {
       </Menu.Button>
       <Menu.Items className="lesson-preview-dropdown">
         <Menu.Item className="lesson-preview-dropdown-item">
-          <EditLessonDialog selectedLesson={lesson} />
+          <div
+            className="dialog-trigger"
+            onClick={(e) => {
+              e.stopPropagation();
+              openEditDialog(true);
+            }}
+          >
+            Editar Lección
+          </div>
         </Menu.Item>
         <Menu.Item className="lesson-preview-dropdown-item">
-          <DeleteLessonDialog />
+          <div
+            className="dialog-trigger"
+            onClick={(e) => {
+              e.stopPropagation();
+              openDeleteDialog(true);
+            }}
+          >
+            Eliminar Lección
+          </div>
         </Menu.Item>
       </Menu.Items>
     </Menu>

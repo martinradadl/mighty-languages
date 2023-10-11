@@ -1,11 +1,13 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Comment } from "../../components/comment";
-import { CommentInput } from "../../components/comment-input";
+import React, { useCallback, useEffect } from "react";
+import { Comment } from "../../components/comments/comment";
+import { CommentInput } from "../../components/comments/comment-input";
 import { Form } from "../../components/questionnaire/form";
 import "../../styles/lessons/lesson.css";
 import { useParams } from "react-router-dom";
-import axios from "axios";
-import { AuthContext } from "../../context/auth-context";
+import { useSelector, useDispatch } from "react-redux";
+import lessonsActions from "../../redux/actions/lessons";
+import commentsActions from "../../redux/actions/comments";
+import debounce from "lodash.debounce";
 
 function openLessonTab(evt, selectedLink) {
   // Declare all variables
@@ -30,44 +32,59 @@ function openLessonTab(evt, selectedLink) {
 
 export const Lesson = () => {
   const params = useParams();
-  const [lesson, setLesson] = useState(null);
-  const [comments, setComments] = useState(null);
-  const { user } = useContext(AuthContext);
+  const user = useSelector((state) => state.users.selectedUser);
+  const dispatch = useDispatch();
+  const { status, selectedLesson } = useSelector((state) => state.lessons);
+  const { status: commentsStatus, commentsList } = useSelector(
+    (state) => state.comments
+  );
+
+  const handleGetLesson = useCallback(() => {
+    dispatch(lessonsActions.getLesson(params.id));
+  }, [dispatch]);
+
+  const debouncedHandleGetLesson = debounce(handleGetLesson, 500);
 
   useEffect(() => {
-    axios
-      .get(
-        `http://localhost:3001/courses/${params.courseId}/lessons/${params.id}`
-      )
-      .then((res) => {
-        setLesson(res.data);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  }, []);
+    debouncedHandleGetLesson();
+  }, [handleGetLesson]);
+
+  const handleGetComments = useCallback(() => {
+    if (selectedLesson !== null) {
+      dispatch(
+        commentsActions.getComments({
+          id: params.id,
+          loggedUser: user ? user?._id : null,
+        })
+      );
+    }
+  }, [selectedLesson, user, dispatch]);
+
+  const debouncedHandleGetComments = debounce(handleGetComments, 500);
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:3001/lessons/${params.id}/comments`)
-      .then((res) => {
-        setComments(res.data);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  }, []);
+    debouncedHandleGetComments();
+  }, [handleGetComments]);
 
-  if (lesson === null) {
+  if (status === "loading" || selectedLesson === null) {
     return <p>Loading...</p>;
   }
   return (
     <div style={{ margin: "5px 20px" }}>
-      <h1>{lesson.title}</h1>
-      <div
-        style={{ width: "500px", height: "300px", border: "4px solid black" }}
-      />
-      <div class="lesson-tab">
+      <h1>{selectedLesson.title}</h1>
+      {selectedLesson.videos.map((video, index) => {
+        return (
+          <iframe
+            key={index}
+            width="100%"
+            height="350px"
+            style={{ border: "none" }}
+            src={video}
+          ></iframe>
+        );
+      })}
+
+      <div className="lesson-tab">
         <button
           className="lesson-tablinks"
           onClick={(event) => {
@@ -85,21 +102,23 @@ export const Lesson = () => {
           Comentarios
         </button>
       </div>
-
-      <div id="quiz" class="lesson-tabcontent">
+      <div id="quiz" className="lesson-tabcontent">
         <Form />
       </div>
-      <div id="comments" class="lesson-tabcontent">
+      <div id="comments" className="lesson-tabcontent">
         {user !== null ? (
           <CommentInput />
         ) : (
           <span>Si quieres comentar por favor inicia sesión</span>
         )}
-        {comments === null
-          ? null
-          : comments.map((comment) => {
-              return <Comment comment={comment} />;
-            })}
+        {commentsList === null || commentsStatus === "loading" ? (
+          <p>Loading...</p>
+        ) : (
+          commentsList?.map((comment, index) => {
+            return <Comment key={index} comment={comment} />;
+          })
+        )}
+        {console.log(commentsList)}
       </div>
     </div>
   );
