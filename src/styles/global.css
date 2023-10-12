@@ -6,3 +6,26 @@ body {
 button {
     cursor: pointer;
 }
+
+.dialog-backdrop {
+    position: relative;
+    z-index: 50;
+  }
+
+.dialog-container {
+    position: fixed;
+    top: 0px;
+    bottom: 0px;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+}
+
+.close-modal-button {
+        position: absolute;
+        top: 24px;
+        right: 24px;
+        height: 20px;
+        width: 20px;
+        cursor: pointer;
+}
