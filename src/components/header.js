@@ -1,13 +1,12 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import { LoginDialog } from "./authentication/login-dialog";
 import "../styles/header.css";
-import { AuthContext } from "../context/auth-context";
-import { ProfileDialog } from "../pages/profile/profile-dialog";
+import { ProfileDialog } from "./profile/profile-dialog";
 import { AuthDialog } from "./authentication/auth-dialog";
+import { useSelector } from "react-redux";
 
 export const Header = () => {
-  const { user } = useContext(AuthContext);
+  const user = useSelector((state) => state.users.selectedUser);
   return (
     <nav width="100%">
       <div className="left-side-header">
@@ -20,7 +19,7 @@ export const Header = () => {
         </Link>
       </div>
       <div className="right-side-header">
-        {user !== null ? <ProfileDialog /> : <AuthDialog />}
+        {user !== null ? <ProfileDialog user={user} /> : <AuthDialog />}
       </div>
     </nav>
   );
