@@ -71,7 +71,10 @@ export const Lesson = () => {
   }
   return (
     <div style={{ margin: "5px 20px" }}>
-      <h1>{selectedLesson.title}</h1>
+      <h4 style={{ margin: "30px 0px 2px" }}>
+        {selectedLesson.course_id.title}
+      </h4>
+      <h1 style={{ margin: "2px 0px 30px" }}>{selectedLesson.title}</h1>
       {selectedLesson.videos.map((video, index) => {
         return (
           <iframe
