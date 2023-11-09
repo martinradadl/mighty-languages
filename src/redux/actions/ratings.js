@@ -13,7 +13,7 @@ const addRating = createAsyncThunk(
     }
   }
 );
-// TODO
+
 const editRating = createAsyncThunk(
   "ratings/editRating",
   async ({ userId, courseId, rating }) => {

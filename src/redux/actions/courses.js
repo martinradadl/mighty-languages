@@ -3,10 +3,10 @@ import axios from "axios";
 
 const getCourses = createAsyncThunk(
   "courses/getCourses",
-  async (loggedUser) => {
+  async ({ loggedUser, title }) => {
     try {
       const response = await axios.get(
-        `http://localhost:3001/courses?user=${loggedUser}`
+        `http://localhost:3001/courses?user=${loggedUser}&title=${title}`
       );
       return response.data;
     } catch (error) {
@@ -15,14 +15,19 @@ const getCourses = createAsyncThunk(
   }
 );
 
-const getCourse = createAsyncThunk("courses/getCourse", async (id) => {
-  try {
-    const response = await axios.get(`http://localhost:3001/courses/${id}`);
-    return response.data;
-  } catch (error) {
-    return error.message;
+const getCourse = createAsyncThunk(
+  "courses/getCourse",
+  async ({ id, loggedUser }) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:3001/courses/${id}?user=${loggedUser}`
+      );
+      return response.data;
+    } catch (error) {
+      return error.message;
+    }
   }
-});
+);
 
 const addCourse = createAsyncThunk("courses/addCourse", async (newCourse) => {
   try {

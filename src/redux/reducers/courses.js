@@ -6,6 +6,7 @@ const initialState = {
   coursesList: null,
   selectedCourse: null,
   status: "idle",
+  error: "",
 };
 
 const findIndex = (state, id) => {
@@ -26,11 +27,21 @@ const coursesSlice = createSlice({
         state.coursesList = action.payload;
         state.status = "idle";
       })
+      .addCase(actions.getCourses.rejected, (state, action) => {
+        state.error = action.payload;
+        state.status = "idle";
+        state.coursesList = null;
+      })
       .addCase(actions.getCourse.pending, (state) => {
         state.status = "loading";
       })
       .addCase(actions.getCourse.fulfilled, (state, action) => {
         state.selectedCourse = action.payload;
+        state.status = "idle";
+      })
+      .addCase(actions.getCourse.rejected, (state, action) => {
+        state.error = action.payload;
+        state.selectedCourse = null;
         state.status = "idle";
       })
       .addCase(actions.addCourse.pending, (state) => {
@@ -75,44 +86,32 @@ const coursesSlice = createSlice({
         };
       })
       .addCase(ratingsActions.addRating.fulfilled, (state, action) => {
-        const i = findIndex(state, action.payload.courseId);
-        const updatedCourse = { ...state.coursesList[i] };
-        updatedCourse.hasRating = action.payload.rating;
         return {
           ...state,
-          coursesList: [
-            ...state.coursesList.slice(0, i),
-            updatedCourse,
-            ...state.coursesList.slice(i + 1),
-          ],
+          selectedCourse: {
+            ...state.selectedCourse,
+            hasRating: action.payload.rating,
+          },
         };
       })
       .addCase(ratingsActions.deleteRating.fulfilled, (state, action) => {
-        const i = findIndex(state, action.payload.courseId);
-        const updatedCourse = { ...state.coursesList[i] };
-        updatedCourse.hasRating = 0;
         return {
           ...state,
-          coursesList: [
-            ...state.coursesList.slice(0, i),
-            updatedCourse,
-            ...state.coursesList.slice(i + 1),
-          ],
+          selectedCourse: {
+            ...state.selectedCourse,
+            hasRating: 0,
+          },
         };
       })
       .addCase(ratingsActions.editRating.fulfilled, (state, action) => {
-        const i = findIndex(state, action.payload.courseId);
-        const updatedCourse = { ...state.coursesList[i] };
-        updatedCourse.hasRating = action.payload.rating;
         return {
           ...state,
-          coursesList: [
-            ...state.coursesList.slice(0, i),
-            updatedCourse,
-            ...state.coursesList.slice(i + 1),
-          ],
+          selectedCourse: {
+            ...state.selectedCourse,
+            hasRating: action.payload.rating,
+          },
         };
-      });
+      })
   },
 });
 
