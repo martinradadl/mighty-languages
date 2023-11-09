@@ -1,5 +1,40 @@
 .course-container {
-    margin-left: auto;
-    margin-right: auto;
-    width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
+}
+
+.lessons-list-container {
+  margin-top: 20px;
+}
+
+.course-rate-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+#rate-course-button {
+  height: 32px;
+  background-color: blue;
+  color: antiquewhite;
+  border: none;
+  border-radius: 4px;
+}
+
+.rate-dialog-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.rate-button-submit {
+  background-color: blue;
+  color: aliceblue;
+  margin: 10px;
+  height: 40px;
+  width: 120px;
+  border: 0px;
+  border-radius: 4px;
+  font-size: 14px;
 }

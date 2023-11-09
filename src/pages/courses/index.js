@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { CoursePreview } from "./course-preview";
 import { AddCourseDialog } from "./add-course-dialog";
@@ -14,9 +14,9 @@ export const Courses = () => {
 
   const handleGetCourses = useCallback(() => {
     if (user !== null) {
-      dispatch(coursesActions.getCourses(user._id));
+      dispatch(coursesActions.getCourses({ loggedUser: user._id }));
     } else {
-      dispatch(coursesActions.getCourses());
+      dispatch(coursesActions.getCourses({}));
     }
   }, [user, dispatch]);
 
@@ -26,30 +26,38 @@ export const Courses = () => {
     debouncedHandleGetCourses();
   }, [handleGetCourses]);
 
-  if (status === "loading" || coursesList === null) {
-    return <p>Loading...</p>;
-  }
+  const handleChangeSearchbar = (event) => {
+    dispatch(coursesActions.getCourses({ title: event.target.value }));
+  };
+
+  const debouncedHandleChangeSearchbar = debounce(handleChangeSearchbar, 500);
+
   return (
     <div>
       <div style={{ width: "100%", display: "flex", flexDirection: "column" }}>
         <input
           className="search-bar"
           placeholder="Buscar cursos"
+          onChange={debouncedHandleChangeSearchbar}
           style={{ margin: "20px", height: "20px" }}
         />
         <AddCourseDialog />
-        {coursesList.map((item, i) => {
-          return (
-            <div
-              key={i}
-              onClick={() => {
-                navigate(`/courses/${item._id}`);
-              }}
-            >
-              <CoursePreview course={item} />
-            </div>
-          );
-        })}
+        {status === "loading" || coursesList === null ? (
+          <p>Loading...</p>
+        ) : (
+          coursesList.map((course, i) => {
+            return (
+              <div
+                key={i}
+                onClick={() => {
+                  navigate(`/courses/${course._id}`);
+                }}
+              >
+                <CoursePreview course={course} />
+              </div>
+            );
+          })
+        )}
       </div>
     </div>
   );
