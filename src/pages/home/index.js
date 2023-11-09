@@ -7,7 +7,6 @@ import { useSelector, useDispatch } from "react-redux";
 import coursesActions from "../../redux/actions/courses";
 import debounce from "lodash.debounce";
 
-
 export const Home = () => {
   const user = useSelector((state) => state.users.selectedUser);
   const { status, coursesList } = useSelector((state) => state.courses);
@@ -16,9 +15,9 @@ export const Home = () => {
 
   const handleGetCourses = useCallback(() => {
     if (user !== null) {
-      dispatch(coursesActions.getCourses(user._id));
+      dispatch(coursesActions.getCourses({ loggedUser: user._id }));
     } else {
-      dispatch(coursesActions.getCourses());
+      dispatch(coursesActions.getCourses({}));
     }
   }, [user, dispatch]);
 
@@ -28,26 +27,27 @@ export const Home = () => {
     debouncedHandleGetCourses();
   }, [handleGetCourses]);
 
-  if (status === "loading" || coursesList === null) {
-    return <p>Loading...</p>;
-  }
 
   return (
     <div className="home-container">
       {user !== null ? <RecentActivity /> : null}
       <h2>Cursos</h2>
-      {coursesList.map((elem, index) => {
-        return (
-          <div
-            key={index}
-            onClick={() => {
-              navigate(`/courses/${elem._id}`);
-            }}
-          >
-            <CoursePreview course={elem} />
-          </div>
-        );
-      })}
+      {status === "loading" || coursesList === null ? (
+        <p>Loading...</p>
+      ) : (
+        coursesList.map((course, index) => {
+          return (
+            <div
+              key={index}
+              onClick={() => {
+                navigate(`/courses/${course._id}`);
+              }}
+            >
+              <CoursePreview course={course} />
+            </div>
+          );
+        })
+      )}
     </div>
   );
 };
