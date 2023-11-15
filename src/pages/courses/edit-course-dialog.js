@@ -3,7 +3,7 @@ import axios from "axios";
 import "../../styles/courses/course-dialog.css";
 import { CourseDialog } from "./course-dialog";
 import { AiFillEdit } from "react-icons/ai";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import coursesActions from "../../redux/actions/courses";
 
 export const EditCourseDialog = (props) => {
@@ -11,6 +11,7 @@ export const EditCourseDialog = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   const dispatch = useDispatch();
   const [courseForm, setCourseForm] = useState(selectedCourse);
+  const user = useSelector((state) => state.users.selectedUser);
 
   function closeModal() {
     setIsOpen(false);
@@ -30,11 +31,14 @@ export const EditCourseDialog = (props) => {
     } else {
       dispatch(
         coursesActions.editCourse({
-          _id: selectedCourse._id,
-          title: courseForm.title,
-          imageURL: courseForm.imageURL,
-          description: courseForm.description,
-          rating: selectedCourse.rating,
+          updatedCourse: {
+            _id: selectedCourse._id,
+            title: courseForm.title,
+            imageURL: courseForm.imageURL,
+            description: courseForm.description,
+            rating: selectedCourse.rating,
+          },
+          loggedUser: user._id,
         })
       )
         .unwrap()

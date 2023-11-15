@@ -43,10 +43,10 @@ const addCourse = createAsyncThunk("courses/addCourse", async (newCourse) => {
 
 const editCourse = createAsyncThunk(
   "courses/editCourse",
-  async (updatedCourse) => {
+  async ({updatedCourse, loggedUser}) => {
     try {
       const response = await axios.put(
-        `http://localhost:3001/courses/${updatedCourse._id}`,
+        `http://localhost:3001/courses/${updatedCourse._id}?user=${loggedUser}`,
         updatedCourse
       );
       return response.data;
