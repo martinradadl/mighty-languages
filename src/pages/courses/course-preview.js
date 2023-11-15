@@ -36,13 +36,15 @@ export const CoursePreview = (props) => {
         >
           {Math.round(course.rating * 100) / 100 || "Sin Rating"}
         </h3>
-        {[1, 2, 3, 4, 5].map((star, index) => {
-          return star > course.rating ? (
-            <AiOutlineStar key={index} />
-          ) : (
-            <AiFillStar key={index} />
-          );
-        })}
+        <div>
+          {[1, 2, 3, 4, 5].map((star, index) => {
+            return star > course.rating ? (
+              <AiOutlineStar key={index} />
+            ) : (
+              <AiFillStar key={index} />
+            );
+          })}
+        </div>
         <div
           style={{ marginTop: "10px" }}
           onClick={(e) => {

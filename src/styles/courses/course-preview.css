@@ -32,6 +32,9 @@
   margin-right: 10px;
   margin-top: 10px;
   min-width: 86px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 #enroll-button {
