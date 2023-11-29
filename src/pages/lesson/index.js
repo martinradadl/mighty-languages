@@ -71,7 +71,7 @@ export const Lesson = () => {
   }
   return (
     <div style={{ margin: "5px 20px" }}>
-      <h4 style={{ margin: "30px 0px 2px" }}>
+      <h4 style={{ margin: "20px 0px 2px" }}>
         {selectedLesson.course_id.title}
       </h4>
       <h1 style={{ margin: "2px 0px 30px" }}>{selectedLesson.title}</h1>
@@ -121,7 +121,6 @@ export const Lesson = () => {
             return <Comment key={index} comment={comment} />;
           })
         )}
-        {console.log(commentsList)}
       </div>
     </div>
   );
