@@ -6,6 +6,7 @@ import { AddLessonDialog } from "../lesson/add-lesson-dialog";
 import { useSelector, useDispatch } from "react-redux";
 import coursesActions from "../../redux/actions/courses";
 import lessonsActions from "../../redux/actions/lessons";
+import recentActivityActions from "../../redux/actions/recent-activity";
 import debounce from "lodash.debounce";
 import { RateCourseDialog } from "./rate-course-dialog";
 import { AiOutlineStar, AiFillStar } from "react-icons/ai";
@@ -42,6 +43,48 @@ export const Course = () => {
     debouncedHandleGetLessons();
   }, [handleGetLessons]);
 
+  const handleAddRecentActivity = () => {
+    const newRecentActivity = {
+      course_id: selectedCourse._id,
+      user_id: user._id,
+      currentLessonIndex: 1,
+    };
+    dispatch(recentActivityActions.addRecentActivity(newRecentActivity))
+      .unwrap()
+      .then(() => {
+        dispatch(coursesActions.changeIsUserEnrolled());
+      })
+      .catch((e) => {
+        alert(e.message);
+      });
+  };
+
+  const debouncedHandleAddRecentActivity = debounce(
+    handleAddRecentActivity,
+    500
+  );
+
+  const handleDeleteRecentActivity = () => {
+    dispatch(
+      recentActivityActions.deleteRecentActivity({
+        userId: user._id,
+        courseId: selectedCourse._id,
+      })
+    )
+      .unwrap()
+      .then(() => {
+        dispatch(coursesActions.changeIsUserEnrolled());
+      })
+      .catch((e) => {
+        alert(e.message);
+      });
+  };
+
+  const debouncedHandleDeleteRecentActivity = debounce(
+    handleDeleteRecentActivity,
+    500
+  );
+
   if (status === "loading" || selectedCourse === null) {
     return <p>Loading...</p>;
   }
@@ -49,6 +92,31 @@ export const Course = () => {
     <div className="course-container">
       <h2>{selectedCourse.title}</h2>
       <p>{selectedCourse.description}</p>
+      <div
+          style={{ marginTop: "10px" }}
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
+        >
+          {selectedCourse.isUserEnrolled ? (
+            <button
+              type="button"
+              id="enroll-button"
+              style={{ backgroundColor: "red" }}
+              onClick={debouncedHandleDeleteRecentActivity}
+            >
+              Dejar Curso
+            </button>
+          ) : (
+            <button
+              type="button"
+              id="enroll-button"
+              onClick={debouncedHandleAddRecentActivity}
+            >
+              Inscribirse
+            </button>
+          )}
+        </div>
       <div className="course-rate-container">
         <h3>{Math.round(selectedCourse.rating * 100) / 100}</h3>
         <div>
