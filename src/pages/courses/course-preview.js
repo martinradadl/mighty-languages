@@ -45,16 +45,6 @@ export const CoursePreview = (props) => {
             );
           })}
         </div>
-        <div
-          style={{ marginTop: "10px" }}
-          onClick={(e) => {
-            e.stopPropagation();
-          }}
-        >
-          <button type="button" id="enroll-button">
-            Inscribirse
-          </button>
-        </div>
       </div>
     </div>
   );
