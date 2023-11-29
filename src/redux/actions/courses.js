@@ -1,5 +1,7 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+
+const changeIsUserEnrolled = createAction("courses/changeIsUserEnrolled");
 
 const getCourses = createAsyncThunk(
   "courses/getCourses",
@@ -43,7 +45,7 @@ const addCourse = createAsyncThunk("courses/addCourse", async (newCourse) => {
 
 const editCourse = createAsyncThunk(
   "courses/editCourse",
-  async ({updatedCourse, loggedUser}) => {
+  async ({ updatedCourse, loggedUser }) => {
     try {
       const response = await axios.put(
         `http://localhost:3001/courses/${updatedCourse._id}?user=${loggedUser}`,
@@ -71,5 +73,6 @@ const coursesActions = {
   addCourse,
   editCourse,
   deleteCourse,
+  changeIsUserEnrolled,
 };
 export default coursesActions;

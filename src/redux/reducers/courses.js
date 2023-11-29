@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import actions from "../actions/courses";
 import ratingsActions from "../actions/ratings";
+import coursesActions from "../actions/courses";
 
 const initialState = {
   coursesList: null,
@@ -112,6 +113,16 @@ const coursesSlice = createSlice({
           },
         };
       })
+      .addCase(coursesActions.changeIsUserEnrolled, (state) => {
+        const updatedCourse = {
+          ...state.selectedCourse,
+          isUserEnrolled: !state.selectedCourse.isUserEnrolled,
+        };
+        return {
+          ...state,
+          selectedCourse: updatedCourse,
+        };
+      });
   },
 });
 
