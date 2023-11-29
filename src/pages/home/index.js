@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect } from "react";
 import { CoursePreview } from "../courses/course-preview";
-import { RecentActivity } from "../../components/recent-activity";
+import { RecentActivity } from "./recent-activity";
 import "../../styles/home/home.css";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -27,9 +27,17 @@ export const Home = () => {
     debouncedHandleGetCourses();
   }, [handleGetCourses]);
 
-
   return (
     <div className="home-container">
+      <h1
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          marginBottom: "30px",
+        }}
+      >
+        Mighty Languages
+      </h1>
       {user !== null ? <RecentActivity /> : null}
       <h2>Cursos</h2>
       {status === "loading" || coursesList === null ? (
