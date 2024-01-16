@@ -1,56 +1,71 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import "../../styles/home/recent-activity.css";
 import { useSelector, useDispatch } from "react-redux";
 import debounce from "lodash.debounce";
-import recentActivityActions from "../../redux/actions/recent-activity";
+import courseEnrollmentActions from "../../redux/actions/course-enrollment";
+import { useNavigate } from "react-router-dom";
+import { LoadingWrapper } from "../../components/loading";
 
 export const RecentActivity = () => {
-  const { status, recentActivityList } = useSelector(
-    (state) => state.recent_activity
-  );
   const user = useSelector((state) => state.users.selectedUser);
+  const { status, enrollmentsList } = useSelector(
+    (state) => state.course_enrollment
+  );
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const handleGetRecentActivity = () => {
-    dispatch(recentActivityActions.getRecentActivity({userId: user._id, limit: 2}));
-  };
+  const handleGetCourseEnrollments = useCallback(() => {
+    dispatch(courseEnrollmentActions.getCourseEnrollments(user._id));
+  },[user,dispatch]);
 
-  const debouncedHandleGetRecentActivity = debounce(
-    handleGetRecentActivity,
+  const debouncedHandleGetCourseEnrollments = debounce(
+    handleGetCourseEnrollments,
     500
   );
 
   useEffect(() => {
-    debouncedHandleGetRecentActivity();
-  }, []);
+    if (user !== null) {
+      debouncedHandleGetCourseEnrollments();
+    }
+  }, [user]);
 
   return (
     <div className="recent-activity-container">
       <h2>Mi Actividad Reciente</h2>
-      {recentActivityList ? (
-        recentActivityList.map((elem, index) => {
-          return (
-            <div key={index} className="course-progress-container">
-              <h3>{elem.course_id.title}</h3>
-              <div className="course-progress-details">
-                <div className="progress-label">
-                  <p>
-                    <b>Progreso:</b>{" "}
-                  </p>
+
+      <LoadingWrapper
+        isLoading={status === "loading" || enrollmentsList === null}
+      >
+        {enrollmentsList?.length ? (
+          enrollmentsList.map((enrollment, index) => {
+            return (
+              <div key={index} className="course-progress-container">
+                <h3>{enrollment.course.title}</h3>
+                <div className="course-progress-details">
+                  <div className="progress-label">
+                    <p>
+                      <b>Progreso:</b>{" "}
+                    </p>
+                  </div>
+                  <div className="progress-bar">
+                    <div className="current-progress" />
+                  </div>
+                  <button
+                    id="resume-button"
+                    onClick={() => {
+                      navigate(`/lessons/${enrollment.current_lesson}`);
+                    }}
+                  >
+                    <b>Continuar</b>
+                  </button>
                 </div>
-                <div className="progress-bar">
-                  <div className="current-progress" />
-                </div>
-                <button id="resume-button">
-                  <b>Continuar</b>
-                </button>
               </div>
-            </div>
-          );
-        })
-      ) : (
-        <p>Loading...</p>
-      )}
+            );
+          })
+        ) : (
+          <p>No hay actividad reciente</p>
+        )}
+      </LoadingWrapper>
     </div>
   );
 };
