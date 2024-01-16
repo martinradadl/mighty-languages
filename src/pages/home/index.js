@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import coursesActions from "../../redux/actions/courses";
 import debounce from "lodash.debounce";
+import { LoadingWrapper } from "../../components/loading";
 
 export const Home = () => {
   const user = useSelector((state) => state.users.selectedUser);
@@ -15,7 +16,7 @@ export const Home = () => {
 
   const handleGetCourses = useCallback(() => {
     if (user !== null) {
-      dispatch(coursesActions.getCourses({ loggedUser: user._id }));
+      dispatch(coursesActions.getCourses({ userId: user._id }));
     } else {
       dispatch(coursesActions.getCourses({}));
     }
@@ -40,10 +41,8 @@ export const Home = () => {
       </h1>
       {user !== null ? <RecentActivity /> : null}
       <h2>Cursos</h2>
-      {status === "loading" || coursesList === null ? (
-        <p>Loading...</p>
-      ) : (
-        coursesList.map((course, index) => {
+      <LoadingWrapper isLoading={status === "loading" || coursesList === null}>
+        {coursesList?.map((course, index) => {
           return (
             <div
               key={index}
@@ -51,11 +50,11 @@ export const Home = () => {
                 navigate(`/courses/${course._id}`);
               }}
             >
-              <CoursePreview course={course} />
+              <CoursePreview course={course} showRating={true} user={user} />
             </div>
           );
-        })
-      )}
+        })}
+      </LoadingWrapper>
     </div>
   );
 };
