@@ -3,7 +3,7 @@ import coursesReducer from "./reducers/courses";
 import lessonsReducer from "./reducers/lessons";
 import commentsReducer from "./reducers/comments";
 import usersReducer from "./reducers/users";
-import recentActivityReducer from "./reducers/recent-activity";
+import courseEnrollmentReducer from "./reducers/course-enrollment";
 
 export const store = configureStore({
   reducer: {
@@ -11,7 +11,7 @@ export const store = configureStore({
     lessons: lessonsReducer,
     users: usersReducer,
     comments: commentsReducer,
-    recent_activity: recentActivityReducer,
+    course_enrollment: courseEnrollmentReducer,
     quizzes: {},
   },
 });
