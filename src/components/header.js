@@ -13,10 +13,14 @@ export const Header = () => {
         <Link className="links" to="/">
           Home
         </Link>
-
         <Link className="links" to="/courses">
-          Courses
+          Cursos
         </Link>
+        {user !== null ? (
+          <Link className="links" to="/my-courses">
+            Mis Cursos
+          </Link>
+        ) : null}
       </div>
       <div className="right-side-header">
         {user !== null ? <ProfileDialog user={user} /> : <AuthDialog />}
