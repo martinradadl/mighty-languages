@@ -3,10 +3,10 @@ import axios from "axios";
 
 const getComments = createAsyncThunk(
   "comments/getComments",
-  async ({ id, loggedUser }) => {
+  async ({ id, userId }) => {
     try {
       const response = await axios.get(
-        `http://localhost:3001/lessons/${id}/comments?user=${loggedUser}`
+        `http://localhost:3001/lessons/${id}/comments?userId=${userId}`
       );
       return response.data;
     } catch (error) {
