@@ -1,15 +1,16 @@
 import React, { useCallback, useEffect } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { LessonPreview } from "../lesson/lesson-preview";
 import "../../styles/courses/course.css";
 import { AddLessonDialog } from "../lesson/add-lesson-dialog";
 import { useSelector, useDispatch } from "react-redux";
 import coursesActions from "../../redux/actions/courses";
 import lessonsActions from "../../redux/actions/lessons";
-import recentActivityActions from "../../redux/actions/recent-activity";
+import courseEnrollmentActions from "../../redux/actions/course-enrollment";
 import debounce from "lodash.debounce";
 import { RateCourseDialog } from "./rate-course-dialog";
 import { AiOutlineStar, AiFillStar } from "react-icons/ai";
+import { LoadingWrapper } from "../../components/loading";
 
 export const Course = () => {
   const params = useParams();
@@ -21,10 +22,10 @@ export const Course = () => {
   );
   const navigate = useNavigate();
 
+  // Get Course and Lessons
+
   const handleGetCourse = useCallback(() => {
-    dispatch(
-      coursesActions.getCourse({ id: params.id, loggedUser: user?._id })
-    );
+    dispatch(coursesActions.getCourse({ id: params.id, userId: user?._id }));
   }, [params, dispatch]);
 
   const debouncedHandleGetCourse = debounce(handleGetCourse, 500);
@@ -43,114 +44,120 @@ export const Course = () => {
     debouncedHandleGetLessons();
   }, [handleGetLessons]);
 
-  const handleAddRecentActivity = () => {
-    const newRecentActivity = {
-      course_id: selectedCourse._id,
-      user_id: user._id,
-      currentLessonIndex: 1,
+  // Course Enrollment functions
+
+  const handleEnrollInCourse = () => {
+    const newCourseEnrollment = {
+      userId: user._id,
+      courseId: selectedCourse._id,
+      lessonId: lessonsList[0]._id,
     };
-    dispatch(recentActivityActions.addRecentActivity(newRecentActivity))
+    dispatch(courseEnrollmentActions.addCourseEnrollment(newCourseEnrollment))
       .unwrap()
       .then(() => {
-        dispatch(coursesActions.changeIsUserEnrolled());
+        dispatch(coursesActions.changeUserEnrollment());
       })
       .catch((e) => {
         alert(e.message);
       });
   };
 
-  const debouncedHandleAddRecentActivity = debounce(
-    handleAddRecentActivity,
-    500
-  );
+  const debouncedhandleEnrollInCourse = debounce(handleEnrollInCourse, 500);
 
-  const handleDeleteRecentActivity = () => {
+  const handleLeaveCourse = () => {
     dispatch(
-      recentActivityActions.deleteRecentActivity({
+      courseEnrollmentActions.editCourseEnrollment({
         userId: user._id,
         courseId: selectedCourse._id,
+        updatedEnrollment: { isActive: false },
       })
     )
       .unwrap()
       .then(() => {
-        dispatch(coursesActions.changeIsUserEnrolled());
+        dispatch(coursesActions.changeUserEnrollment());
       })
       .catch((e) => {
         alert(e.message);
       });
   };
 
-  const debouncedHandleDeleteRecentActivity = debounce(
-    handleDeleteRecentActivity,
-    500
-  );
+  const debouncedhandleLeaveCourse = debounce(handleLeaveCourse, 500);
 
-  if (status === "loading" || selectedCourse === null) {
-    return <p>Loading...</p>;
-  }
   return (
-    <div className="course-container">
-      <h2>{selectedCourse.title}</h2>
-      <p>{selectedCourse.description}</p>
-      <div
-          style={{ marginTop: "10px" }}
-          onClick={(e) => {
-            e.stopPropagation();
-          }}
-        >
-          {selectedCourse.isUserEnrolled ? (
-            <button
-              type="button"
-              id="enroll-button"
-              style={{ backgroundColor: "red" }}
-              onClick={debouncedHandleDeleteRecentActivity}
-            >
-              Dejar Curso
-            </button>
-          ) : (
-            <button
-              type="button"
-              id="enroll-button"
-              onClick={debouncedHandleAddRecentActivity}
-            >
-              Inscribirse
-            </button>
-          )}
-        </div>
-      <div className="course-rate-container">
-        <h3>{Math.round(selectedCourse.rating * 100) / 100}</h3>
-        <div>
-          {[1, 2, 3, 4, 5].map((star, index) => {
-            return star > selectedCourse.rating ? (
-              <AiOutlineStar key={index} size={20} />
+    <LoadingWrapper isLoading={status === "loading" || selectedCourse === null}>
+      <div className="course-container">
+        <h2>{selectedCourse?.title}</h2>
+        <p>{selectedCourse?.description}</p>
+        {user !== null ? (
+          <div
+            style={{ marginTop: "10px" }}
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+          >
+            {selectedCourse?.isUserEnrolled ? (
+              <button
+                type="button"
+                id="enroll-button"
+                style={{ backgroundColor: "red" }}
+                onClick={debouncedhandleLeaveCourse}
+              >
+                Dejar Curso
+              </button>
             ) : (
-              <AiFillStar key={index} size={20} />
-            );
-          })}
-        </div>
-        <RateCourseDialog course={selectedCourse} />
-      </div>
-      <div className="lessons-list-container">
-        <h3 style={{ marginBottom: "10px" }}>Lecciones</h3>
-        {lessonsList !== null && lessonStatus !== "loading" ? (
-          lessonsList.map((lesson, index) => {
-            return (
-              <div
-                key={index}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  navigate(`/lessons/${lesson._id}`);
+              <button
+                type="button"
+                id="enroll-button"
+                onClick={() => {
+                  debouncedhandleEnrollInCourse();
                 }}
               >
-                <LessonPreview isCurrentLesson={index === 0} lesson={lesson} />
-              </div>
-            );
-          })
-        ) : (
-          <p>Loading...</p>
-        )}
+                Inscribirse
+              </button>
+            )}
+          </div>
+        ) : null}
+
+        <div className="course-rate-container">
+          <h3>{Math.round(selectedCourse?.rating * 100) / 100}</h3>
+          <div>
+            {[1, 2, 3, 4, 5].map((star, index) => {
+              return star > selectedCourse?.rating ? (
+                <AiOutlineStar key={index} size={20} />
+              ) : (
+                <AiFillStar key={index} size={20} />
+              );
+            })}
+          </div>
+          <RateCourseDialog course={selectedCourse} />
+        </div>
+        <div className="lessons-list-container">
+          <h3 style={{ marginBottom: "10px" }}>Lecciones</h3>
+          <LoadingWrapper
+            isLoading={lessonsList === null || lessonStatus === "loading"}
+          >
+            {lessonsList?.map((lesson, index) => {
+              return (
+                <div
+                  key={index}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    navigate(`/lessons/${lesson._id}`);
+                  }}
+                >
+                  <LessonPreview
+                    isCurrentLesson={index === 0}
+                    lesson={lesson}
+                    index={index}
+                    user={user}
+                  />
+                </div>
+              );
+            })}
+          </LoadingWrapper>
+        </div>
+        {user?.type === "instructor" ? <AddLessonDialog /> : null}
       </div>
-      <AddLessonDialog />
-    </div>
+    </LoadingWrapper>
   );
 };
