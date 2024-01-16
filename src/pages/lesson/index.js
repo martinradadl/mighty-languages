@@ -3,11 +3,14 @@ import { Comment } from "../../components/comments/comment";
 import { CommentInput } from "../../components/comments/comment-input";
 import { Form } from "../../components/questionnaire/form";
 import "../../styles/lessons/lesson.css";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import lessonsActions from "../../redux/actions/lessons";
 import commentsActions from "../../redux/actions/comments";
 import debounce from "lodash.debounce";
+import { AiFillRightCircle, AiFillLeftCircle } from "react-icons/ai";
+import { LoadingWrapper } from "../../components/loading";
+import courseEnrollmentActions from "../../redux/actions/course-enrollment";
 
 function openLessonTab(evt, selectedLink) {
   // Declare all variables
@@ -32,16 +35,20 @@ function openLessonTab(evt, selectedLink) {
 
 export const Lesson = () => {
   const params = useParams();
+  const navigate = useNavigate();
   const user = useSelector((state) => state.users.selectedUser);
   const dispatch = useDispatch();
   const { status, selectedLesson } = useSelector((state) => state.lessons);
   const { status: commentsStatus, commentsList } = useSelector(
     (state) => state.comments
   );
+  const { status: enrollmentStatus, enrollmentsList } = useSelector(
+    (state) => state.course_enrollment
+  );
 
   const handleGetLesson = useCallback(() => {
     dispatch(lessonsActions.getLesson(params.id));
-  }, [dispatch]);
+  }, [dispatch, params.id]);
 
   const debouncedHandleGetLesson = debounce(handleGetLesson, 500);
 
@@ -54,7 +61,7 @@ export const Lesson = () => {
       dispatch(
         commentsActions.getComments({
           id: params.id,
-          loggedUser: user ? user?._id : null,
+          userId: user ? user?._id : undefined,
         })
       );
     }
@@ -66,15 +73,68 @@ export const Lesson = () => {
     debouncedHandleGetComments();
   }, [handleGetComments]);
 
+  useEffect(() => {
+    if (enrollmentsList === null) {
+      debounce(() => {
+        dispatch(courseEnrollmentActions.getCourseEnrollments(user._id));
+      }, 500);
+    }
+  }, [user, enrollmentsList, dispatch]);
+
+  // useEffect(() => {
+  //   window.focus();
+  //   window.addEventListener("blur", function (e) {
+  //     if (document.activeElement == document.querySelector("iframe")) {
+  //       dispatch(
+  //         recentActivityActions.editRecentActivity({
+  //           userId: user._id,
+  //           courseId: selectedLesson.course_id,
+  //           lessonId: params.id,
+  //         })
+  //       );
+  //     }
+  //   });
+  //   return () => {
+  //     window.removeEventListener("blur");
+  //   };
+  // }, []);
+
   if (status === "loading" || selectedLesson === null) {
     return <p>Loading...</p>;
   }
   return (
-    <div style={{ margin: "5px 20px" }}>
-      <h4 style={{ margin: "20px 0px 2px" }}>
-        {selectedLesson.course_id.title}
-      </h4>
-      <h1 style={{ margin: "2px 0px 30px" }}>{selectedLesson.title}</h1>
+    <div className="lesson-container" style={{ margin: "5px 20px" }}>
+      <div className="lesson-title-container">
+        <div>
+          <h4 style={{ margin: "20px 0px 2px" }}>
+            {selectedLesson.course.title}
+          </h4>
+          <h1 style={{ margin: "2px 0px 30px" }}>
+            {`${selectedLesson.index + 1}. ${selectedLesson.title}`}
+          </h1>
+        </div>
+        <div className="change-lesson-buttons">
+          {selectedLesson.prevLesson ? (
+            <AiFillLeftCircle
+              className="button"
+              size={40}
+              onClick={() => {
+                navigate(`/lessons/${selectedLesson.prevLesson}`);
+              }}
+            />
+          ) : null}
+          {selectedLesson.nextLesson ? (
+            <AiFillRightCircle
+              className="button"
+              size={40}
+              onClick={() => {
+                navigate(`/lessons/${selectedLesson.nextLesson}`);
+              }}
+            />
+          ) : null}
+        </div>
+      </div>
+
       {selectedLesson.videos.map((video, index) => {
         return (
           <iframe
@@ -114,13 +174,13 @@ export const Lesson = () => {
         ) : (
           <span>Si quieres comentar por favor inicia sesión</span>
         )}
-        {commentsList === null || commentsStatus === "loading" ? (
-          <p>Loading...</p>
-        ) : (
-          commentsList?.map((comment, index) => {
+        <LoadingWrapper
+          isLoading={commentsList === null || commentsStatus === "loading"}
+        >
+          {commentsList?.map((comment, index) => {
             return <Comment key={index} comment={comment} />;
-          })
-        )}
+          })}
+        </LoadingWrapper>
       </div>
     </div>
   );
