@@ -1,4 +1,4 @@
-import {React, useState} from "react";
+import { React, useState } from "react";
 import "../../styles/authentication.css";
 import { useDispatch } from "react-redux";
 import usersActions from "../../redux/actions/users";
@@ -36,6 +36,7 @@ export const SignUpForm = (props) => {
           email: signUpForm.email,
           password: signUpForm.password,
           profile_pic: signUpForm.profile_pic,
+          type: "student",
         })
       )
         .unwrap()
