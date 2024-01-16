@@ -6,17 +6,19 @@ import { Courses } from "./courses";
 import { Course } from "./courses/course";
 import { Home } from "./home";
 import { Lesson } from "./lesson";
+import { MyCourses } from "./courses/my-courses";
 import { useCookies } from "react-cookie";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import usersActions from "../redux/actions/users";
+import { LoadingWrapper } from "../components/loading";
 
 export const MainRouter = () => {
   const dispatch = useDispatch();
   const [cookie] = useCookies(["user"]);
   const [loading, setLoading] = useState(true);
+  const user = useSelector((state) => state.users.selectedUser);
 
   useEffect(() => {
-
     if (cookie.user) {
       dispatch(usersActions.setUser(cookie.user));
       setLoading(false);
@@ -24,20 +26,23 @@ export const MainRouter = () => {
       setLoading(false);
     }
   }, [cookie]);
-  if (loading) {
-    return <h3>Cargando...</h3>;
-  }
+
   return (
-    <BrowserRouter>
-      <MainLayout>
-        <Routes>
-          <Route path="/" element={<Home />}></Route>
-          <Route path="/courses" element={<Courses />}></Route>
-          <Route path="/courses/:id" element={<Course />}></Route>
-          <Route path="/lessons/:id" element={<Lesson />}></Route>
-          <Route path="*" element={<PageNotFound />}></Route>
-        </Routes>
-      </MainLayout>
-    </BrowserRouter>
+    <LoadingWrapper isLoading={loading}>
+      <BrowserRouter>
+        <MainLayout>
+          <Routes>
+            <Route path="/" element={<Home />}></Route>
+            <Route path="/courses" element={<Courses />}></Route>
+            {user !== null ? (
+              <Route path="/my-courses" element={<MyCourses />}></Route>
+            ) : null}
+            <Route path="/courses/:id" element={<Course />}></Route>
+            <Route path="/lessons/:id" element={<Lesson />}></Route>
+            <Route path="*" element={<PageNotFound />}></Route>
+          </Routes>
+        </MainLayout>
+      </BrowserRouter>
+    </LoadingWrapper>
   );
 };
