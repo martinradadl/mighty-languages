@@ -5,10 +5,10 @@ import { DeleteCourseDialog } from "./delete-course-dialog";
 import { AiOutlineStar, AiFillStar } from "react-icons/ai";
 
 export const CoursePreview = (props) => {
-  const { course } = props;
+  const { course, showRating, user } = props;
 
   return (
-    <div className="course-preview-container">
+    <div className="course-preview-container button">
       <img
         src={
           course.imageURL ||
@@ -19,33 +19,37 @@ export const CoursePreview = (props) => {
       <div className="course-preview-details">
         <h3 style={{ fontSize: "4vw" }}>{course.title}</h3>
         <p style={{ fontSize: "3vw" }}>{course.description}</p>
-        <div className="admin-course-options">
-          <EditCourseDialog selectedCourse={course} />
-          <DeleteCourseDialog selectedCourse={course} />
-        </div>
+        {user?.type === "instructor" ? (
+          <div className="admin-course-options">
+            <EditCourseDialog selectedCourse={course} />
+            <DeleteCourseDialog selectedCourse={course} />
+          </div>
+        ) : null}
       </div>
-      <div className="right-side-course-preview">
-        <h3
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            marginTop: "5px",
-            marginBottom: "5px",
-            textAlign: "center",
-          }}
-        >
-          {Math.round(course.rating * 100) / 100 || "Sin Rating"}
-        </h3>
-        <div>
-          {[1, 2, 3, 4, 5].map((star, index) => {
-            return star > course.rating ? (
-              <AiOutlineStar key={index} />
-            ) : (
-              <AiFillStar key={index} />
-            );
-          })}
+      {showRating === true ? (
+        <div className="right-side-course-preview">
+          <h3
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              marginTop: "5px",
+              marginBottom: "5px",
+              textAlign: "center",
+            }}
+          >
+            {Math.round(course.rating * 100) / 100 || "Sin Rating"}
+          </h3>
+          <div>
+            {[1, 2, 3, 4, 5].map((star, index) => {
+              return star > course.rating ? (
+                <AiOutlineStar key={index} />
+              ) : (
+                <AiFillStar key={index} />
+              );
+            })}
+          </div>
         </div>
-      </div>
+      ) : null}
     </div>
   );
 };
