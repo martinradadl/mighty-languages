@@ -1,14 +1,14 @@
 import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const changeIsUserEnrolled = createAction("courses/changeIsUserEnrolled");
+const changeUserEnrollment = createAction("courses/changeUserEnrollment");
 
 const getCourses = createAsyncThunk(
   "courses/getCourses",
-  async ({ loggedUser, title }) => {
+  async ({ userId, title }) => {
     try {
       const response = await axios.get(
-        `http://localhost:3001/courses?user=${loggedUser}&title=${title}`
+        `http://localhost:3001/courses?userId=${userId}&title=${title}`
       );
       return response.data;
     } catch (error) {
@@ -19,10 +19,10 @@ const getCourses = createAsyncThunk(
 
 const getCourse = createAsyncThunk(
   "courses/getCourse",
-  async ({ id, loggedUser }) => {
+  async ({ id, userId }) => {
     try {
       const response = await axios.get(
-        `http://localhost:3001/courses/${id}?user=${loggedUser}`
+        `http://localhost:3001/courses/${id}?userId=${userId}`
       );
       return response.data;
     } catch (error) {
@@ -45,10 +45,10 @@ const addCourse = createAsyncThunk("courses/addCourse", async (newCourse) => {
 
 const editCourse = createAsyncThunk(
   "courses/editCourse",
-  async ({ updatedCourse, loggedUser }) => {
+  async ({ updatedCourse, userId }) => {
     try {
       const response = await axios.put(
-        `http://localhost:3001/courses/${updatedCourse._id}?user=${loggedUser}`,
+        `http://localhost:3001/courses/${updatedCourse._id}?userId=${userId}`,
         updatedCourse
       );
       return response.data;
@@ -73,6 +73,6 @@ const coursesActions = {
   addCourse,
   editCourse,
   deleteCourse,
-  changeIsUserEnrolled,
+  changeUserEnrollment,
 };
 export default coursesActions;

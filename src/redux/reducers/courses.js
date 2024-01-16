@@ -113,7 +113,7 @@ const coursesSlice = createSlice({
           },
         };
       })
-      .addCase(coursesActions.changeIsUserEnrolled, (state) => {
+      .addCase(coursesActions.changeUserEnrollment, (state) => {
         const updatedCourse = {
           ...state.selectedCourse,
           isUserEnrolled: !state.selectedCourse.isUserEnrolled,
