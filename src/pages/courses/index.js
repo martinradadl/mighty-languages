@@ -5,6 +5,7 @@ import { AddCourseDialog } from "./add-course-dialog";
 import { useSelector, useDispatch } from "react-redux";
 import coursesActions from "../../redux/actions/courses";
 import debounce from "lodash.debounce";
+import { LoadingWrapper } from "../../components/loading";
 
 export const Courses = () => {
   const dispatch = useDispatch();
@@ -14,7 +15,7 @@ export const Courses = () => {
 
   const handleGetCourses = useCallback(() => {
     if (user !== null) {
-      dispatch(coursesActions.getCourses({ loggedUser: user._id }));
+      dispatch(coursesActions.getCourses({ userId: user._id }));
     } else {
       dispatch(coursesActions.getCourses({}));
     }
@@ -41,11 +42,11 @@ export const Courses = () => {
           onChange={debouncedHandleChangeSearchbar}
           style={{ margin: "20px", height: "20px" }}
         />
-        <AddCourseDialog />
-        {status === "loading" || coursesList === null ? (
-          <p>Loading...</p>
-        ) : (
-          coursesList.map((course, i) => {
+        {user?.type === "instructor" ? <AddCourseDialog /> : null}
+        <LoadingWrapper
+          isLoading={status === "loading" || coursesList === null}
+        >
+          {coursesList?.map((course, i) => {
             return (
               <div
                 key={i}
@@ -53,11 +54,11 @@ export const Courses = () => {
                   navigate(`/courses/${course._id}`);
                 }}
               >
-                <CoursePreview course={course} />
+                <CoursePreview course={course} showRating={true} user={user} />
               </div>
             );
-          })
-        )}
+          })}
+        </LoadingWrapper>
       </div>
     </div>
   );
