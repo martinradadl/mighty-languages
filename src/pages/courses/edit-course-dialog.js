@@ -38,7 +38,7 @@ export const EditCourseDialog = (props) => {
             description: courseForm.description,
             rating: selectedCourse.rating,
           },
-          loggedUser: user._id,
+          userId: user._id,
         })
       )
         .unwrap()
