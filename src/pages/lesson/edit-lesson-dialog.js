@@ -1,7 +1,5 @@
-import React, { Fragment, useState } from "react";
-import axios from "axios";
+import React, { useState } from "react";
 import "../../styles/lessons/lesson-dialog.css";
-import { AiFillEdit } from "react-icons/ai";
 import { LessonDialog } from "./lesson-dialog";
 import { useDispatch } from "react-redux";
 import lessonsActions from "../../redux/actions/lessons";
