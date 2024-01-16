@@ -4,7 +4,6 @@ import feedbacksActions from "../actions/feedbacks";
 
 const initialState = {
   commentsList: null,
-  selectedComment: null,
   status: "idle",
 };
 
