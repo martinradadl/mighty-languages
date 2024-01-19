@@ -20,6 +20,9 @@ export const Course = () => {
   const { status: lessonStatus, lessonsList } = useSelector(
     (state) => state.lessons
   );
+  const { status: enrollmentStatus, selectedEnrollment } = useSelector(
+    (state) => state.course_enrollment
+  );
   const navigate = useNavigate();
 
   // Get Course and Lessons
@@ -83,8 +86,35 @@ export const Course = () => {
 
   const debouncedhandleLeaveCourse = debounce(handleLeaveCourse, 500);
 
+  const handleGetCourseEnrollment = useCallback(() => {
+    if (selectedCourse !== null) {
+      dispatch(
+        courseEnrollmentActions.getCourseEnrollment({
+          userId: user._id,
+          courseId: selectedCourse._id,
+        })
+      );
+    }
+  }, [dispatch, user, selectedCourse]);
+
+  const debouncedHandleGetCourseEnrollment = debounce(
+    handleGetCourseEnrollment,
+    500
+  );
+
+  useEffect(() => {
+    debouncedHandleGetCourseEnrollment();
+  }, [handleGetCourseEnrollment]);
+
   return (
-    <LoadingWrapper isLoading={status === "loading" || selectedCourse === null}>
+    <LoadingWrapper
+      isLoading={
+        status === "loading" ||
+        selectedCourse === null ||
+        enrollmentStatus === "loading" ||
+        selectedEnrollment === null
+      }
+    >
       <div className="course-container">
         <h2>{selectedCourse?.title}</h2>
         <p>{selectedCourse?.description}</p>
@@ -146,7 +176,9 @@ export const Course = () => {
                   }}
                 >
                   <LessonPreview
-                    isCurrentLesson={index === 0}
+                    isCurrentLesson={
+                      selectedEnrollment?.currentLesson === lesson._id
+                    }
                     lesson={lesson}
                     index={index}
                     user={user}
