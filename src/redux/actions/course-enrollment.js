@@ -32,7 +32,7 @@ const editCourseEnrollment = createAsyncThunk(
 );
 
 const getCourseEnrollments = createAsyncThunk(
-  "course_enrollment/get",
+  "course_enrollment/getEnrollments",
   async (userId) => {
     try {
       const response = await axios.get(
@@ -45,9 +45,24 @@ const getCourseEnrollments = createAsyncThunk(
   }
 );
 
+const getCourseEnrollment = createAsyncThunk(
+  "course_enrollment/getEnrollment",
+  async ({ userId, courseId }) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:3001/course_enrollment?userId=${userId}&courseId=${courseId}`
+      );
+      return response.data;
+    } catch (error) {
+      return error.message;
+    }
+  }
+);
+
 const courseEnrollmentActions = {
   addCourseEnrollment,
   editCourseEnrollment,
   getCourseEnrollments,
+  getCourseEnrollment,
 };
 export default courseEnrollmentActions;

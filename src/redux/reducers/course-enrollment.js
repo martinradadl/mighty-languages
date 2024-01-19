@@ -5,6 +5,7 @@ const initialState = {
   status: "idle",
   error: "",
   enrollmentsList: null,
+  selectedEnrollment: null,
 };
 
 const courseEnrollmentSlice = createSlice({
@@ -60,6 +61,18 @@ const courseEnrollmentSlice = createSlice({
         state.error = action.payload;
         state.status = "idle";
         state.enrollmentsList = null;
+      })
+      .addCase(actions.getCourseEnrollment.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(actions.getCourseEnrollment.fulfilled, (state, action) => {
+        state.selectedEnrollment = action.payload;
+        state.status = "idle";
+      })
+      .addCase(actions.getCourseEnrollment.rejected, (state, action) => {
+        state.error = action.payload;
+        state.status = "idle";
+        state.selectedEnrollment = null;
       });
   },
 });
