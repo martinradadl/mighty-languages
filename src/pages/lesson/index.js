@@ -42,10 +42,11 @@ export const Lesson = () => {
   const { status: commentsStatus, commentsList } = useSelector(
     (state) => state.comments
   );
-  const { status: enrollmentStatus, enrollmentsList } = useSelector(
+  const { status: enrollmentStatus, selectedEnrollment } = useSelector(
     (state) => state.course_enrollment
   );
 
+  // Get Lesson
   const handleGetLesson = useCallback(() => {
     dispatch(lessonsActions.getLesson(params.id));
   }, [dispatch, params.id]);
@@ -56,6 +57,7 @@ export const Lesson = () => {
     debouncedHandleGetLesson();
   }, [handleGetLesson]);
 
+  //Get Comments
   const handleGetComments = useCallback(() => {
     if (selectedLesson !== null) {
       dispatch(
@@ -73,13 +75,42 @@ export const Lesson = () => {
     debouncedHandleGetComments();
   }, [handleGetComments]);
 
+  // Get Course Enrollment
+  const debouncedHandleGetCourseEnrollment = debounce(() => {
+    dispatch(
+      courseEnrollmentActions.getCourseEnrollment({
+        userId: user._id,
+        courseId: selectedLesson.course._id,
+      })
+    );
+  }, 500);
+
   useEffect(() => {
-    if (enrollmentsList === null) {
-      debounce(() => {
-        dispatch(courseEnrollmentActions.getCourseEnrollments(user._id));
-      }, 500);
+    if (
+      selectedEnrollment === null &&
+      user !== null &&
+      selectedLesson !== null
+    ) {
+      debouncedHandleGetCourseEnrollment();
     }
-  }, [user, enrollmentsList, dispatch]);
+  }, [user, selectedEnrollment, selectedLesson, dispatch]);
+
+  // Update Current Lesson in Enrollment
+  const debouncedHandleChangeCurrentLesson = debounce(() => {
+    dispatch(
+      courseEnrollmentActions.editCourseEnrollment({
+        userId: user._id,
+        courseId: selectedLesson.course._id,
+        updatedEnrollment: { currentLesson: selectedLesson._id },
+      })
+    );
+  }, 500);
+
+  useEffect(() => {
+    if (selectedLesson?._id !== selectedEnrollment?.currentLesson) {
+      debouncedHandleChangeCurrentLesson();
+    }
+  }, [selectedLesson, selectedEnrollment, user, dispatch]);
 
   // useEffect(() => {
   //   window.focus();
@@ -151,7 +182,8 @@ export const Lesson = () => {
         <button
           className="lesson-tablinks"
           onClick={(event) => {
-            openLessonTab(event, "quiz");
+            // openLessonTab(event, "quiz");
+            // handleCompleteLesson();
           }}
         >
           Quiz
