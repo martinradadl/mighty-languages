@@ -138,9 +138,7 @@ export const Course = () => {
               <button
                 type="button"
                 id="enroll-button"
-                onClick={() => {
-                  debouncedhandleEnrollInCourse();
-                }}
+                onClick={debouncedhandleEnrollInCourse}
               >
                 Inscribirse
               </button>
