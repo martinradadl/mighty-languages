@@ -58,6 +58,7 @@ export const LoginForm = (props) => {
       </p>
       <input
         className="auth-form-input"
+        type="password"
         placeholder="Ingresa tu contraseña"
         onChange={handleChange}
         name="password"

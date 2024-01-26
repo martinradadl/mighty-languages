@@ -7,7 +7,7 @@ const signUpFormInitialState = {
   name: "",
   email: "",
   password: "",
-  profile_pic: "",
+  profilePic: "",
 };
 
 export const SignUpForm = (props) => {
@@ -35,7 +35,7 @@ export const SignUpForm = (props) => {
           name: signUpForm.name,
           email: signUpForm.email,
           password: signUpForm.password,
-          profile_pic: signUpForm.profile_pic,
+          profilePic: signUpForm.profilePic,
           type: "student",
         })
       )
@@ -77,6 +77,7 @@ export const SignUpForm = (props) => {
       </p>
       <input
         className="auth-form-input"
+        type="password"
         placeholder="Crea una contraseña"
         onChange={handleChange}
         name="password"
