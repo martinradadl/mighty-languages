@@ -2,11 +2,11 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const addRating = createAsyncThunk(
-  "ratings/addRating",
+  "ratings/add",
   async (newRating) => {
     try {
       await axios.post(`http://localhost:3001/ratings`, newRating);
-      const courseId = newRating.course_id;
+      const courseId = newRating.courseId;
       return { courseId, rating: newRating.rating };
     } catch (error) {
       return error.message;
@@ -15,7 +15,7 @@ const addRating = createAsyncThunk(
 );
 
 const editRating = createAsyncThunk(
-  "ratings/editRating",
+  "ratings/edit",
   async ({ userId, courseId, rating }) => {
     try {
       await axios.put(
@@ -30,7 +30,7 @@ const editRating = createAsyncThunk(
 );
 
 const deleteRating = createAsyncThunk(
-  "ratings/deleteRating",
+  "ratings/delete",
   async ({ userId, courseId }) => {
     try {
       await axios.delete(

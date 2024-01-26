@@ -2,11 +2,11 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const getComments = createAsyncThunk(
-  "comments/getComments",
+  "comments/get",
   async ({ id, userId }) => {
     try {
       const response = await axios.get(
-        `http://localhost:3001/lessons/${id}/comments?userId=${userId}`
+        `http://localhost:3001/lessons/${id}/comments?user_id=${userId}`
       );
       return response.data;
     } catch (error) {
@@ -15,7 +15,7 @@ const getComments = createAsyncThunk(
   }
 );
 
-const addComment = createAsyncThunk("comments/addComment", async (comment) => {
+const addComment = createAsyncThunk("comments/add", async (comment) => {
   try {
     const response = await axios.post(
       `http://localhost:3001/comments`,
@@ -27,7 +27,7 @@ const addComment = createAsyncThunk("comments/addComment", async (comment) => {
   }
 });
 
-const deleteComment = createAsyncThunk("comments/deleteComment", async (id) => {
+const deleteComment = createAsyncThunk("comments/delete", async (id) => {
   try {
     console.log(id);
     const response = await axios.delete(`http://localhost:3001/comments/${id}`);
@@ -38,7 +38,7 @@ const deleteComment = createAsyncThunk("comments/deleteComment", async (id) => {
 });
 
 const editComment = createAsyncThunk(
-  "comments/editComment",
+  "comments/edit",
   async (updatedComment) => {
     try {
       const response = await axios.put(

@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const getLessons = createAsyncThunk("lessons/getLessons", async (courseId) => {
+const getLessons = createAsyncThunk("lessons/get_lessons", async (courseId) => {
   try {
     const response = await axios.get(
       `http://localhost:3001/courses/${courseId}/lessons`
@@ -12,7 +12,7 @@ const getLessons = createAsyncThunk("lessons/getLessons", async (courseId) => {
   }
 });
 
-const getLesson = createAsyncThunk("lessons/getLesson", async (id) => {
+const getLesson = createAsyncThunk("lessons/get_lesson", async (id) => {
   try {
     const response = await axios.get(`http://localhost:3001/lessons/${id}`);
     return response.data;
@@ -21,7 +21,7 @@ const getLesson = createAsyncThunk("lessons/getLesson", async (id) => {
   }
 });
 
-const addLesson = createAsyncThunk("lessons/addLesson", async (newLesson) => {
+const addLesson = createAsyncThunk("lessons/add", async (newLesson) => {
   try {
     const response = await axios.post(
       `http://localhost:3001/lessons`,
@@ -34,7 +34,7 @@ const addLesson = createAsyncThunk("lessons/addLesson", async (newLesson) => {
 });
 
 const editLesson = createAsyncThunk(
-  "lessons/editLesson",
+  "lessons/edit",
   async (updatedLesson) => {
     try {
       const response = await axios.put(
@@ -48,7 +48,7 @@ const editLesson = createAsyncThunk(
   }
 );
 
-const deleteLesson = createAsyncThunk("lessons/deleteLesson", async (id) => {
+const deleteLesson = createAsyncThunk("lessons/delete", async (id) => {
   try {
     const response = await axios.delete(`http://localhost:3001/lessons/${id}`);
     return response.data;

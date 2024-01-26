@@ -2,11 +2,11 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const addFeedback = createAsyncThunk(
-  "feedbacks/addFeedback",
+  "feedbacks/add",
   async (newFeedback) => {
     try {
       await axios.post(`http://localhost:3001/feedbacks`, newFeedback);
-      const commentId = newFeedback.comment_id;
+      const commentId = newFeedback.commentId;
       return { commentId, type: newFeedback.type };
     } catch (error) {
       return error.message;
@@ -15,7 +15,7 @@ const addFeedback = createAsyncThunk(
 );
 
 const editFeedback = createAsyncThunk(
-  "feedbacks/editFeedback",
+  "feedbacks/edit",
   async ({ userId, commentId, type }) => {
     try {
       await axios.put(
@@ -30,7 +30,7 @@ const editFeedback = createAsyncThunk(
 );
 
 const deleteFeedback = createAsyncThunk(
-  "feedbacks/deleteFeedback",
+  "feedbacks/delete",
   async ({ userId, commentId, type }) => {
     try {
       await axios.delete(

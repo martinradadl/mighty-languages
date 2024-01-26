@@ -3,7 +3,7 @@ import axios from "axios";
 
 const logout = createAction("users/logout");
 
-const setUser = createAction("users/setUser");
+const setUser = createAction("users/set");
 
 const register = createAsyncThunk("users/register", async (newUser) => {
   try {

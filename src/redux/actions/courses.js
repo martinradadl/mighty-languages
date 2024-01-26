@@ -4,7 +4,7 @@ import axios from "axios";
 const changeUserEnrollment = createAction("courses/changeUserEnrollment");
 
 const getCourses = createAsyncThunk(
-  "courses/getCourses",
+  "courses/get_courses",
   async ({ userId, title }) => {
     try {
       const response = await axios.get(
@@ -18,7 +18,7 @@ const getCourses = createAsyncThunk(
 );
 
 const getCourse = createAsyncThunk(
-  "courses/getCourse",
+  "courses/get_course",
   async ({ id, userId }) => {
     try {
       const response = await axios.get(
@@ -31,7 +31,7 @@ const getCourse = createAsyncThunk(
   }
 );
 
-const addCourse = createAsyncThunk("courses/addCourse", async (newCourse) => {
+const addCourse = createAsyncThunk("courses/add", async (newCourse) => {
   try {
     const response = await axios.post(
       "http://localhost:3001/courses",
@@ -44,7 +44,7 @@ const addCourse = createAsyncThunk("courses/addCourse", async (newCourse) => {
 });
 
 const editCourse = createAsyncThunk(
-  "courses/editCourse",
+  "courses/edit",
   async ({ updatedCourse, userId }) => {
     try {
       const response = await axios.put(
@@ -58,7 +58,7 @@ const editCourse = createAsyncThunk(
   }
 );
 
-const deleteCourse = createAsyncThunk("courses/deleteCourse", async (id) => {
+const deleteCourse = createAsyncThunk("courses/delete", async (id) => {
   try {
     const response = await axios.delete(`http://localhost:3001/courses/${id}`);
     return response.data;
