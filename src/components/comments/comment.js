@@ -36,8 +36,8 @@ export const Comment = (props) => {
         
         dispatch(
           feedbacksActions.addFeedback({
-            user_id: user._id,
-            comment_id: comment._id,
+            userId: user._id,
+            commentId: comment._id,
             type: feedback,
           })
         );

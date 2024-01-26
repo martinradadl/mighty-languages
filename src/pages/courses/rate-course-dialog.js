@@ -27,8 +27,8 @@ export const RateCourseDialog = (props) => {
       if (!course.hasRating && rating !== 0) {
         dispatch(
           ratingsActions.addRating({
-            user_id: user._id,
-            course_id: course._id,
+            userId: user._id,
+            courseId: course._id,
             rating,
           })
         )

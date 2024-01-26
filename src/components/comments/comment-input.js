@@ -22,7 +22,7 @@ export const CommentInput = () => {
         commentsActions.addComment({
           user: user._id,
           comment: comment,
-          lesson_id: params.id,
+          lessonId: params.id,
         })
       )
         .unwrap()

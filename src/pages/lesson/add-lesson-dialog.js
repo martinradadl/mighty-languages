@@ -48,7 +48,7 @@ export const AddLessonDialog = () => {
         lessonsActions.addLesson({
           title: lessonForm.title,
           videos: lessonForm.videos,
-          course_id: params.id,
+          courseId: params.id,
         })
       )
         .unwrap()
