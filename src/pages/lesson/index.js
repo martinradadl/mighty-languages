@@ -95,20 +95,40 @@ export const Lesson = () => {
     }
   }, [user, selectedEnrollment, selectedLesson, dispatch]);
 
-  // Update Current Lesson in Enrollment
+  // Update Current Lesson in Course Enrollment
   const debouncedHandleChangeCurrentLesson = debounce(() => {
     dispatch(
-      courseEnrollmentActions.editCourseEnrollment({
+      courseEnrollmentActions.setCurrentLesson({
         userId: user._id,
         courseId: selectedLesson.course._id,
-        updatedEnrollment: { currentLesson: selectedLesson._id },
+        currentLessonId: selectedLesson._id,
       })
     );
   }, 500);
 
   useEffect(() => {
-    if (selectedLesson?._id !== selectedEnrollment?.currentLesson) {
+    if (
+      selectedLesson?._id !== selectedEnrollment?.currentLesson &&
+      user !== null
+    ) {
       debouncedHandleChangeCurrentLesson();
+    }
+  }, [selectedLesson, selectedEnrollment, user, dispatch]);
+
+  // Add finished Lesson in Course Enrollment
+  const debouncedHandleCompleteLesson = debounce(() => {
+    dispatch(
+      courseEnrollmentActions.addFinishedLesson({
+        userId: user._id,
+        courseId: selectedLesson.course._id,
+        lessonId: selectedLesson._id,
+      })
+    );
+  }, 500);
+
+  useEffect(() => {
+    if (user !== null) {
+      debouncedHandleCompleteLesson();
     }
   }, [selectedLesson, selectedEnrollment, user, dispatch]);
 
@@ -183,7 +203,7 @@ export const Lesson = () => {
           className="lesson-tablinks"
           onClick={(event) => {
             // openLessonTab(event, "quiz");
-            // handleCompleteLesson();
+            debouncedHandleCompleteLesson();
           }}
         >
           Quiz
