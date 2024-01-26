@@ -1,5 +1,10 @@
 # Getting Started with Create React App
 
+This is an ongoing project of a language learning courses website, to see ADMIN VIEW login with the following account: 
+
+email: martin@gmail.com  
+password: 123456
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
