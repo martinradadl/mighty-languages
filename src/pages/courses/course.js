@@ -87,10 +87,10 @@ export const Course = () => {
   const debouncedhandleLeaveCourse = debounce(handleLeaveCourse, 500);
 
   const handleGetCourseEnrollment = useCallback(() => {
-    if (selectedCourse !== null) {
+    if (selectedCourse !== null && user !== null) {
       dispatch(
         courseEnrollmentActions.getCourseEnrollment({
-          userId: user._id,
+          userId: user?._id,
           courseId: selectedCourse._id,
         })
       );
@@ -111,8 +111,9 @@ export const Course = () => {
       isLoading={
         status === "loading" ||
         selectedCourse === null ||
-        enrollmentStatus === "loading" ||
-        selectedEnrollment === null
+        (user === null &&
+          enrollmentStatus === "loading" &&
+          selectedEnrollment === null)
       }
     >
       <div className="course-container">
@@ -157,8 +158,9 @@ export const Course = () => {
               );
             })}
           </div>
-          <RateCourseDialog course={selectedCourse} />
+          {user !== null ? <RateCourseDialog course={selectedCourse} /> : null}
         </div>
+
         <div className="lessons-list-container">
           <h3 style={{ marginBottom: "10px" }}>Lecciones</h3>
           <LoadingWrapper
