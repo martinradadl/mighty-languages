@@ -15,8 +15,9 @@ const addCourseEnrollment = createAsyncThunk(
     }
   }
 );
+
 const editCourseEnrollmentOptions = {
-  SET_CURRENT_LESSON: async ({ userId, courseId, lessonId }) => {
+  SET_CURRENT_LESSON: async ({ userId, courseId, lessonId }) => {;
     try {
       const response = await axios.put(
         `http://localhost:3001/course_enrollment/set_current_lesson`,
@@ -85,7 +86,7 @@ const getCourseEnrollment = createAsyncThunk(
   async ({ userId, courseId }) => {
     try {
       const response = await axios.get(
-        `http://localhost:3001/course_enrollment?userId=${userId}&courseId=${courseId}`
+        `http://localhost:3001/course_enrollment?user_id=${userId}&course_id=${courseId}`
       );
       return response.data;
     } catch (error) {

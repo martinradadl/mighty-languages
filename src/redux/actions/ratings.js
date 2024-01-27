@@ -19,7 +19,7 @@ const editRating = createAsyncThunk(
   async ({ userId, courseId, rating }) => {
     try {
       await axios.put(
-        `http://localhost:3001/ratings?userId=${userId}&courseId=${courseId}`,
+        `http://localhost:3001/ratings?user_id=${userId}&course_id=${courseId}`,
         { rating }
       );
       return { courseId, rating };
@@ -34,7 +34,7 @@ const deleteRating = createAsyncThunk(
   async ({ userId, courseId }) => {
     try {
       await axios.delete(
-        `http://localhost:3001/ratings?userId=${userId}&courseId=${courseId}`
+        `http://localhost:3001/ratings?user_id=${userId}&course_id=${courseId}`
       );
       return { courseId };
     } catch (error) {

@@ -98,10 +98,11 @@ export const Lesson = () => {
   // Update Current Lesson in Course Enrollment
   const debouncedHandleChangeCurrentLesson = debounce(() => {
     dispatch(
-      courseEnrollmentActions.setCurrentLesson({
+      courseEnrollmentActions.editCourseEnrollment({
         userId: user._id,
         courseId: selectedLesson.course._id,
-        currentLessonId: selectedLesson._id,
+        lessonId: selectedLesson._id,
+        operation: "SET_CURRENT_LESSON",
       })
     );
   }, 500);
@@ -109,7 +110,8 @@ export const Lesson = () => {
   useEffect(() => {
     if (
       selectedLesson?._id !== selectedEnrollment?.currentLesson &&
-      user !== null
+      user !== null &&
+      selectedLesson.course.isUserEnrolled
     ) {
       debouncedHandleChangeCurrentLesson();
     }
@@ -117,13 +119,14 @@ export const Lesson = () => {
 
   // Add finished Lesson in Course Enrollment
   const debouncedHandleCompleteLesson = debounce(() => {
-    dispatch(
-      courseEnrollmentActions.addFinishedLesson({
-        userId: user._id,
-        courseId: selectedLesson.course._id,
-        lessonId: selectedLesson._id,
-      })
-    );
+    // dispatch(
+    //   courseEnrollmentActions.editCourseEnrollment({
+    //     userId: user._id,
+    //     courseId: selectedLesson?.course._id,
+    //     lessonId: selectedLesson?._id,
+    //     operation: "ADD_FINISHED_LESSON",
+    //   })
+    // );
   }, 500);
 
   useEffect(() => {

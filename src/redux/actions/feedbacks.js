@@ -19,7 +19,7 @@ const editFeedback = createAsyncThunk(
   async ({ userId, commentId, type }) => {
     try {
       await axios.put(
-        `http://localhost:3001/feedbacks?userId=${userId}&commentId=${commentId}`,
+        `http://localhost:3001/feedbacks?user_id=${userId}&comment_id=${commentId}`,
         { type }
       );
       return { commentId, type };
@@ -34,7 +34,7 @@ const deleteFeedback = createAsyncThunk(
   async ({ userId, commentId, type }) => {
     try {
       await axios.delete(
-        `http://localhost:3001/feedbacks?userId=${userId}&commentId=${commentId}`
+        `http://localhost:3001/feedbacks?user_id=${userId}&comment_id=${commentId}`
       );
       return { commentId, type };
     } catch (error) {

@@ -1,14 +1,14 @@
 import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const changeUserEnrollment = createAction("courses/changeUserEnrollment");
+const changeUserEnrollment = createAction("courses/change_user_enrollment");
 
 const getCourses = createAsyncThunk(
   "courses/get_courses",
   async ({ userId, title }) => {
     try {
       const response = await axios.get(
-        `http://localhost:3001/courses?userId=${userId}&title=${title}`
+        `http://localhost:3001/courses?user_id=${userId}&title=${title}`
       );
       return response.data;
     } catch (error) {
@@ -22,7 +22,7 @@ const getCourse = createAsyncThunk(
   async ({ id, userId }) => {
     try {
       const response = await axios.get(
-        `http://localhost:3001/courses/${id}?userId=${userId}`
+        `http://localhost:3001/courses/${id}?user_id=${userId}`
       );
       return response.data;
     } catch (error) {
@@ -48,7 +48,7 @@ const editCourse = createAsyncThunk(
   async ({ updatedCourse, userId }) => {
     try {
       const response = await axios.put(
-        `http://localhost:3001/courses/${updatedCourse._id}?userId=${userId}`,
+        `http://localhost:3001/courses/${updatedCourse._id}?user_id=${userId}`,
         updatedCourse
       );
       return response.data;
