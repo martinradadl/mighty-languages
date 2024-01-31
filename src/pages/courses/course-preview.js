@@ -19,7 +19,7 @@ export const CoursePreview = (props) => {
       <div className="course-preview-details">
         <h3 style={{ fontSize: "4vw" }}>{course.title}</h3>
         <p style={{ fontSize: "3vw" }}>{course.description}</p>
-        {user?.type === "instructor" ? (
+        {user?.type === "admin" || user?._id === course.instructor ? (
           <div className="admin-course-options">
             <EditCourseDialog selectedCourse={course} />
             <DeleteCourseDialog selectedCourse={course} />

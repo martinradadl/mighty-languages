@@ -188,7 +188,9 @@ export const Course = () => {
             })}
           </LoadingWrapper>
         </div>
-        {user?.type === "instructor" ? <AddLessonDialog /> : null}
+        {user?.type === "admin" || user?._id === selectedCourse?.instructor ? (
+          <AddLessonDialog />
+        ) : null}
       </div>
     </LoadingWrapper>
   );

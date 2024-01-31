@@ -31,7 +31,7 @@ export const LessonPreview = (props) => {
               Continuar
             </button>
           ) : null}
-          {user?.type === "instructor" ? (
+          {user?.type === "admin" || lesson.course.instructor === user?._id ? (
             <div>
               <LessonPreviewDropdown
                 openEditDialog={setIsEditDialogOpen}

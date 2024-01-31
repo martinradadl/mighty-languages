@@ -42,7 +42,9 @@ export const Courses = () => {
           onChange={debouncedHandleChangeSearchbar}
           style={{ margin: "20px", height: "20px" }}
         />
-        {user?.type === "instructor" ? <AddCourseDialog /> : null}
+        {user?.type === "admin" || user?.type === "instructor" ? (
+          <AddCourseDialog />
+        ) : null}
         <LoadingWrapper
           isLoading={status === "loading" || coursesList === null}
         >
