@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "../../styles/courses/course-dialog.css";
 import { CourseDialog } from "./course-dialog";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import coursesActions from "../../redux/actions/courses";
 
 const courseFormInitialState = {
@@ -13,6 +13,7 @@ const courseFormInitialState = {
 export const AddCourseDialog = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [courseForm, setCourseForm] = useState(courseFormInitialState);
+  const user = useSelector((state) => state.users.selectedUser);
   const dispatch = useDispatch();
 
   function closeModal() {
@@ -38,6 +39,7 @@ export const AddCourseDialog = () => {
           imageURL: courseForm.imageURL,
           description: courseForm.description,
           rating: 0,
+          instructor: user._id,
         })
       )
         .unwrap()
