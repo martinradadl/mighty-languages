@@ -11,6 +11,7 @@ import { useCookies } from "react-cookie";
 import { useDispatch, useSelector } from "react-redux";
 import usersActions from "../redux/actions/users";
 import { LoadingWrapper } from "../components/loading";
+import courseEnrollmentActions from "../redux/actions/course-enrollment";
 
 export const MainRouter = () => {
   const dispatch = useDispatch();
@@ -21,11 +22,24 @@ export const MainRouter = () => {
   useEffect(() => {
     if (cookie.user) {
       dispatch(usersActions.setUser(cookie.user));
-      setLoading(false);
     } else {
       setLoading(false);
     }
   }, [cookie]);
+
+  useEffect(() => {
+    if (user) {
+      dispatch(courseEnrollmentActions.getCourseEnrollments(user._id))
+        .unwrap()
+        .then(() => {
+          setLoading(false);
+        })
+        .catch((e) => {
+          alert(e.message);
+          setLoading(false);
+        });
+    }
+  }, [user]);
 
   return (
     <LoadingWrapper isLoading={loading}>

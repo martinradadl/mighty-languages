@@ -88,12 +88,7 @@ export const Course = () => {
 
   const handleGetCourseEnrollment = useCallback(() => {
     if (selectedCourse !== null && user !== null) {
-      dispatch(
-        courseEnrollmentActions.getCourseEnrollment({
-          userId: user?._id,
-          courseId: selectedCourse._id,
-        })
-      );
+      dispatch(courseEnrollmentActions.getCourseEnrollment(selectedCourse._id));
     }
   }, [dispatch, user, selectedCourse]);
 

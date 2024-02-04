@@ -1,5 +1,7 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import { createAsyncThunk, createAction } from "@reduxjs/toolkit";
 import axios from "axios";
+
+const getCourseEnrollment = createAction("course_enrollment/get_enrollment");
 
 const addCourseEnrollment = createAsyncThunk(
   "course_enrollment/add",
@@ -17,7 +19,7 @@ const addCourseEnrollment = createAsyncThunk(
 );
 
 const editCourseEnrollmentOptions = {
-  SET_CURRENT_LESSON: async ({ userId, courseId, lessonId }) => {;
+  SET_CURRENT_LESSON: async ({ userId, courseId, lessonId }) => {
     try {
       const response = await axios.put(
         `http://localhost:3001/course_enrollment/set_current_lesson`,
@@ -73,20 +75,6 @@ const getCourseEnrollments = createAsyncThunk(
     try {
       const response = await axios.get(
         `http://localhost:3001/course_enrollment/${userId}`
-      );
-      return response.data;
-    } catch (error) {
-      return error.message;
-    }
-  }
-);
-
-const getCourseEnrollment = createAsyncThunk(
-  "course_enrollment/get_enrollment",
-  async ({ userId, courseId }) => {
-    try {
-      const response = await axios.get(
-        `http://localhost:3001/course_enrollment?user_id=${userId}&course_id=${courseId}`
       );
       return response.data;
     } catch (error) {

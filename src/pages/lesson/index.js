@@ -78,10 +78,7 @@ export const Lesson = () => {
   // Get Course Enrollment
   const debouncedHandleGetCourseEnrollment = debounce(() => {
     dispatch(
-      courseEnrollmentActions.getCourseEnrollment({
-        userId: user._id,
-        courseId: selectedLesson.course._id,
-      })
+      courseEnrollmentActions.getCourseEnrollment(selectedLesson.course._id)
     );
   }, 500);
 
