@@ -10,11 +10,7 @@ const initialState = {
 const lessonsSlice = createSlice({
   name: "lessons",
   initialState,
-  reducers: {
-    deleteLesson(state) {
-      state.lessonsList = [];
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(actions.getLesson.pending, (state) => {
