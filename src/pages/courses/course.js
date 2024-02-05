@@ -101,6 +101,7 @@ export const Course = () => {
     debouncedHandleGetCourseEnrollment();
   }, [handleGetCourseEnrollment]);
 
+  // console.log(user._id, selectedCourse.instructor);
   return (
     <LoadingWrapper
       isLoading={
@@ -121,24 +122,26 @@ export const Course = () => {
               e.stopPropagation();
             }}
           >
-            {selectedCourse?.isUserEnrolled ? (
-              <button
-                type="button"
-                id="enroll-button"
-                style={{ backgroundColor: "red" }}
-                onClick={debouncedhandleLeaveCourse}
-              >
-                Dejar Curso
-              </button>
-            ) : (
-              <button
-                type="button"
-                id="enroll-button"
-                onClick={debouncedhandleEnrollInCourse}
-              >
-                Inscribirse
-              </button>
-            )}
+            {user?._id !== selectedCourse?.instructor ? (
+              selectedCourse?.isUserEnrolled ? (
+                <button
+                  type="button"
+                  id="enroll-button"
+                  style={{ backgroundColor: "red" }}
+                  onClick={debouncedhandleLeaveCourse}
+                >
+                  Dejar Curso
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  id="enroll-button"
+                  onClick={debouncedhandleEnrollInCourse}
+                >
+                  Inscribirse
+                </button>
+              )
+            ) : null}
           </div>
         ) : null}
 
