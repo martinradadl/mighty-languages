@@ -22,7 +22,6 @@
 .progress-bar {
     position: relative;
     background-color:lightblue;
-    width: 200px;
     height: 8px;
     border-radius: 4px;
 }
@@ -30,7 +29,6 @@
 .current-progress {
     position: absolute;
     background-color: green;
-    width: 100px;
     height: 8px;
     border-radius: 4px;
 }
