@@ -16,7 +16,7 @@ export const RecentActivity = () => {
 
   const handleGetCourseEnrollments = useCallback(() => {
     dispatch(courseEnrollmentActions.getCourseEnrollments(user._id));
-  },[user,dispatch]);
+  }, [user, dispatch]);
 
   const debouncedHandleGetCourseEnrollments = debounce(
     handleGetCourseEnrollments,
@@ -37,7 +37,8 @@ export const RecentActivity = () => {
         isLoading={status === "loading" || enrollmentsList === null}
       >
         {enrollmentsList?.length ? (
-          enrollmentsList.map((enrollment, index) => {
+          enrollmentsList?.map((enrollment, index) => {
+            const progressBarWidth = 200;
             return (
               <div key={index} className="course-progress-container">
                 <h3>{enrollment.course.title}</h3>
@@ -47,8 +48,14 @@ export const RecentActivity = () => {
                       <b>Progreso:</b>{" "}
                     </p>
                   </div>
-                  <div className="progress-bar">
-                    <div className="current-progress" />
+                  <div
+                    className="progress-bar"
+                    style={{ width: `${progressBarWidth}px` }}
+                  >
+                    <div
+                      className="current-progress"
+                      style={{ width: `${progressBarWidth / 2}px` }}
+                    />
                   </div>
                   <button
                     id="resume-button"
