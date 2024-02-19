@@ -12,7 +12,10 @@ To see INSTRUCTOR VIEW login with the following account:
 email: dayson@gmail.com  
 password: 123456
 
-Signing up you can see STUDENT VIEW
+To see STUDENT VIEW sign up or login with the following account: 
+
+email: cristian@gmail.com  
+password: 123456
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
