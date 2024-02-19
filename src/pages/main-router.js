@@ -18,6 +18,7 @@ export const MainRouter = () => {
   const [cookie] = useCookies(["user"]);
   const [loading, setLoading] = useState(true);
   const user = useSelector((state) => state.users.selectedUser);
+  const enrollmentsList = useSelector((state) => state.course_enrollment.enrollmentsList);
 
   useEffect(() => {
     if (cookie.user) {
@@ -40,7 +41,7 @@ export const MainRouter = () => {
         });
     }
   }, [user]);
-
+  
   return (
     <LoadingWrapper isLoading={loading}>
       <BrowserRouter>
