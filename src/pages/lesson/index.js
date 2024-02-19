@@ -11,9 +11,9 @@ import debounce from "lodash.debounce";
 import { AiFillRightCircle, AiFillLeftCircle } from "react-icons/ai";
 import { LoadingWrapper } from "../../components/loading";
 import courseEnrollmentActions from "../../redux/actions/course-enrollment";
+import { handleEnrollInCourse } from "../helpers";
 
 function openLessonTab(evt, selectedLink) {
-  // Declare all variables
   var i, tabcontent, tablinks;
 
   // Get all elements with class="tabcontent" and hide them
@@ -42,9 +42,16 @@ export const Lesson = () => {
   const { status: commentsStatus, commentsList } = useSelector(
     (state) => state.comments
   );
-  const { status: enrollmentStatus, selectedEnrollment } = useSelector(
-    (state) => state.course_enrollment
-  );
+  const selectedEnrollment = useSelector((state) => {
+    if (
+      state.course_enrollment.enrollmentsList !== null &&
+      selectedLesson !== null
+    ) {
+      return state.course_enrollment.enrollmentsList.find(
+        (enrollment) => enrollment.course._id === selectedLesson.course._id
+      );
+    }
+  });
 
   // Get Lesson
   const handleGetLesson = useCallback(() => {
@@ -75,23 +82,6 @@ export const Lesson = () => {
     debouncedHandleGetComments();
   }, [handleGetComments]);
 
-  // Get Course Enrollment
-  const debouncedHandleGetCourseEnrollment = debounce(() => {
-    dispatch(
-      courseEnrollmentActions.getCourseEnrollment(selectedLesson.course._id)
-    );
-  }, 500);
-
-  useEffect(() => {
-    if (
-      selectedEnrollment === null &&
-      user !== null &&
-      selectedLesson !== null
-    ) {
-      debouncedHandleGetCourseEnrollment();
-    }
-  }, [user, selectedEnrollment, selectedLesson, dispatch]);
-
   // Update Current Lesson in Course Enrollment
   const debouncedHandleChangeCurrentLesson = debounce(() => {
     dispatch(
@@ -106,31 +96,54 @@ export const Lesson = () => {
 
   useEffect(() => {
     if (
-      selectedLesson?._id !== selectedEnrollment?.currentLesson &&
-      user !== null &&
-      selectedLesson.course.isUserEnrolled
+      selectedEnrollment &&
+      selectedLesson?._id !== selectedEnrollment?.currentLesson
     ) {
       debouncedHandleChangeCurrentLesson();
     }
-  }, [selectedLesson, selectedEnrollment, user, dispatch]);
+  }, [selectedLesson, selectedEnrollment, dispatch]);
 
   // Add finished Lesson in Course Enrollment
-  const debouncedHandleCompleteLesson = debounce(() => {
-    // dispatch(
-    //   courseEnrollmentActions.editCourseEnrollment({
-    //     userId: user._id,
-    //     courseId: selectedLesson?.course._id,
-    //     lessonId: selectedLesson?._id,
-    //     operation: "ADD_FINISHED_LESSON",
-    //   })
-    // );
-  }, 500);
-
-  useEffect(() => {
-    if (user !== null) {
-      debouncedHandleCompleteLesson();
+  const handleCompleteLesson = useCallback(() => {
+    // try {
+    if (
+      (user !== null && user?._id !== selectedLesson?.course.instructor) ||
+      user?.type === "admin"
+    ) {
+      if (!selectedEnrollment) {
+        handleEnrollInCourse({
+          userId: user._id,
+          courseId: selectedLesson.course._id,
+          currentLessonId: selectedLesson._id,
+          dispatch,
+        });
+        // handleCompleteLesson();
+      }
+      selectedEnrollment &&
+        console.log(
+          selectedEnrollment.finishedLessonsIds?.includes(selectedLesson._id)
+        );
+      if (
+        selectedEnrollment !== undefined &&
+        !selectedEnrollment.finishedLessonsIds?.includes(selectedLesson._id)
+      ) {
+        console.log("holaaa");
+        dispatch(
+          courseEnrollmentActions.editCourseEnrollment({
+            userId: user._id,
+            courseId: selectedLesson?.course._id,
+            lessonId: selectedLesson?._id,
+            operation: "ADD_FINISHED_LESSON",
+          })
+        );
+      }
     }
-  }, [selectedLesson, selectedEnrollment, user, dispatch]);
+    // } catch (e) {
+    //   console.log(e.message);
+    // }
+  }, [dispatch, user, selectedLesson, selectedEnrollment]);
+
+  const debouncedHandleCompleteLesson = debounce(handleCompleteLesson, 500);
 
   // useEffect(() => {
   //   window.focus();
@@ -163,6 +176,11 @@ export const Lesson = () => {
           <h1 style={{ margin: "2px 0px 30px" }}>
             {`${selectedLesson.index + 1}. ${selectedLesson.title}`}
           </h1>
+          {selectedEnrollment?.finishedLessonsIds.includes(
+            selectedLesson?._id
+          ) ? (
+            <div className="badge success-badge">Lección Completada</div>
+          ) : null}
         </div>
         <div className="change-lesson-buttons">
           {selectedLesson.prevLesson ? (
@@ -202,8 +220,15 @@ export const Lesson = () => {
         <button
           className="lesson-tablinks"
           onClick={(event) => {
-            // openLessonTab(event, "quiz");
             debouncedHandleCompleteLesson();
+          }}
+        >
+          Completar Lección
+        </button>
+        <button
+          className="lesson-tablinks"
+          onClick={(event) => {
+            openLessonTab(event, "quiz");
           }}
         >
           Quiz
