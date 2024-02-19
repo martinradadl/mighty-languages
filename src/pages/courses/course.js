@@ -6,11 +6,14 @@ import { AddLessonDialog } from "../lesson/add-lesson-dialog";
 import { useSelector, useDispatch } from "react-redux";
 import coursesActions from "../../redux/actions/courses";
 import lessonsActions from "../../redux/actions/lessons";
-import courseEnrollmentActions from "../../redux/actions/course-enrollment";
+import courseEnrollmentActions, {
+  EDIT_OPERATIONS,
+} from "../../redux/actions/course-enrollment";
 import debounce from "lodash.debounce";
 import { RateCourseDialog } from "./rate-course-dialog";
 import { AiOutlineStar, AiFillStar } from "react-icons/ai";
 import { LoadingWrapper } from "../../components/loading";
+import { handleEnrollInCourse } from "../helpers";
 
 export const Course = () => {
   const params = useParams();
@@ -20,9 +23,21 @@ export const Course = () => {
   const { status: lessonStatus, lessonsList } = useSelector(
     (state) => state.lessons
   );
-  const { status: enrollmentStatus, selectedEnrollment } = useSelector(
-    (state) => state.course_enrollment
+  const enrollmentsList = useSelector(
+    (state) => state.course_enrollment.enrollmentsList
   );
+
+  const selectedEnrollment = useSelector((state) => {
+    if (
+      state.course_enrollment.enrollmentsList !== null &&
+      selectedCourse !== null
+    ) {
+      return state.course_enrollment.enrollmentsList.find(
+        (enrollment) => enrollment.course._id === selectedCourse._id
+      );
+    }
+  });
+
   const navigate = useNavigate();
 
   // Get Course and Lessons
@@ -49,22 +64,6 @@ export const Course = () => {
 
   // Course Enrollment functions
 
-  const handleEnrollInCourse = () => {
-    const newCourseEnrollment = {
-      userId: user._id,
-      courseId: selectedCourse._id,
-      lessonId: lessonsList[0]._id,
-    };
-    dispatch(courseEnrollmentActions.addCourseEnrollment(newCourseEnrollment))
-      .unwrap()
-      .then(() => {
-        dispatch(coursesActions.changeUserEnrollment());
-      })
-      .catch((e) => {
-        alert(e.message);
-      });
-  };
-
   const debouncedhandleEnrollInCourse = debounce(handleEnrollInCourse, 500);
 
   const handleLeaveCourse = () => {
@@ -72,7 +71,7 @@ export const Course = () => {
       courseEnrollmentActions.editCourseEnrollment({
         userId: user._id,
         courseId: selectedCourse._id,
-        updatedEnrollment: { isActive: false },
+        operation: EDIT_OPERATIONS.LEAVE_COURSE,
       })
     )
       .unwrap()
@@ -86,29 +85,12 @@ export const Course = () => {
 
   const debouncedhandleLeaveCourse = debounce(handleLeaveCourse, 500);
 
-  const handleGetCourseEnrollment = useCallback(() => {
-    if (selectedCourse !== null && user !== null) {
-      dispatch(courseEnrollmentActions.getCourseEnrollment(selectedCourse._id));
-    }
-  }, [dispatch, user, selectedCourse]);
-
-  const debouncedHandleGetCourseEnrollment = debounce(
-    handleGetCourseEnrollment,
-    500
-  );
-
-  useEffect(() => {
-    debouncedHandleGetCourseEnrollment();
-  }, [handleGetCourseEnrollment]);
-
-  // console.log(user._id, selectedCourse.instructor);
   return (
     <LoadingWrapper
       isLoading={
         status === "loading" ||
         selectedCourse === null ||
         (user === null &&
-          enrollmentStatus === "loading" &&
           selectedEnrollment === null)
       }
     >
@@ -123,20 +105,31 @@ export const Course = () => {
             }}
           >
             {user?._id !== selectedCourse?.instructor ? (
-              selectedCourse?.isUserEnrolled ? (
-                <button
-                  type="button"
-                  id="enroll-button"
-                  style={{ backgroundColor: "red" }}
-                  onClick={debouncedhandleLeaveCourse}
-                >
-                  Dejar Curso
-                </button>
+              selectedEnrollment?.isActive ? (
+                selectedEnrollment?.isCompleted ? (
+                  <div className="badge success-badge">Curso Completado</div>
+                ) : (
+                  <button
+                    type="button"
+                    id="enroll-button"
+                    style={{ backgroundColor: "red" }}
+                    onClick={debouncedhandleLeaveCourse}
+                  >
+                    Dejar Curso
+                  </button>
+                )
               ) : (
                 <button
                   type="button"
                   id="enroll-button"
-                  onClick={debouncedhandleEnrollInCourse}
+                  onClick={() => {
+                    debouncedhandleEnrollInCourse({
+                      userId: user._id,
+                      courseId: selectedCourse._id,
+                      currentLessonId: lessonsList[0]._id,
+                      dispatch,
+                    });
+                  }}
                 >
                   Inscribirse
                 </button>
@@ -180,6 +173,7 @@ export const Course = () => {
                     lesson={lesson}
                     index={index}
                     user={user}
+                    isCompleted={selectedEnrollment?.isCompleted}
                   />
                 </div>
               );
