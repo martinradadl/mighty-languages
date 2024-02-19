@@ -5,19 +5,12 @@ const initialState = {
   status: "idle",
   error: "",
   enrollmentsList: null,
-  selectedEnrollment: null,
 };
 
 const courseEnrollmentSlice = createSlice({
   name: "course_enrollment",
   initialState,
-  reducers: {
-    getCourseEnrollment(state, action) {
-      state.selectedEnrollment = state.enrollmentsList.find({
-        course: action.payload,
-      });
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(actions.addCourseEnrollment.pending, (state) => {
@@ -67,9 +60,6 @@ const courseEnrollmentSlice = createSlice({
         state.error = action.payload;
         state.status = "idle";
         state.enrollmentsList = null;
-      })
-      .addCase(actions.getCourseEnrollment, (state, action) => {
-        state.selectedEnrollment = action.payload;
       });
   },
 });

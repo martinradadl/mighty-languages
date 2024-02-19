@@ -1,7 +1,11 @@
 import { createAsyncThunk, createAction } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const getCourseEnrollment = createAction("course_enrollment/get_enrollment");
+export const EDIT_OPERATIONS = {
+  SET_CURRENT_LESSON: "SET_CURRENT_LESSON",
+  ADD_FINISHED_LESSON: "ADD_FINISHED_LESSON",
+  LEAVE_COURSE:"LEAVE_COURSE",
+}
 
 const addCourseEnrollment = createAsyncThunk(
   "course_enrollment/add",
@@ -30,17 +34,6 @@ const editCourseEnrollmentOptions = {
       return error.message;
     }
   },
-  COMPLETE_COURSE: async ({ userId, courseId }) => {
-    try {
-      const response = await axios.put(
-        `http://localhost:3001/course_enrollment/complete_course`,
-        { userId, courseId }
-      );
-      return response.data;
-    } catch (error) {
-      return error.message;
-    }
-  },
   ADD_FINISHED_LESSON: async ({ userId, courseId, lessonId }) => {
     try {
       const response = await axios.put(
@@ -52,6 +45,15 @@ const editCourseEnrollmentOptions = {
       return error.message;
     }
   },
+  LEAVE_COURSE: async ({ userId, courseId}) => {
+    try {
+      const response = await axios.put(`http://localhost:3001/course_enrollment/leave_course`,
+      { userId, courseId });
+      return response.data;
+    } catch (error) {
+      return error.message;
+    }
+  }
 };
 
 const editCourseEnrollment = createAsyncThunk(
@@ -87,6 +89,5 @@ const courseEnrollmentActions = {
   addCourseEnrollment,
   editCourseEnrollment,
   getCourseEnrollments,
-  getCourseEnrollment,
 };
 export default courseEnrollmentActions;
