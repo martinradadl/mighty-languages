@@ -112,16 +112,6 @@ const coursesSlice = createSlice({
             hasRating: action.payload.rating,
           },
         };
-      })
-      .addCase(coursesActions.changeUserEnrollment, (state) => {
-        const updatedCourse = {
-          ...state.selectedCourse,
-          isUserEnrolled: !state.selectedCourse.isUserEnrolled,
-        };
-        return {
-          ...state,
-          selectedCourse: updatedCourse,
-        };
       });
   },
 });

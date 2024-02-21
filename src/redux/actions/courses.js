@@ -1,8 +1,6 @@
 import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const changeUserEnrollment = createAction("courses/change_user_enrollment");
-
 const getCourses = createAsyncThunk(
   "courses/get_courses",
   async ({ userId, title }) => {
@@ -73,6 +71,5 @@ const coursesActions = {
   addCourse,
   editCourse,
   deleteCourse,
-  changeUserEnrollment,
 };
 export default coursesActions;
