@@ -10,7 +10,7 @@ import commentsActions from "../../redux/actions/comments";
 import debounce from "lodash.debounce";
 import { AiFillRightCircle, AiFillLeftCircle } from "react-icons/ai";
 import { LoadingWrapper } from "../../components/loading";
-import courseEnrollmentActions from "../../redux/actions/course-enrollment";
+import courseEnrollmentActions, { EDIT_OPERATIONS } from "../../redux/actions/course-enrollment";
 import { handleEnrollInCourse } from "../helpers";
 
 function openLessonTab(evt, selectedLink) {
@@ -104,43 +104,37 @@ export const Lesson = () => {
   }, [selectedLesson, selectedEnrollment, dispatch]);
 
   // Add finished Lesson in Course Enrollment
-  const handleCompleteLesson = useCallback(() => {
-    // try {
-    if (
-      (user !== null && user?._id !== selectedLesson?.course.instructor) ||
-      user?.type === "admin"
-    ) {
-      if (!selectedEnrollment) {
-        handleEnrollInCourse({
-          userId: user._id,
-          courseId: selectedLesson.course._id,
-          currentLessonId: selectedLesson._id,
-          dispatch,
-        });
-        // handleCompleteLesson();
-      }
-      selectedEnrollment &&
-        console.log(
-          selectedEnrollment.finishedLessonsIds?.includes(selectedLesson._id)
-        );
+  const handleCompleteLesson = useCallback(async () => {
+    try {
+      let enrollment = { ...selectedEnrollment };
       if (
-        selectedEnrollment !== undefined &&
-        !selectedEnrollment.finishedLessonsIds?.includes(selectedLesson._id)
+        user?.type === "admin" ||
+        (user !== null && user?._id !== selectedLesson?.course.instructor)
       ) {
-        console.log("holaaa");
-        dispatch(
-          courseEnrollmentActions.editCourseEnrollment({
+        if (Object.keys(enrollment).length === 0) {
+          enrollment = await handleEnrollInCourse({
             userId: user._id,
-            courseId: selectedLesson?.course._id,
-            lessonId: selectedLesson?._id,
-            operation: "ADD_FINISHED_LESSON",
-          })
-        );
+            courseId: selectedLesson.course._id,
+            currentLessonId: selectedLesson._id,
+            dispatch,
+          });
+        }
+        if (
+          !enrollment.finishedLessonsIds?.includes(selectedLesson._id)
+        ) {
+          dispatch(
+            courseEnrollmentActions.editCourseEnrollment({
+              userId: user._id,
+              courseId: selectedLesson?.course._id,
+              lessonId: selectedLesson?._id,
+              operation: EDIT_OPERATIONS.ADD_FINISHED_LESSON,
+            })
+          );
+        }
       }
+    } catch (e) {
+      console.log(e.message);
     }
-    // } catch (e) {
-    //   console.log(e.message);
-    // }
   }, [dispatch, user, selectedLesson, selectedEnrollment]);
 
   const debouncedHandleCompleteLesson = debounce(handleCompleteLesson, 500);
