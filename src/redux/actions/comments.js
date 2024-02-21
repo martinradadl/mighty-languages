@@ -29,7 +29,6 @@ const addComment = createAsyncThunk("comments/add", async (comment) => {
 
 const deleteComment = createAsyncThunk("comments/delete", async (id) => {
   try {
-    console.log(id);
     const response = await axios.delete(`http://localhost:3001/comments/${id}`);
     return response.data;
   } catch (error) {
