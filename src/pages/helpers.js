@@ -1,7 +1,7 @@
 import courseEnrollmentActions from "../redux/actions/course-enrollment";
 import coursesActions from "../redux/actions/courses";
 
-export const handleEnrollInCourse = ({
+export const handleEnrollInCourse = async ({
   userId,
   courseId,
   currentLessonId,
@@ -12,12 +12,13 @@ export const handleEnrollInCourse = ({
     courseId,
     lessonId: currentLessonId,
   };
-  dispatch(courseEnrollmentActions.addCourseEnrollment(newCourseEnrollment))
-    .unwrap()
-    .then(() => {
-      dispatch(coursesActions.changeUserEnrollment());
-    })
-    .catch((e) => {
-      alert(e.message);
-    });
+  let enrollment = null;
+  try {
+    enrollment = await dispatch(
+      courseEnrollmentActions.addCourseEnrollment(newCourseEnrollment)
+    );
+  } catch (e) {
+    return e.message;
+  }
+  return enrollment.payload;
 };
