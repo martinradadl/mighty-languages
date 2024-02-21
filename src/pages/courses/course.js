@@ -73,14 +73,7 @@ export const Course = () => {
         courseId: selectedCourse._id,
         operation: EDIT_OPERATIONS.LEAVE_COURSE,
       })
-    )
-      .unwrap()
-      .then(() => {
-        dispatch(coursesActions.changeUserEnrollment());
-      })
-      .catch((e) => {
-        alert(e.message);
-      });
+    );
   };
 
   const debouncedhandleLeaveCourse = debounce(handleLeaveCourse, 500);
@@ -90,8 +83,7 @@ export const Course = () => {
       isLoading={
         status === "loading" ||
         selectedCourse === null ||
-        (user === null &&
-          selectedEnrollment === null)
+        (user === null && selectedEnrollment === null)
       }
     >
       <div className="course-container">
@@ -173,7 +165,9 @@ export const Course = () => {
                     lesson={lesson}
                     index={index}
                     user={user}
-                    isCompleted={selectedEnrollment?.isCompleted}
+                    isCompleted={selectedEnrollment?.finishedLessonsIds.includes(
+                      lesson._id
+                    )}
                   />
                 </div>
               );
