@@ -160,7 +160,7 @@ export const Course = () => {
                 >
                   <LessonPreview
                     isCurrentLesson={
-                      selectedEnrollment?.currentLesson === lesson._id
+                      selectedEnrollment?.currentLesson._id === lesson._id
                     }
                     lesson={lesson}
                     index={index}
