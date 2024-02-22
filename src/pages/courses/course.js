@@ -96,7 +96,8 @@ export const Course = () => {
               e.stopPropagation();
             }}
           >
-            {user?._id !== selectedCourse?.instructor ? (
+            {user?.type === "admin" ||
+            user?._id !== selectedCourse?.instructor ? (
               selectedEnrollment?.isActive ? (
                 selectedEnrollment?.isCompleted ? (
                   <div className="badge success-badge">Curso Completado</div>
