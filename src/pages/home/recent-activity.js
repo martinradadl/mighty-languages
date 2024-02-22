@@ -41,7 +41,12 @@ export const RecentActivity = () => {
             const progressBarWidth = 200;
             return (
               <div key={index} className="course-progress-container">
-                <h3>{enrollment.course.title}</h3>
+                <h2 style={{ marginTop: "2px", marginBottom: "2px" }}>
+                  {enrollment.course.title}
+                </h2>
+                <h4 style={{ marginTop: "2px", marginBottom: "2px" }}>
+                  {enrollment.currentLesson.title}
+                </h4>
                 <div className="course-progress-details">
                   <div className="progress-label">
                     <p>
@@ -54,13 +59,19 @@ export const RecentActivity = () => {
                   >
                     <div
                       className="current-progress"
-                      style={{ width: `${progressBarWidth / 2}px` }}
+                      style={{
+                        width: `${
+                          progressBarWidth *
+                          (enrollment.finishedLessonsIds.length /
+                            enrollment.numberOfLessons)
+                        }px`,
+                      }}
                     />
                   </div>
                   <button
                     id="resume-button"
                     onClick={() => {
-                      navigate(`/lessons/${enrollment.current_lesson}`);
+                      navigate(`/lessons/${enrollment.currentLesson._id}`);
                     }}
                   >
                     <b>Continuar</b>
