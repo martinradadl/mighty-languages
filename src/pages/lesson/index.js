@@ -10,7 +10,9 @@ import commentsActions from "../../redux/actions/comments";
 import debounce from "lodash.debounce";
 import { AiFillRightCircle, AiFillLeftCircle } from "react-icons/ai";
 import { LoadingWrapper } from "../../components/loading";
-import courseEnrollmentActions, { EDIT_OPERATIONS } from "../../redux/actions/course-enrollment";
+import courseEnrollmentActions, {
+  EDIT_OPERATIONS,
+} from "../../redux/actions/course-enrollment";
 import { handleEnrollInCourse } from "../helpers";
 
 function openLessonTab(evt, selectedLink) {
@@ -119,9 +121,7 @@ export const Lesson = () => {
             dispatch,
           });
         }
-        if (
-          !enrollment.finishedLessonsIds?.includes(selectedLesson._id)
-        ) {
+        if (!enrollment.finishedLessonsIds?.includes(selectedLesson._id)) {
           dispatch(
             courseEnrollmentActions.editCourseEnrollment({
               userId: user._id,
@@ -164,7 +164,13 @@ export const Lesson = () => {
     <div className="lesson-container" style={{ margin: "5px 20px" }}>
       <div className="lesson-title-container">
         <div>
-          <h4 style={{ margin: "20px 0px 2px" }}>
+          <h4
+            className="button"
+            onClick={() => {
+              navigate(`/courses/${selectedLesson.course._id}`);
+            }}
+            style={{ margin: "20px 0px 2px" }}
+          >
             {selectedLesson.course.title}
           </h4>
           <h1 style={{ margin: "2px 0px 30px" }}>
