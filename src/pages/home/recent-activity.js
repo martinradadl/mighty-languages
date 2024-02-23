@@ -68,6 +68,7 @@ export const RecentActivity = () => {
                       }}
                     />
                   </div>
+                  <h4>{`${enrollment.finishedLessonsIds.length}/${enrollment.numberOfLessons}`}</h4>
                   <button
                     id="resume-button"
                     onClick={() => {
