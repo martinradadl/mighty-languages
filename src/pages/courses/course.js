@@ -23,21 +23,17 @@ export const Course = () => {
   const { status: lessonStatus, lessonsList } = useSelector(
     (state) => state.lessons
   );
-  const enrollmentsList = useSelector(
-    (state) => state.course_enrollment.enrollmentsList
-  );
 
   const selectedEnrollment = useSelector((state) => {
     if (
       state.course_enrollment.enrollmentsList !== null &&
       selectedCourse !== null
     ) {
-      return state.course_enrollment.enrollmentsList.find(
-        (enrollment) => enrollment.course._id === selectedCourse._id
-      );
+      return state.course_enrollment.enrollmentsList.find((enrollment) => {
+        return enrollment.course._id === selectedCourse._id;
+      });
     }
   });
-
   const navigate = useNavigate();
 
   // Get Course and Lessons
