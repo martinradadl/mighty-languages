@@ -17,11 +17,28 @@ const courseEnrollmentSlice = createSlice({
         state.status = "loading";
       })
       .addCase(actions.addCourseEnrollment.fulfilled, (state, action) => {
-        return {
-          ...state,
-          enrollmentsList: [...state.enrollmentsList, action.payload],
-          status: "idle",
-        };
+        const enrollmentsList = [...state.enrollmentsList];
+        const foundIndex = (elem) => action.payload._id === elem._id;
+        const i = enrollmentsList.findIndex(foundIndex);
+        console.log(enrollmentsList);
+        console.log(i);
+        if (i !== -1) {
+          return {
+            ...state,
+            enrollmentsList: [
+              ...state.enrollmentsList.slice(0, i),
+              action.payload,
+              ...state.enrollmentsList.slice(i + 1),
+            ],
+            status: "idle",
+          };
+        } else {
+          return {
+            ...state,
+            enrollmentsList: [...state.enrollmentsList, action.payload],
+            status: "idle",
+          };
+        }
       })
       .addCase(actions.addCourseEnrollment.rejected, (state, action) => {
         state.error = action.payload;
@@ -36,7 +53,7 @@ const courseEnrollmentSlice = createSlice({
         const i = state.enrollmentsList.findIndex(foundIndex);
         return {
           ...state,
-          enrollmentList: [
+          enrollmentsList: [
             ...state.enrollmentsList.slice(0, i),
             action.payload,
             ...state.enrollmentsList.slice(i + 1),
