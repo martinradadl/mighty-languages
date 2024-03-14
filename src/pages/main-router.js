@@ -12,13 +12,13 @@ import { useDispatch, useSelector } from "react-redux";
 import usersActions from "../redux/actions/users";
 import { LoadingWrapper } from "../components/loading";
 import courseEnrollmentActions from "../redux/actions/course-enrollment";
+import questionsActions from "../redux/actions/questions";
 
 export const MainRouter = () => {
   const dispatch = useDispatch();
   const [cookie] = useCookies(["user"]);
   const [loading, setLoading] = useState(true);
   const user = useSelector((state) => state.users.selectedUser);
-  const enrollmentsList = useSelector((state) => state.course_enrollment.enrollmentsList);
 
   useEffect(() => {
     if (cookie.user) {
@@ -30,6 +30,7 @@ export const MainRouter = () => {
 
   useEffect(() => {
     if (user) {
+      dispatch(questionsActions.getQuestionTypes());
       dispatch(courseEnrollmentActions.getCourseEnrollments(user._id))
         .unwrap()
         .then(() => {
@@ -41,7 +42,7 @@ export const MainRouter = () => {
         });
     }
   }, [user]);
-  
+
   return (
     <LoadingWrapper isLoading={loading}>
       <BrowserRouter>
