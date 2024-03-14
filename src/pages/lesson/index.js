@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect } from "react";
 import { Comment } from "../../components/comments/comment";
 import { CommentInput } from "../../components/comments/comment-input";
-import { Form } from "../../components/questionnaire/form";
 import "../../styles/lessons/lesson.css";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -14,6 +13,7 @@ import courseEnrollmentActions, {
   EDIT_OPERATIONS,
 } from "../../redux/actions/course-enrollment";
 import { handleEnrollInCourse } from "../helpers";
+import { AddQuestionDialog } from "../../components/questions/add-question-dialog";
 
 function openLessonTab(evt, selectedLink) {
   var i, tabcontent, tablinks;
@@ -243,7 +243,7 @@ export const Lesson = () => {
         </button>
       </div>
       <div id="quiz" className="lesson-tabcontent">
-        <Form />
+        <AddQuestionDialog />
       </div>
       <div id="comments" className="lesson-tabcontent">
         {user !== null ? (
