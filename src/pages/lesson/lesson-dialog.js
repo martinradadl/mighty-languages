@@ -1,7 +1,6 @@
 import React, { Fragment } from "react";
 import { Dialog } from "@headlessui/react";
 import { AiOutlineClose, AiFillPlusSquare } from "react-icons/ai";
-import "../../styles/lessons/lesson-dialog.css";
 
 export const LessonDialog = (props) => {
   const {
@@ -25,17 +24,17 @@ export const LessonDialog = (props) => {
               className="close-modal-button"
               onClick={closeModal}
             />
-            <div className="lesson-dialog-content">
-              <p className="lesson-form-item">
+            <div className="dialog-content">
+              <p className="dialog-form-item">
                 <b>TÍTULO*</b>
               </p>
               <input
-                className="lesson-form-input"
+                className="dialog-form-input"
                 onChange={handleChange}
                 name="title"
                 value={lessonForm.title}
               />
-              <p className="lesson-form-item">
+              <p className="dialog-form-item">
                 <b>URL DE LOS VIDEOS*</b>
               </p>
 
@@ -43,7 +42,7 @@ export const LessonDialog = (props) => {
                 return (
                   <input
                     key={i}
-                    className="lesson-form-input"
+                    className="dialog-form-input"
                     onChange={handleVideosChange}
                     name={`videos-${i}`}
                     value={video}
@@ -51,11 +50,11 @@ export const LessonDialog = (props) => {
                 );
               })}
 
-              <button id="add-video-button" onClick={addVideo}>
-                <AiFillPlusSquare id="add-video-icon" />
+              <button className="add-input-button" onClick={addVideo}>
+                <AiFillPlusSquare className="add-input-icon" />
               </button>
 
-              <button id="lesson-submit" onClick={onSubmit}>
+              <button className="dialog-form-submit" onClick={onSubmit}>
                 <b>{submitButtonText}</b>
               </button>
             </div>

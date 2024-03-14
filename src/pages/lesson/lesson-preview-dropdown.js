@@ -18,7 +18,7 @@ export const LessonPreviewDropdown = (props) => {
       <Menu.Items className="lesson-preview-dropdown">
         <Menu.Item className="lesson-preview-dropdown-item">
           <div
-            className="dialog-trigger"
+            className="lesson-dialog-trigger"
             onClick={(e) => {
               e.stopPropagation();
               openEditDialog(true);
@@ -29,7 +29,7 @@ export const LessonPreviewDropdown = (props) => {
         </Menu.Item>
         <Menu.Item className="lesson-preview-dropdown-item">
           <div
-            className="dialog-trigger"
+            className="lesson-dialog-trigger"
             onClick={(e) => {
               e.stopPropagation();
               openDeleteDialog(true);
