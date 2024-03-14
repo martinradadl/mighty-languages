@@ -1,6 +1,5 @@
 import React, { Fragment, useState } from "react";
 import axios from "axios";
-import "../../styles/courses/course-dialog.css";
 import { CourseDialog } from "./course-dialog";
 import { AiFillEdit } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";

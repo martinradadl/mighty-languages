@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "../../styles/lessons/lesson-dialog.css";
 import { useParams } from "react-router-dom";
 import { LessonDialog } from "./lesson-dialog";
 import { useDispatch } from "react-redux";
@@ -71,8 +70,8 @@ export const AddLessonDialog = () => {
         isOpen,
         lessonForm,
         dialogTrigger: (
-          <div className="add-lesson-button-container">
-            <button type="button" id="add-lesson-button" onClick={openModal}>
+          <div className="open-dialog-button-container">
+            <button type="button" className="open-dialog-button" onClick={openModal}>
               Agregar Lección
             </button>
           </div>

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "../../styles/courses/course-dialog.css";
 import { CourseDialog } from "./course-dialog";
 import { useDispatch, useSelector } from "react-redux";
 import coursesActions from "../../redux/actions/courses";
@@ -59,8 +58,8 @@ export const AddCourseDialog = () => {
         isOpen,
         courseForm,
         dialogTrigger: (
-          <div className="add-course-button-container">
-            <button type="button" id="add-course-button" onClick={openModal}>
+          <div className="open-dialog-button-container">
+            <button type="button" className="open-dialog-button" onClick={openModal}>
               Agregar Curso
             </button>
           </div>

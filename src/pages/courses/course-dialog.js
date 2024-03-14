@@ -1,7 +1,6 @@
 import React, { Fragment } from "react";
 import { Dialog } from "@headlessui/react";
 import { AiOutlineClose } from "react-icons/ai";
-import "../../styles/courses/course-dialog.css";
 
 export const CourseDialog = (props) => {
   const {
@@ -20,37 +19,36 @@ export const CourseDialog = (props) => {
       <Dialog className="dialog-container" open={isOpen} onClose={closeModal}>
         <Dialog.Panel className="dialog">
           <AiOutlineClose className="close-modal-button" onClick={closeModal} />
-          {/* <Dialog.Title className="course-form-title">Agregar / Editar Curso</Dialog.Title> */}
-          <div className="course-dialog-content">
-            <p className="course-form-item">
+          <div className="dialog-content">
+            <p className="dialog-form-item">
               <b>TÍTULO*</b>
             </p>
             <input
-              className="course-form-input"
+              className="dialog-form-input"
               onChange={handleChange}
               name="title"
               value={courseForm.title}
             />
-            <p className="course-form-item">
+            <p className="dialog-form-item">
               <b>URL DE LA IMAGEN</b>
             </p>
             <input
-              className="course-form-input"
+              className="dialog-form-input"
               onChange={handleChange}
               name="imageURL"
               value={courseForm.imageURL}
             />
-            <p className="course-form-item">
+            <p className="dialog-form-item">
               <b>DESCRIPCIÓN*</b>
             </p>
             <textarea
               rows="3"
-              className="course-form-description"
+              className="dialog-form-textarea"
               onChange={handleChange}
               name="description"
               value={courseForm.description}
             />
-            <button id="course-submit" onClick={onSubmit}>
+            <button className="dialog-form-submit" onClick={onSubmit}>
               <b>{submitButtonText}</b>
             </button>
           </div>

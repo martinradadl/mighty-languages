@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "../../styles/lessons/lesson-dialog.css";
 import { LessonDialog } from "./lesson-dialog";
 import { useDispatch } from "react-redux";
 import lessonsActions from "../../redux/actions/lessons";
