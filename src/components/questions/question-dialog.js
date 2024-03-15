@@ -6,6 +6,38 @@ import { MultipleChoiceForm } from "./multiple-choice-form";
 import { useSelector } from "react-redux";
 import { FillingQuestionForm } from "./filling-question-form";
 
+const multipleChoiceFormInitialState = {
+  statements: [
+    {
+      type: "text",
+      value: "",
+      options: [
+        { value: "", isAnswer: true },
+        { value: "", isAnswer: false },
+      ],
+    },
+  ],
+};
+
+const fillingQuestionFormInitialState = {
+  statements: [],
+};
+
+// type: {
+//   id: {
+//     type: MULT_CHOICE,
+//   },
+//   value: String,
+// },
+// lesson: { type: mongoose.Schema.Types.ObjectId, ref: "Lesson" },
+// statements: [
+//   {
+//     type: String,
+//     value: String,
+//     options: [{ value: String, isAnswer: Boolean }],
+//   },
+// ],
+
 export const QuestionDialog = (props) => {
   const {
     closeModal,
@@ -15,6 +47,7 @@ export const QuestionDialog = (props) => {
     onSubmit,
     isOpen,
     questionForm,
+    setQuestionForm,
     dialogTrigger,
     submitButtonText,
   } = props;
@@ -25,6 +58,9 @@ export const QuestionDialog = (props) => {
 
   const handleChangeQuestionType = (event) => {
     setQuestionType(event.target.value);
+    event.target.value === QUESTION_TYPES["MULT_CHOICE"].id
+      ? setQuestionForm(multipleChoiceFormInitialState)
+      : setQuestionForm(fillingQuestionFormInitialState);
   };
 
   return (

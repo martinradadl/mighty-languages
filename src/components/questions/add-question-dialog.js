@@ -5,37 +5,10 @@ import lessonsActions from "../../redux/actions/lessons";
 import { QuestionDialog } from "./question-dialog";
 import questionsActions from "../../redux/actions/questions";
 
-const multipleChoiceFormInitialState = {
-  statements: [
-    {
-      type: "text",
-      value: "",
-      options: [
-        { value: "", isAnswer: true },
-        { value: "", isAnswer: false },
-      ],
-    },
-  ],
-};
 
 const questionFormInitialState = {
   statements: [],
 };
-
-// type: {
-//   id: {
-//     type: MULT_CHOICE,
-//   },
-//   value: String,
-// },
-// lesson: { type: mongoose.Schema.Types.ObjectId, ref: "Lesson" },
-// statements: [
-//   {
-//     type: String,
-//     value: String,
-//     options: [{ value: String, isAnswer: Boolean }],
-//   },
-// ],
 
 export const AddQuestionDialog = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -46,7 +19,7 @@ export const AddQuestionDialog = () => {
 
   function closeModal() {
     setIsOpen(false);
-    setQuestionForm(multipleChoiceFormInitialState);
+    setQuestionForm(questionFormInitialState);
   }
 
   function openModal() {
@@ -119,6 +92,7 @@ export const AddQuestionDialog = () => {
         onSubmit,
         isOpen,
         questionForm,
+        setQuestionForm,
         dialogTrigger: (
           <div className="open-dialog-button-container">
             <button
