@@ -1,16 +1,20 @@
 body {
-    margin: 0px;
-    background-color: bisque;
+  margin: 0px;
+  background-color: bisque;
 }
 
 /* Buttons */
 
 button {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .button {
-    cursor: pointer;
+  cursor: pointer;
+}
+
+.button-not-allowed {
+  cursor: not-allowed;
 }
 
 /* Badges */
@@ -36,17 +40,17 @@ button {
 /* Dialogs */
 
 .dialog-backdrop {
-    position: relative;
-    z-index: 50;
-  }
+  position: relative;
+  z-index: 50;
+}
 
 .dialog-container {
-    position: fixed;
-    top: 0px;
-    bottom: 0px;
-    width: 100vw;
-    display: flex;
-    align-items: center;
+  position: fixed;
+  top: 0px;
+  bottom: 0px;
+  width: 100vw;
+  display: flex;
+  align-items: center;
 }
 
 .dialog {
@@ -60,104 +64,138 @@ button {
 }
 
 .close-modal-button {
-        position: absolute;
-        top: 24px;
-        right: 24px;
-        height: 20px;
-        width: 20px;
-        cursor: pointer;
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  height: 20px;
+  width: 20px;
+  cursor: pointer;
 }
 
-  .open-dialog-button-container {
-    margin-left: auto;
-    margin-right: 20px;
-    margin-top: 20px;
-  }
+.open-dialog-button-container {
+  margin-left: auto;
+  margin-right: 20px;
+  margin-top: 20px;
+}
 
-  .open-dialog-button {
-    height: 32px;
-    background-color: blue;
-    color: antiquewhite;
-    border: none;
-    border-radius: 4px;
-  }
+.open-dialog-button {
+  height: 32px;
+  background-color: blue;
+  color: antiquewhite;
+  border: none;
+  border-radius: 4px;
+}
 
-  .filling-question-buttons-container {
-    display: flex;
-    justify-content: space-around;
-    margin: 12px 0px;
-  }
+.filling-question-buttons-container {
+  display: flex;
+  justify-content: space-around;
+  margin: 12px 0px;
+}
 
-  .filling-question-button {
-    height: 32px;
-    width: 100px;
-    background-color: blue;
-    color: antiquewhite;
-    border: none;
-    border-radius: 4px;
-  }
+.filling-question-button {
+  height: 32px;
+  width: 100px;
+  background-color: blue;
+  color: antiquewhite;
+  border: none;
+  border-radius: 4px;
+}
 
-  .dialog-form-select {
-    height: 32px;
-    border-color: blue;
-    border-radius: 4px;
-  }
+.dialog-form-select {
+  height: 32px;
+  border-color: blue;
+  border-radius: 4px;
+}
 
-  .dialog-content {
-    display: flex;
-    flex-direction: column;
-  }
+.dialog-content {
+  display: flex;
+  flex-direction: column;
+}
 
-  .dialog-form-container {
-    display: flex;
-    flex-direction: column;
-  }
+.dialog-form-container {
+  display: flex;
+  flex-direction: column;
+}
 
-  .dialog-form-item {
-    margin-bottom: 8px;
-    font-size: 12px;
-  }
+.dialog-form-item {
+  margin-bottom: 8px;
+  font-size: 12px;
+}
 
-  .dialog-form-textarea {
-    margin-bottom: 8px;
-    height: 60px;
-    padding: 0px 12px;
-    border-color: blue;
-    border-width: 1px;
-    font-size: 16px;
-  }
+.dialog-form-textarea {
+  margin-bottom: 8px;
+  height: 60px;
+  padding: 0px 12px;
+  border-color: blue;
+  border-width: 1px;
+  font-size: 16px;
+}
 
-  .dialog-form-input {
-    margin-bottom: 8px;
-    height: 40px;
-    padding: 0px 12px;
-    border-color: blue;
-    border-width: 1px;
-    font-size: 16px;
-  }
+.dialog-form-input {
+  margin-bottom: 8px;
+  height: 40px;
+  padding: 0px 12px;
+  border-color: blue;
+  border-width: 1px;
+  font-size: 16px;
+}
 
-  .add-input-button {
-    height: 40px;
-    width: 40px;
-    margin: auto;
-    padding: 0;
-    background-color: transparent;
-    border: none;
-  }
+.add-video-input {
+  flex: 1;
+  height: 40px;
+  padding: 0px 12px;
+  border-color: blue;
+  border-width: 1px;
+  font-size: 16px;
+}
 
-  .add-input-icon {
-    width: 100%;
-    height: 100%;
-    color: blue;
-  }
+.multiple-choice-option-input {
+  flex: 1;
+  height: 28px;
+  padding: 0px 12px;
+  border-color: blue;
+  border-width: 1px;
+  font-size: 16px;
+}
 
-  .dialog-form-submit {
-    background-color: blue;
-    color: aliceblue;
-    margin-top: 32px;
-    height: 40px;
-    border: 0px;
-    border-radius: 4px;
-    font-size: 14px;
-    width: 100%;
-  }
+.add-input-button {
+  height: 40px;
+  width: 40px;
+  margin: auto;
+  padding: 0;
+  background-color: transparent;
+  border: none;
+}
+
+.add-input-icon {
+  width: 100%;
+  height: 100%;
+  color: blue;
+}
+
+.dialog-form-submit {
+  background-color: blue;
+  color: aliceblue;
+  margin-top: 32px;
+  height: 40px;
+  border: 0px;
+  border-radius: 4px;
+  font-size: 14px;
+  width: 100%;
+}
+
+.delete-input-button {
+  margin-left: 4px;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+}
+
+.delete-input-icon {
+  font-size: 16px;
+  color: red;
+}
+
+.delete-input-icon-disabled {
+  color: gray;
+}
