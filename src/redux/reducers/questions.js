@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import actions from "../actions/questions";
 
 const initialState = {
-  questionsList: null,
+  questionsList: [],
   selectedQuestion: null,
   questionTypes: null,
 };
