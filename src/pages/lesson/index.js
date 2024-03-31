@@ -13,7 +13,7 @@ import courseEnrollmentActions, {
   EDIT_OPERATIONS,
 } from "../../redux/actions/course-enrollment";
 import { handleEnrollInCourse } from "../helpers";
-import { AddQuestionDialog } from "../../components/questions/add-question-dialog";
+import { AddQuestionDialog } from "../../components/questions/question-dialogs/add-question-dialog";
 
 function openLessonTab(evt, selectedLink) {
   var i, tabcontent, tablinks;
@@ -85,7 +85,7 @@ export const Lesson = () => {
   }, [handleGetComments]);
 
   // Update Current Lesson in Course Enrollment
-  const debouncedHandleChangeCurrentLesson = debounce(() => {
+  const handleChangeCurrentLesson = () => {
     dispatch(
       courseEnrollmentActions.editCourseEnrollment({
         userId: user._id,
@@ -94,12 +94,17 @@ export const Lesson = () => {
         operation: "SET_CURRENT_LESSON",
       })
     );
-  }, 500);
+  };
+
+  const debouncedHandleChangeCurrentLesson = debounce(
+    handleChangeCurrentLesson,
+    500
+  );
 
   useEffect(() => {
     if (
       selectedEnrollment &&
-      selectedLesson?._id !== selectedEnrollment?.currentLesson
+      selectedLesson?._id !== selectedEnrollment?.currentLesson._id
     ) {
       debouncedHandleChangeCurrentLesson();
     }
@@ -243,7 +248,7 @@ export const Lesson = () => {
         </button>
       </div>
       <div id="quiz" className="lesson-tabcontent">
-        <AddQuestionDialog />
+        <AddQuestionDialog lessonId={params.id} />
       </div>
       <div id="comments" className="lesson-tabcontent">
         {user !== null ? (
