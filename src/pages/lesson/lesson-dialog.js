@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import { Dialog } from "@headlessui/react";
-import { AiOutlineClose, AiFillPlusSquare } from "react-icons/ai";
+import { AiOutlineClose, AiFillPlusSquare, AiFillDelete } from "react-icons/ai";
 
 export const LessonDialog = (props) => {
   const {
@@ -10,10 +10,20 @@ export const LessonDialog = (props) => {
     onSubmit,
     isOpen,
     lessonForm,
+    setLessonForm,
     dialogTrigger,
     submitButtonText,
     addVideo,
   } = props;
+
+  const handleDeleteVideo = (i) => {
+    let videosCopy = [...lessonForm.videos];
+    videosCopy = [...videosCopy.slice(0, i), ...videosCopy.slice(i + 1)];
+    setLessonForm({ ...lessonForm, videos: videosCopy });
+  };
+
+  const isDeleteOptionDisabled = lessonForm.videos.length < 2;
+
   return (
     <Fragment>
       {dialogTrigger}
@@ -40,13 +50,41 @@ export const LessonDialog = (props) => {
 
               {lessonForm?.videos?.map((video, i) => {
                 return (
-                  <input
+                  <div
                     key={i}
-                    className="dialog-form-input"
-                    onChange={handleVideosChange}
-                    name={`videos-${i}`}
-                    value={video}
-                  />
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      marginBottom: "8px",
+                    }}
+                  >
+                    <input
+                      key={i}
+                      className="add-video-input"
+                      onChange={handleVideosChange}
+                      name={`videos-${i}`}
+                      value={video}
+                    />
+                    <button
+                      className={
+                        isDeleteOptionDisabled
+                          ? "delete-input-button button-not-allowed"
+                          : "delete-input-button"
+                      }
+                      disabled={isDeleteOptionDisabled}
+                      onClick={() => {
+                        handleDeleteVideo(i);
+                      }}
+                    >
+                      <AiFillDelete
+                        className={
+                          isDeleteOptionDisabled
+                            ? "delete-input-icon-disabled"
+                            : "delete-input-icon"
+                        }
+                      />
+                    </button>
+                  </div>
                 );
               })}
 

@@ -69,6 +69,7 @@ export const AddLessonDialog = () => {
         onSubmit,
         isOpen,
         lessonForm,
+        setLessonForm,
         dialogTrigger: (
           <div className="open-dialog-button-container">
             <button type="button" className="open-dialog-button" onClick={openModal}>

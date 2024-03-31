@@ -58,6 +58,7 @@ export const EditLessonDialog = (props) => {
         onSubmit,
         isOpen,
         lessonForm,
+        setLessonForm,
         submitButtonText: "Editar Lección",
       }}
     />
