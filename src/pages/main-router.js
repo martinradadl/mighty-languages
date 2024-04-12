@@ -29,8 +29,8 @@ export const MainRouter = () => {
   }, [cookie]);
 
   useEffect(() => {
+    dispatch(questionsActions.getQuestionTypes());
     if (user) {
-      dispatch(questionsActions.getQuestionTypes());
       dispatch(courseEnrollmentActions.getCourseEnrollments(user._id))
         .unwrap()
         .then(() => {
