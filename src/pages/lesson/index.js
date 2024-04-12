@@ -1,49 +1,20 @@
 import React, { useCallback, useEffect } from "react";
-import { Comment } from "../../components/comments/comment";
-import { CommentInput } from "../../components/comments/comment-input";
 import "../../styles/lessons/lesson.css";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import lessonsActions from "../../redux/actions/lessons";
-import commentsActions from "../../redux/actions/comments";
 import debounce from "lodash.debounce";
 import { AiFillRightCircle, AiFillLeftCircle } from "react-icons/ai";
-import { LoadingWrapper } from "../../components/loading";
-import courseEnrollmentActions, {
-  EDIT_OPERATIONS,
-} from "../../redux/actions/course-enrollment";
+import courseEnrollmentActions, { EDIT_OPERATIONS } from "../../redux/actions/course-enrollment";
 import { handleEnrollInCourse } from "../helpers";
-import { AddQuestionDialog } from "../../components/questions/question-dialogs/add-question-dialog";
-
-function openLessonTab(evt, selectedLink) {
-  var i, tabcontent, tablinks;
-
-  // Get all elements with class="tabcontent" and hide them
-  tabcontent = document.getElementsByClassName("lesson-tabcontent");
-  for (i = 0; i < tabcontent.length; i++) {
-    tabcontent[i].style.display = "none";
-  }
-
-  // Get all elements with class="tablinks" and remove the class "active"
-  tablinks = document.getElementsByClassName("lesson-tablinks");
-  for (i = 0; i < tablinks.length; i++) {
-    tablinks[i].className = tablinks[i].className.replace(" active", "");
-  }
-
-  // Show the current tab, and add an "active" class to the button that opened the tab
-  document.getElementById(selectedLink).style.display = "block";
-  evt.currentTarget.className += " active";
-}
+import { TabsContent } from "../../components/tabs-content";
 
 export const Lesson = () => {
   const params = useParams();
   const navigate = useNavigate();
-  const user = useSelector((state) => state.users.selectedUser);
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.users.selectedUser);
   const { status, selectedLesson } = useSelector((state) => state.lessons);
-  const { status: commentsStatus, commentsList } = useSelector(
-    (state) => state.comments
-  );
   const selectedEnrollment = useSelector((state) => {
     if (
       state.course_enrollment.enrollmentsList !== null &&
@@ -65,24 +36,6 @@ export const Lesson = () => {
   useEffect(() => {
     debouncedHandleGetLesson();
   }, [handleGetLesson]);
-
-  //Get Comments
-  const handleGetComments = useCallback(() => {
-    if (selectedLesson !== null) {
-      dispatch(
-        commentsActions.getComments({
-          id: params.id,
-          userId: user ? user?._id : undefined,
-        })
-      );
-    }
-  }, [selectedLesson, user, dispatch]);
-
-  const debouncedHandleGetComments = debounce(handleGetComments, 500);
-
-  useEffect(() => {
-    debouncedHandleGetComments();
-  }, [handleGetComments]);
 
   // Update Current Lesson in Course Enrollment
   const handleChangeCurrentLesson = () => {
@@ -144,24 +97,6 @@ export const Lesson = () => {
 
   const debouncedHandleCompleteLesson = debounce(handleCompleteLesson, 500);
 
-  // useEffect(() => {
-  //   window.focus();
-  //   window.addEventListener("blur", function (e) {
-  //     if (document.activeElement == document.querySelector("iframe")) {
-  //       dispatch(
-  //         recentActivityActions.editRecentActivity({
-  //           userId: user._id,
-  //           courseId: selectedLesson.course_id,
-  //           lessonId: params.id,
-  //         })
-  //       );
-  //     }
-  //   });
-  //   return () => {
-  //     window.removeEventListener("blur");
-  //   };
-  // }, []);
-
   if (status === "loading" || selectedLesson === null) {
     return <p>Loading...</p>;
   }
@@ -170,7 +105,7 @@ export const Lesson = () => {
       <div className="lesson-title-container">
         <div>
           <h4
-            className="button"
+            className="clickable-container"
             onClick={() => {
               navigate(`/courses/${selectedLesson.course._id}`);
             }}
@@ -190,7 +125,7 @@ export const Lesson = () => {
         <div className="change-lesson-buttons">
           {selectedLesson.prevLesson ? (
             <AiFillLeftCircle
-              className="button"
+              className="clickable-container"
               size={40}
               onClick={() => {
                 navigate(`/lessons/${selectedLesson.prevLesson}`);
@@ -199,7 +134,7 @@ export const Lesson = () => {
           ) : null}
           {selectedLesson.nextLesson ? (
             <AiFillRightCircle
-              className="button"
+              className="clickable-container"
               size={40}
               onClick={() => {
                 navigate(`/lessons/${selectedLesson.nextLesson}`);
@@ -221,49 +156,7 @@ export const Lesson = () => {
         );
       })}
 
-      <div className="lesson-tab">
-        <button
-          className="lesson-tablinks"
-          onClick={(event) => {
-            debouncedHandleCompleteLesson();
-          }}
-        >
-          Completar Lección
-        </button>
-        <button
-          className="lesson-tablinks"
-          onClick={(event) => {
-            openLessonTab(event, "quiz");
-          }}
-        >
-          Quiz
-        </button>
-        <button
-          className="lesson-tablinks"
-          onClick={(event) => {
-            openLessonTab(event, "comments");
-          }}
-        >
-          Comentarios
-        </button>
-      </div>
-      <div id="quiz" className="lesson-tabcontent">
-        <AddQuestionDialog lessonId={params.id} />
-      </div>
-      <div id="comments" className="lesson-tabcontent">
-        {user !== null ? (
-          <CommentInput />
-        ) : (
-          <span>Si quieres comentar por favor inicia sesión</span>
-        )}
-        <LoadingWrapper
-          isLoading={commentsList === null || commentsStatus === "loading"}
-        >
-          {commentsList?.map((comment, index) => {
-            return <Comment key={index} comment={comment} />;
-          })}
-        </LoadingWrapper>
-      </div>
+      <TabsContent handleCompleteLesson={debouncedHandleCompleteLesson} />
     </div>
   );
 };
