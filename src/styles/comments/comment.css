@@ -1,6 +1,7 @@
 .comment-container {
     display: flex;
-    background-color: white;
+    background-color: var(--light-blue);
+    border-radius: 4px;
     margin-top: 10px;
     padding: 10px;
 }

@@ -1,13 +1,13 @@
 .profile-item {
-    margin-bottom: 8px;
-    font-size: 18px;
-  }
+  margin-bottom: 8px;
+  font-size: 18px;
+}
 
-  #view-profile-button { 
-    margin-left: auto;
-    height: 24px;
-    background-color: antiquewhite;
-    color:blue;
-    border: none;
-    border-radius: 4px;
+#view-profile-button {
+  margin-left: auto;
+  height: 24px;
+  background-color: var(--red);
+  color: var(--light-gray);
+  border: none;
+  border-radius: 4px;
 }

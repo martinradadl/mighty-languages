@@ -5,12 +5,12 @@ nav {
     flex: 1;
     justify-content: space-between;
     align-items: center;
-    background-color: blue;
+    background-color: var(--dark-blue);
     padding: 20px;
 }
 
 .links {
-    color: antiquewhite;
+    color: var(--light-gray);
     text-decoration: none;
     margin: 10px;
 }

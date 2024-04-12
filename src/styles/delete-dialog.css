@@ -7,8 +7,8 @@
 }
 
 .delete-button-submit {
-  background-color: blue;
-  color: aliceblue;
+  background-color: var(--dark-blue);
+  color: var(--light-gray);
   margin: 20px;
   height: 40px;
   width: 100px;
@@ -18,5 +18,5 @@
 } 
 
 #yes-button {
-    background-color: red;
+    background-color: var(--red);
 }

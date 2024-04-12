@@ -5,11 +5,11 @@
 .lesson-preview {
   display: flex;
   align-items: center;
-  background-color: cadetblue;
+  background-color: var(--light-blue);
 }
 
 .lesson-preview:hover {
-  background-color: cornflowerblue;
+  background-color: var(--pink);
   transition: 0.8s;
 }
 
@@ -42,8 +42,8 @@
   right: 10px;
   top: 10px;
   z-index: 20;
-  background-color: antiquewhite;
-  width: 120px;
+  background-color: var(--light-gray);
+  width: fit-content;
   border-radius: 4px;
   -webkit-box-shadow: 2px 2px 11px -1px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: 2px 2px 11px -1px rgba(0, 0, 0, 0.75);
@@ -64,7 +64,7 @@
 
 .lesson-preview-dropdown-item:hover {
   transition: 0.5s;
-  background-color: cornflowerblue;
+  background-color: var(--pink);
 }
 
 .lesson-dialog-trigger {
@@ -82,5 +82,5 @@
 
 .dialog-trigger:hover {
   transition: 0.7s;
-  background-color: aquamarine;
+  background-color: var(--red);
 }

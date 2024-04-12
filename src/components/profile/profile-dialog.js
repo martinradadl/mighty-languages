@@ -40,7 +40,9 @@ export const ProfileDialog = (props) => {
                 height: "80px",
                 width: "80px",
                 borderRadius: "50%",
-                backgroundColor: "blue",
+                backgroundColor: getComputedStyle(
+                  document.body
+                ).getPropertyValue("--dark-blue"),
                 margin: "auto",
               }}
             />

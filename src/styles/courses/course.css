@@ -16,8 +16,8 @@
 
 #rate-course-button {
   height: 32px;
-  background-color: blue;
-  color: antiquewhite;
+  background-color: var(--dark-blue);
+  color: var(--light-gray);
   border: none;
   border-radius: 4px;
 }
@@ -29,8 +29,8 @@
 }
 
 .rate-button-submit {
-  background-color: blue;
-  color: aliceblue;
+  background-color: var(--dark-blue);
+  color: var(--light-gray);
   margin: 10px;
   height: 40px;
   width: 120px;
@@ -41,8 +41,8 @@
 
 #enroll-button {
   height: 32px;
-  background-color: blue;
-  color: antiquewhite;
+  background-color: var(--dark-blue);
+  color: var(--light-gray);
   border: none;
   border-radius: 4px;
 }
