@@ -13,21 +13,19 @@ export const MultipleChoiceForm = (props) => {
     setQuestionForm,
   } = props;
 
-  const isDeleteOptionDisabled = questionForm.statements[0].options.length < 3;
+  const isDeleteOptionDisabled = questionForm[0].options.length < 3;
 
   const addOptionMultipleChoice = () => {
     const optionsUpdated = [
-      ...questionForm.statements[0].options,
+      ...questionForm[0].options,
       { value: "", isAnswer: false },
     ];
-    const statementUpdated = {
-      ...questionForm.statements[0],
-      options: optionsUpdated,
-    };
-    setQuestionForm({
-      ...questionForm,
-      statements: [statementUpdated],
-    });
+    setQuestionForm([
+      {
+        ...questionForm[0],
+        options: optionsUpdated,
+      },
+    ]);
   };
 
   return (
@@ -40,12 +38,12 @@ export const MultipleChoiceForm = (props) => {
         className="dialog-form-textarea"
         onChange={handleStatementChange}
         name="statement-0"
-        value={questionForm?.statements[0]?.value}
+        value={questionForm[0]?.value}
       />
       <p className="dialog-form-item">
         <b>OPCIONES</b>
       </p>
-      {questionForm?.statements[0]?.options?.map((option, i) => {
+      {questionForm[0]?.options.map((option, i) => {
         return (
           <div
             key={i}
@@ -76,7 +74,7 @@ export const MultipleChoiceForm = (props) => {
             <button
               className={
                 isDeleteOptionDisabled
-                  ? "delete-input-button button-not-allowed"
+                  ? "delete-input-button click-not-allowed"
                   : "delete-input-button"
               }
               disabled={isDeleteOptionDisabled}

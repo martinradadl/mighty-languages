@@ -1,12 +1,14 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import { Dialog } from "@headlessui/react";
-import { AiOutlineClose } from "react-icons/ai";
-import "../../styles/delete-dialog.css";
+import { AiFillDelete, AiOutlineClose } from "react-icons/ai";
+import "../../../styles/delete-dialog.css";
 import { useDispatch } from "react-redux";
 import questionsActions from "../../../redux/actions/questions";
 
 export const DeleteQuestionDialog = (props) => {
-  const { isOpen, setIsOpen, id } = props;
+  const { id } = props;
+  const [isOpen, setIsOpen] = useState(false);
+
   const dispatch = useDispatch();
 
   function closeModal() {
@@ -17,12 +19,21 @@ export const DeleteQuestionDialog = (props) => {
     setIsOpen(true);
   }
 
-  const deleteLesson = () => {
+  const deleteQuestion = () => {
     dispatch(questionsActions.deleteQuestion(id));
   };
 
   return (
     <Fragment>
+      <div
+        onClick={(e) => {
+          openModal();
+          e.stopPropagation();
+        }}
+        className="clickable-container"
+      >
+        <AiFillDelete size={20} />
+      </div>
       <Dialog className="dialog-backdrop" open={isOpen} onClose={closeModal}>
         <div className="dialog-container">
           <Dialog.Panel className="dialog">
@@ -36,7 +47,7 @@ export const DeleteQuestionDialog = (props) => {
                 <button
                   className="delete-button-submit"
                   id="yes-button"
-                  onClick={deleteLesson}
+                  onClick={deleteQuestion}
                 >
                   Sí
                 </button>

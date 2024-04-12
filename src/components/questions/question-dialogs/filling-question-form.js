@@ -29,13 +29,13 @@ export const FillingQuestionForm = (props) => {
         className="dialog-form-textarea"
         onChange={handleStatementChange}
         name="statement-0"
-        value={questionForm.statements[0]}
+        value={questionForm[0].value}
       />
       <p className="dialog-form-item">
         <b>OPCIONES</b>
       </p>
 
-      {questionForm?.statements[0]?.options.map((option, i) => {
+      {questionForm[0]?.options.map((option, i) => {
         return (
           <input
             key={i}

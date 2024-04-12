@@ -5,21 +5,18 @@ import lessonsActions from "../../../redux/actions/lessons";
 import { QuestionDialog } from "./question-dialog";
 import questionsActions from "../../../redux/actions/questions";
 
-const multipleChoiceFormInitialState = {
-  statements: [
-    {
-      type: "text",
-      value: "",
-      options: [
-        { value: "", isAnswer: true },
-        { value: "", isAnswer: false },
-      ],
-    },
-  ],
-};
+const multipleChoiceFormInitialState = [
+  {
+    type: "text",
+    value: "",
+    options: [
+      { value: "", isAnswer: true },
+      { value: "", isAnswer: false },
+    ],
+  },
+];
 
-export const AddQuestionDialog = (props) => {
-  const { lessonId } = props;
+export const AddQuestionDialog = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [questionForm, setQuestionForm] = useState(
     multipleChoiceFormInitialState
@@ -38,64 +35,87 @@ export const AddQuestionDialog = (props) => {
   }
 
   const handleStatementChange = (e) => {
-    const statementsCopy = [...questionForm.statements];
+    const questionFormCopy = [...questionForm];
     const statementIndex = e.target.name.split("-")[1];
-    statementsCopy[statementIndex].value = e.target.value;
-
-    setQuestionForm({ ...questionForm, statements: statementsCopy });
+    questionFormCopy[statementIndex].value = e.target.value;
+    setQuestionForm(questionFormCopy);
   };
 
   const addStatement = () => {
-    setQuestionForm({
+    setQuestionForm([
       ...questionForm,
-      statements: [
-        ...questionForm.statements,
-        {
-          type: "",
-          value: "",
-          options: [],
-        },
-      ],
-    });
+      {
+        type: "",
+        value: "",
+        options: [],
+      },
+    ]);
   };
 
   const handleOptionsChange = (e) => {
-    const optionsCopy = [...questionForm.statements[0].options];
+    const optionsCopy = [...questionForm[0].options];
     const optionIndex = e.target.name.split("-")[1];
     optionsCopy[optionIndex].value = e.target.value;
-    const statementUpdated = {
-      ...questionForm.statements[0],
-      options: optionsCopy,
-    };
-    setQuestionForm({ ...questionForm, statements: [statementUpdated] });
+    setQuestionForm([
+      {
+        ...questionForm[0],
+        options: optionsCopy,
+      },
+    ]);
   };
 
   const handleRadioButtonChange = (e) => {
-    const optionsCopy = [...questionForm.statements[0].options];
-    const lastAnswerIndex = questionForm.statements[0].options.findIndex(
+    const optionsCopy = [...questionForm[0].options];
+    const lastAnswerIndex = questionForm[0].options.findIndex(
       (elem) => elem.isAnswer === true
     );
     if (lastAnswerIndex !== -1) optionsCopy[lastAnswerIndex].isAnswer = false;
     const newAnswerIndex = e.target.name.split("-")[1];
     optionsCopy[newAnswerIndex].isAnswer = true;
-    const statementCopy = {
-      ...questionForm.statements[0],
-      options: optionsCopy,
-    };
-    setQuestionForm({ ...questionForm, statements: [statementCopy] });
+    setQuestionForm([
+      {
+        ...questionForm[0],
+        options: optionsCopy,
+      },
+    ]);
   };
 
   const handleDeleteOption = (i) => {
-    let optionsCopy = [...questionForm.statements[0].options];
+    let optionsCopy = [...questionForm[0].options];
     optionsCopy = [...optionsCopy.slice(0, i), ...optionsCopy.slice(i + 1)];
-    const statementCopy = {
-      ...questionForm.statements[0],
-      options: optionsCopy,
-    };
-    setQuestionForm({ ...questionForm, statements: [statementCopy] });
+    setQuestionForm([
+      {
+        ...questionForm[0],
+        options: optionsCopy,
+      },
+    ]);
   };
 
-  
+  const onSubmitMultipleChoice = () => {
+    if (
+      questionForm[0].value === "" ||
+      questionForm[0].options.some((option) => option.value === "")
+    ) {
+      return alert("Faltan campos por llenar");
+    }
+    if (!questionForm[0].options.some((option) => option.isAnswer === true)) {
+      return alert("Falta elegir la respuesta");
+    }
+    const newQuestion = {
+      type: QUESTION_TYPES["MULT_CHOICE"],
+      statements: questionForm,
+      lessonId: params.id,
+    };
+    dispatch(questionsActions.addQuestion(newQuestion))
+      .unwrap()
+      .then(() => {
+        closeModal();
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
   return (
     <QuestionDialog
       {...{
@@ -108,6 +128,7 @@ export const AddQuestionDialog = (props) => {
         isOpen,
         questionForm,
         setQuestionForm,
+        onSubmitMultipleChoice,
         dialogTrigger: (
           <div className="open-dialog-button-container">
             <button

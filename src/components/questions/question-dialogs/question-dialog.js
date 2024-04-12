@@ -8,22 +8,27 @@ import { FillingQuestionForm } from "./filling-question-form";
 import questionsActions from "../../../redux/actions/questions";
 import { useParams } from "react-router-dom";
 
-const multipleChoiceFormInitialState = {
-  statements: [
-    {
-      type: "text",
-      value: "",
-      options: [
-        { value: "", isAnswer: true },
-        { value: "", isAnswer: false },
-      ],
-    },
-  ],
-};
+const multipleChoiceFormInitialState = [
+  {
+    type: "text",
+    value: "",
+    options: [
+      { value: "", isAnswer: true },
+      { value: "", isAnswer: false },
+    ],
+  },
+];
 
-const fillingQuestionFormInitialState = {
-  statements: [],
-};
+const fillingQuestionFormInitialState = [
+  {
+    type: "text",
+    value: "",
+    options: [
+      { value: "", isAnswer: true },
+      { value: "", isAnswer: false },
+    ],
+  },
+];
 
 // type: {
 //   id: {
@@ -50,6 +55,8 @@ export const QuestionDialog = (props) => {
     isOpen,
     questionForm,
     setQuestionForm,
+    selectedQuestionType,
+    onSubmitMultipleChoice,
     dialogTrigger,
     submitButtonText,
   } = props;
@@ -62,39 +69,11 @@ export const QuestionDialog = (props) => {
 
   const handleChangeQuestionType = (event) => {
     setQuestionType(event.target.value);
-    event.target.value === QUESTION_TYPES["MULT_CHOICE"].id
+    event.target.value.id === QUESTION_TYPES["MULT_CHOICE"].id
       ? setQuestionForm(multipleChoiceFormInitialState)
       : setQuestionForm(fillingQuestionFormInitialState);
   };
 
-  const onSubmitMultipleChoice = () => {
-    if (
-      questionForm.statements[0].value === "" ||
-      questionForm.statements[0].options.some((option) => option.value === "")
-    ) {
-      return alert("Faltan campos por llenar");
-    }
-    if (
-      !questionForm.statements[0].options.some(
-        (option) => option.isAnswer === true
-      )
-    ) {
-      return alert("Falta elegir la respuesta");
-    }
-    const newQuestion = {
-      type: questionType,
-      statements: questionForm.statements,
-      lessonId: params.id,
-    };
-    dispatch(questionsActions.addQuestion(newQuestion))
-      .unwrap()
-      .then(() => {
-        closeModal();
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  };
 
   return (
     <Fragment>
@@ -117,7 +96,7 @@ export const QuestionDialog = (props) => {
               >
                 {Object.keys(QUESTION_TYPES).map((type, i) => {
                   return (
-                    <option key={i} value={QUESTION_TYPES[type].id}>
+                    <option key={i} value={QUESTION_TYPES[type]}>
                       {QUESTION_TYPES[type].value}
                     </option>
                   );
