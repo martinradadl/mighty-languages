@@ -24,7 +24,7 @@ export const LessonPreviewDropdown = (props) => {
               openEditDialog(true);
             }}
           >
-            Editar Lección
+            Editar
           </div>
         </Menu.Item>
         <Menu.Item className="lesson-preview-dropdown-item">
@@ -35,7 +35,7 @@ export const LessonPreviewDropdown = (props) => {
               openDeleteDialog(true);
             }}
           >
-            Eliminar Lección
+            Eliminar
           </div>
         </Menu.Item>
       </Menu.Items>

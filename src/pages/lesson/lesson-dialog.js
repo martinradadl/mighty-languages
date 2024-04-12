@@ -68,7 +68,7 @@ export const LessonDialog = (props) => {
                     <button
                       className={
                         isDeleteOptionDisabled
-                          ? "delete-input-button button-not-allowed"
+                          ? "delete-input-button click-not-allowed"
                           : "delete-input-button"
                       }
                       disabled={isDeleteOptionDisabled}
