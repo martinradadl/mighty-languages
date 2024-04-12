@@ -5,7 +5,7 @@
 
 #view-profile-button {
   margin-left: auto;
-  height: 24px;
+  padding: 8px 6px;
   background-color: var(--red);
   color: var(--light-gray);
   border: none;

@@ -29,6 +29,10 @@
 
 #resume-lesson-button {
   height: 28px;
+  background-color: var(--light-gray);
+  color: var(--dark-blue);
+  border: solid var(--dark-blue) 1px;
+  border-radius: 4px;
 }
 
 #more-options-icon {

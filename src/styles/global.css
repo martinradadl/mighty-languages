@@ -31,19 +31,19 @@ button {
 .badge {
   height: 24px;
   width: fit-content;
-  padding: 4px;
+  padding: 4px 8px;
   margin-bottom: 10px;
   background-color: var(--dark-blue);
   color: var(--light-gray);
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .success-badge {
-  background-color: green;
+  background-color: darkgreen;
 }
 
 /* Dialogs */
