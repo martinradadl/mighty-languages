@@ -101,7 +101,11 @@ export const Course = () => {
                   <button
                     type="button"
                     id="enroll-button"
-                    style={{ backgroundColor: "red" }}
+                    style={{
+                      backgroundColor: getComputedStyle(
+                        document.body
+                      ).getPropertyValue("--red"),
+                    }}
                     onClick={debouncedhandleLeaveCourse}
                   >
                     Dejar Curso
