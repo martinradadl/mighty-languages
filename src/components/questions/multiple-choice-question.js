@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import "../../styles/questions.css";
 import { EditQuestionDialog } from "./question-dialogs/edit-question-dialog";
 import { DeleteQuestionDialog } from "./question-dialogs/delete-question-dialog";
-import { AiTwotoneCheckSquare } from "react-icons/ai";
+import { AiFillCheckCircle } from "react-icons/ai";
 
 export const MultipleChoiceQuestion = (props) => {
   const { selectedQuestion, index } = props;
@@ -41,7 +41,10 @@ export const MultipleChoiceQuestion = (props) => {
               {option.value}
             </p>
             {option.isAnswer ? (
-              <AiTwotoneCheckSquare size={20} style={{ color: "green" }} />
+              <AiFillCheckCircle
+                size={16}
+                style={{ color: "darkgreen", marginLeft: "2px" }}
+              />
             ) : null}
           </div>
         );
