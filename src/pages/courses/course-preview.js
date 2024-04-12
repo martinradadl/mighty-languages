@@ -8,7 +8,7 @@ export const CoursePreview = (props) => {
   const { course, showRating, user } = props;
 
   return (
-    <div className="course-preview-container button">
+    <div className="course-preview-container clickable-container">
       <img
         src={
           course.imageURL ||
