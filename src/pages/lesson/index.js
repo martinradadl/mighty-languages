@@ -119,7 +119,7 @@ export const Lesson = () => {
           {selectedEnrollment?.finishedLessonsIds.includes(
             selectedLesson?._id
           ) ? (
-            <div className="badge success-badge">Lección Completada</div>
+            <div className="badge success-badge">Completado</div>
           ) : null}
         </div>
         <div className="change-lesson-buttons">

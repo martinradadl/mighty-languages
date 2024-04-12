@@ -96,7 +96,7 @@ export const Course = () => {
             user?._id !== selectedCourse?.instructor ? (
               selectedEnrollment?.isActive ? (
                 selectedEnrollment?.isCompleted ? (
-                  <div className="badge success-badge">Curso Completado</div>
+                  <div className="badge success-badge">Completado</div>
                 ) : (
                   <button
                     type="button"
