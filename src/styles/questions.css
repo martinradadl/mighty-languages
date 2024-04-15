@@ -30,3 +30,27 @@
 .selected-option {
   border: 2px solid var(--dark-blue);
 }
+
+.multiple-choice-option-input {
+  flex: 1;
+  height: 28px;
+  padding: 0px 12px;
+  border-color: var(--dark-blue);
+  border-width: 1px;
+  font-size: 16px;
+}
+
+.filling-question-buttons-container {
+  display: flex;
+  justify-content: space-around;
+  margin: 12px 0px;
+}
+
+.filling-question-button {
+  height: 32px;
+  width: 100px;
+  background-color: var(--dark-blue);
+  color: var(--light-gray);
+  border: none;
+  border-radius: 4px;
+}

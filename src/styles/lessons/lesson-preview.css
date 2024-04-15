@@ -2,6 +2,14 @@
   position: relative;
 }
 
+.lesson-preview-container:first-child {
+  border-radius: 4px 4px 0 0;
+}
+
+.lesson-preview-container:last-child {
+  border-radius: 0 0 4px 4px;
+}
+
 .lesson-preview {
   display: flex;
   align-items: center;
