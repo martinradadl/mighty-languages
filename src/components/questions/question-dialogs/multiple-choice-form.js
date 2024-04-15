@@ -2,6 +2,7 @@ import React, { Fragment } from "react";
 import { Dialog } from "@headlessui/react";
 import { AiFillPlusSquare, AiFillDelete } from "react-icons/ai";
 import "../../../styles/global.css";
+import "../../../styles/questions.css";
 
 export const MultipleChoiceForm = (props) => {
   const {
