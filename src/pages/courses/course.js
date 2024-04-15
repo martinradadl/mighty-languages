@@ -154,6 +154,7 @@ export const Course = () => {
               return (
                 <div
                   key={index}
+                  className="lesson-preview-container"
                   onClick={(e) => {
                     e.stopPropagation();
                     navigate(`/lessons/${lesson._id}`);

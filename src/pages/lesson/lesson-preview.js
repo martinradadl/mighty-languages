@@ -15,7 +15,7 @@ export const LessonPreview = (props) => {
   const dispatch = useDispatch();
 
   return (
-    <div className="lesson-preview-container clickable-container">
+    <div className="clickable-container">
       <div className="lesson-preview">
         <AiFillYoutube id="yt-icon" />
         <p>{`${index + 1}. ${lesson.title}`}</p>
