@@ -2,6 +2,7 @@ import React, { Fragment } from "react";
 import { Dialog } from "@headlessui/react";
 import { AiOutlineClose, AiFillPlusSquare } from "react-icons/ai";
 import "../../../styles/global.css";
+import "../../../styles/questions.css"
 
 export const FillingQuestionForm = (props) => {
   const {
@@ -24,13 +25,18 @@ export const FillingQuestionForm = (props) => {
         </button>
       </div>
 
-      <textarea
+      {/* <textarea
         rows={6}
         className="dialog-form-textarea"
         onChange={handleStatementChange}
         name="statement-0"
         value={questionForm[0].value}
-      />
+      /> */}
+
+      <div style={{width: "100%", height: "100px"}}>
+    
+      </div>
+
       <p className="dialog-form-item">
         <b>OPCIONES</b>
       </p>
