@@ -27,6 +27,10 @@ export const EditLessonDialog = (props) => {
     setLessonForm({ ...lessonForm, videos: videosCopy });
   };
 
+  const addVideo = () => {
+    setLessonForm({ ...lessonForm, videos: [...lessonForm.videos, ""] });
+  };
+
   const onSubmit = () => {
     if (lessonForm.title === "" || lessonForm.videos.length === 0) {
       alert("Faltan campos por llenar");
@@ -59,6 +63,7 @@ export const EditLessonDialog = (props) => {
         isOpen,
         lessonForm,
         setLessonForm,
+        addVideo,
         submitButtonText: "Editar Lección",
       }}
     />
