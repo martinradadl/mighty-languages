@@ -37,6 +37,7 @@ export const AddLessonDialog = () => {
 
   const addVideo = () => {
     setLessonForm({ ...lessonForm, videos: [...lessonForm.videos, ""] });
+    console.log(lessonForm);
   };
 
   const onSubmit = () => {
