@@ -4,9 +4,11 @@
 }
 
 .course-progress-container {
-    background-color:var(--light-gray);
+    background-color:var(--light-blue);
     border: 1px solid gray;
-    padding: 10px;
+    padding: 6px 12px;
+    margin: 2px 0;
+    border-radius: 4px;
 }
 
 .course-progress-container > h3 {
@@ -21,7 +23,7 @@
 
 .progress-bar {
     position: relative;
-    background-color:var(--light-blue);
+    background-color:var(--light-gray);
     height: 8px;
     border-radius: 4px;
 }
