@@ -2,26 +2,24 @@ import React, { Fragment } from "react";
 import { Dialog } from "@headlessui/react";
 import { AiOutlineClose, AiFillPlusSquare } from "react-icons/ai";
 import "../../../styles/global.css";
-import "../../../styles/questions.css"
+import "../../../styles/questions.css";
 
 export const FillingQuestionForm = (props) => {
-  const {
-    handleStatementChange,
-    handleOptionsChange,
-    questionForm,
-  } = props;
+  const { handleStatementChange, handleOptionsChange, questionForm } = props;
 
-  const addOptionFillingQuestion = () => {}
-
+  const addOptionFillingQuestion = () => {};
 
   return (
     <div className="dialog-content">
       <div className="filling-question-buttons-container">
         <button className="filling-question-button" onClick={() => {}}>
-          <b>Menú</b>
+          <b>Texto</b>
         </button>
         <button className="filling-question-button" onClick={() => {}}>
-          <b>Campo de Texto</b>
+          <b>Campo de Relleno</b>
+        </button>
+        <button className="filling-question-button" onClick={() => {}}>
+          <b>Menú de Selección</b>
         </button>
       </div>
 
@@ -33,9 +31,7 @@ export const FillingQuestionForm = (props) => {
         value={questionForm[0].value}
       /> */}
 
-      <div style={{width: "100%", height: "100px"}}>
-    
-      </div>
+      <div style={{ width: "100%", height: "100px", border: "solid black 1px" }}></div>
 
       <p className="dialog-form-item">
         <b>OPCIONES</b>

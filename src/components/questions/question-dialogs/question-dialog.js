@@ -62,14 +62,15 @@ export const QuestionDialog = (props) => {
   } = props;
   const QUESTION_TYPES = useSelector((state) => state.questions.questionTypes);
   const [questionType, setQuestionType] = useState(
-    QUESTION_TYPES["MULT_CHOICE"]
+    QUESTION_TYPES["MULT_CHOICE"].id
   );
   const dispatch = useDispatch();
   const params = useParams();
 
   const handleChangeQuestionType = (event) => {
     setQuestionType(event.target.value);
-    event.target.value.id === QUESTION_TYPES["MULT_CHOICE"].id
+    console.log("aaaaaaaa", JSON.stringify(event.target.value) )
+    event.target.value === QUESTION_TYPES["MULT_CHOICE"].id
       ? setQuestionForm(multipleChoiceFormInitialState)
       : setQuestionForm(fillingQuestionFormInitialState);
   };
@@ -91,18 +92,18 @@ export const QuestionDialog = (props) => {
               </p>
               <select
                 className="dialog-form-select"
-                value={questionType.id}
+                value={questionType}
                 onChange={handleChangeQuestionType}
               >
                 {Object.keys(QUESTION_TYPES).map((type, i) => {
                   return (
-                    <option key={i} value={QUESTION_TYPES[type]}>
+                    <option key={i} value={QUESTION_TYPES[type].id}>
                       {QUESTION_TYPES[type].value}
                     </option>
                   );
                 })}
               </select>
-              {questionType.id === QUESTION_TYPES["MULT_CHOICE"].id ? (
+              {questionType === QUESTION_TYPES["MULT_CHOICE"].id ? (
                 <MultipleChoiceForm
                   {...{
                     handleStatementChange,
