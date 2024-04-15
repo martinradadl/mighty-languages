@@ -207,3 +207,8 @@ button {
   background-color: var(--light-blue);
   color: var(--dark-blue);
 }
+
+.tab-title-selected {
+  background-color: var(--light-gray);
+  color: var(--dark-blue);
+}

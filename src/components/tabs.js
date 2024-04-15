@@ -1,5 +1,5 @@
 import { Tab } from "@headlessui/react";
-import React from "react";
+import React, { Fragment } from "react";
 import "../styles/global.css";
 
 export function Tabs(props) {
@@ -9,8 +9,16 @@ export function Tabs(props) {
       <Tab.List className="tabs-titles-container">
         {tabs.map((tab, i) => {
           return (
-            <Tab key={i} className="tab-title">
-              {tab.title}
+            <Tab as={Fragment} key={i} className="tab-title">
+              {({ selected }) => (
+                <button
+                  className={
+                    selected ? "tab-title tab-title-selected" : "tab-title"
+                  }
+                >
+                  {tab.title}
+                </button>
+              )}
             </Tab>
           );
         })}
