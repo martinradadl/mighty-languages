@@ -99,7 +99,7 @@ export const QuestionDialog = (props) => {
                 {Object.keys(QUESTION_TYPES).map((type, i) => {
                   return (
                     <option key={i} value={QUESTION_TYPES[type].id}>
-                      {QUESTION_TYPES[type].value}
+                      {QUESTION_TYPES[type].label}
                     </option>
                   );
                 })}
