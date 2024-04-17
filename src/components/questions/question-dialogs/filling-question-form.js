@@ -5,14 +5,23 @@ import "../../../styles/global.css";
 import "../../../styles/questions.css";
 
 export const FillingQuestionForm = (props) => {
-  const { handleStatementChange, handleOptionsChange, questionForm } = props;
+  const { handleStatementChange, handleOptionsChange, questionForm, setQuestionForm } = props;
 
   const addOptionFillingQuestion = () => {};
+
+  const addTextInput = () => {};
+
+  const handleTextInputChange = (event) =>{
+    const temp = [...questionForm]
+    const index = event.target.name.split("-")[2]
+    temp[index] =  {...temp[index],value:event.target.value}
+    setQuestionForm(temp)
+  }
 
   return (
     <div className="dialog-content">
       <div className="filling-question-buttons-container">
-        <button className="filling-question-button" onClick={() => {}}>
+        <button className="filling-question-button" onClick={addTextInput}>
           <b>Texto</b>
         </button>
         <button className="filling-question-button" onClick={() => {}}>
@@ -23,35 +32,17 @@ export const FillingQuestionForm = (props) => {
         </button>
       </div>
 
-      {/* <textarea
-        rows={6}
-        className="dialog-form-textarea"
-        onChange={handleStatementChange}
-        name="statement-0"
-        value={questionForm[0].value}
-      /> */}
-
-      <div style={{ width: "100%", height: "100px", border: "solid black 1px" }}></div>
-
-      <p className="dialog-form-item">
-        <b>OPCIONES</b>
-      </p>
-
-      {questionForm[0]?.options.map((option, i) => {
-        return (
-          <input
-            key={i}
-            className="dialog-form-input"
-            onChange={handleOptionsChange}
-            name={`option-${i}`}
-            value={option.value}
-          />
-        );
-      })}
-
-      <button className="add-input-button" onClick={addOptionFillingQuestion}>
-        <AiFillPlusSquare className="add-input-icon" />
-      </button>
+      <div
+        style={{ width: "100%", height: "100px", border: "solid black 1px" }}
+      >
+        {JSON.stringify(questionForm)}
+        {questionForm.map((question,index)=>{
+          if(question.type === 'text') {
+            return <input name={`$input-text-${index}`} value={question.value} onChange={handleTextInputChange} className=""/>
+          }
+          return null
+        })}
+      </div>
     </div>
   );
 };

@@ -23,12 +23,13 @@ const fillingQuestionFormInitialState = [
   {
     type: "text",
     value: "",
-    options: [
-      { value: "", isAnswer: true },
-      { value: "", isAnswer: false },
-    ],
   },
+  // {
+  //   type:"filling",
+  //   value:""
+  // }
 ];
+
 
 // type: {
 //   id: {
@@ -120,6 +121,7 @@ export const QuestionDialog = (props) => {
                     handleStatementChange,
                     handleOptionsChange,
                     questionForm,
+                    setQuestionForm
                   }}
                 />
               )}
