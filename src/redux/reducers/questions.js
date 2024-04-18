@@ -5,7 +5,9 @@ const initialState = {
   questionsList: [],
   selectedQuestion: null,
   questionTypes: null,
+  statementTypes: null,
 };
+
 const questionsSlice = createSlice({
   name: "questions",
   initialState,
@@ -92,6 +94,18 @@ const questionsSlice = createSlice({
         state.status = "idle";
         state.questionTypes = null;
       })
+      .addCase(actions.getStatementTypes.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(actions.getStatementTypes.fulfilled, (state, action) => {
+        state.statementTypes = action.payload;
+        state.status = "idle";
+      })
+      .addCase(actions.getStatementTypes.rejected, (state, action) => {
+        state.error = action.payload;
+        state.status = "idle";
+        state.statementTypes = null;
+      });
   },
 });
 

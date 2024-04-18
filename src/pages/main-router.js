@@ -30,6 +30,7 @@ export const MainRouter = () => {
 
   useEffect(() => {
     dispatch(questionsActions.getQuestionTypes());
+    dispatch(questionsActions.getStatementTypes());
     if (user) {
       dispatch(courseEnrollmentActions.getCourseEnrollments(user._id))
         .unwrap()

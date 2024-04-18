@@ -44,7 +44,9 @@ const editQuestion = createAsyncThunk(
 
 const deleteQuestion = createAsyncThunk("questions/delete", async (id) => {
   try {
-    const response = await axios.delete(`http://localhost:3001/questions/${id}`);
+    const response = await axios.delete(
+      `http://localhost:3001/questions/${id}`
+    );
     return response.data;
   } catch (error) {
     return error.message;
@@ -55,9 +57,19 @@ const getQuestionTypes = createAsyncThunk(
   "questions/get_question_types",
   async () => {
     try {
-      const response = await axios.get(
-        `http://localhost:3001/question_types`
-      );
+      const response = await axios.get(`http://localhost:3001/question_types`);
+      return response.data;
+    } catch (error) {
+      return error.message;
+    }
+  }
+);
+
+const getStatementTypes = createAsyncThunk(
+  "questions/get_statement_types",
+  async () => {
+    try {
+      const response = await axios.get(`http://localhost:3001/statement_types`);
       return response.data;
     } catch (error) {
       return error.message;
@@ -70,6 +82,7 @@ const questionsActions = {
   addQuestion,
   editQuestion,
   deleteQuestion,
-  getQuestionTypes
+  getQuestionTypes,
+  getStatementTypes,
 };
 export default questionsActions;
