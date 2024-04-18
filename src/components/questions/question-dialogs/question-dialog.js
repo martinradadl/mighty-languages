@@ -24,10 +24,6 @@ const fillingQuestionFormInitialState = [
     type: "text",
     value: "",
   },
-  // {
-  //   type:"filling",
-  //   value:""
-  // }
 ];
 
 
