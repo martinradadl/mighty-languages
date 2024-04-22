@@ -32,20 +32,6 @@ export const EditQuestionDialog = (props) => {
     setQuestionForm(questionFormCopy);
   };
 
-  const addStatement = () => {
-    setQuestionForm({
-      ...questionForm,
-      statements: [
-        ...questionForm.statements,
-        {
-          type: "",
-          value: "",
-          options: [],
-        },
-      ],
-    });
-  };
-
   const handleOptionsChange = (e) => {
     const optionsCopy = [...questionForm[0].options];
     const optionIndex = e.target.name.split("-")[1];
@@ -67,9 +53,13 @@ export const EditQuestionDialog = (props) => {
     const lastAnswerIndex = questionForm[0].options.findIndex(
       (elem) => elem.isAnswer === true
     );
-    if (lastAnswerIndex !== -1) optionsCopy[lastAnswerIndex].isAnswer = false;
+    if (lastAnswerIndex !== -1) {
+      const optionCopy = { ...optionsCopy[lastAnswerIndex], isAnswer: false };
+      optionsCopy[lastAnswerIndex] = optionCopy;
+    }
     const newAnswerIndex = e.target.name.split("-")[1];
-    optionsCopy[newAnswerIndex].isAnswer = true;
+    const optionCopy = { ...optionsCopy[newAnswerIndex], isAnswer: true };
+    optionsCopy[newAnswerIndex] = optionCopy;
     setQuestionForm([
       {
         ...questionForm[0],

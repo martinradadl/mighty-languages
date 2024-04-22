@@ -3,44 +3,9 @@ import { Dialog } from "@headlessui/react";
 import { AiOutlineClose, AiFillPlusSquare } from "react-icons/ai";
 import "../../../styles/global.css";
 import { MultipleChoiceForm } from "./multiple-choice-form";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { FillingQuestionForm } from "./filling-question-form";
 import questionsActions from "../../../redux/actions/questions";
-import { useParams } from "react-router-dom";
-
-const multipleChoiceFormInitialState = [
-  {
-    type: "text",
-    value: "",
-    options: [
-      { value: "", isAnswer: true },
-      { value: "", isAnswer: false },
-    ],
-  },
-];
-
-const fillingQuestionFormInitialState = [
-  {
-    type: "text",
-    value: "",
-  },
-];
-
-
-// type: {
-//   id: {
-//     type: MULT_CHOICE,
-//   },
-//   value: String,
-// },
-// lesson: { type: mongoose.Schema.Types.ObjectId, ref: "Lesson" },
-// statements: [
-//   {
-//     type: String,
-//     value: String,
-//     options: [{ value: String, isAnswer: Boolean }],
-//   },
-// ],
 
 export const QuestionDialog = (props) => {
   const {
@@ -54,24 +19,42 @@ export const QuestionDialog = (props) => {
     setQuestionForm,
     selectedQuestionType,
     onSubmitMultipleChoice,
+    onSubmitFilling,
     dialogTrigger,
     submitButtonText,
   } = props;
   const QUESTION_TYPES = useSelector((state) => state.questions.questionTypes);
+  const STATEMENT_TYPES = useSelector(
+    (state) => state.questions.statementTypes
+  );
   const [questionType, setQuestionType] = useState(
     QUESTION_TYPES["MULT_CHOICE"].id
   );
-  const dispatch = useDispatch();
-  const params = useParams();
+
+  const multipleChoiceFormInitialState = [
+    {
+      statementType: STATEMENT_TYPES["TEXT"],
+      value: "",
+      options: [
+        { value: "", isAnswer: true },
+        { value: "", isAnswer: false },
+      ],
+    },
+  ];
+
+  const fillingQuestionFormInitialState = [
+    {
+      type: "",
+      value: "",
+    },
+  ];
 
   const handleChangeQuestionType = (event) => {
     setQuestionType(event.target.value);
-    console.log("aaaaaaaa", JSON.stringify(event.target.value) )
     event.target.value === QUESTION_TYPES["MULT_CHOICE"].id
       ? setQuestionForm(multipleChoiceFormInitialState)
       : setQuestionForm(fillingQuestionFormInitialState);
   };
-
 
   return (
     <Fragment>
@@ -91,6 +74,7 @@ export const QuestionDialog = (props) => {
                 className="dialog-form-select"
                 value={questionType}
                 onChange={handleChangeQuestionType}
+                disabled={submitButtonText === "Editar Pregunta"}
               >
                 {Object.keys(QUESTION_TYPES).map((type, i) => {
                   return (
@@ -117,14 +101,18 @@ export const QuestionDialog = (props) => {
                     handleStatementChange,
                     handleOptionsChange,
                     questionForm,
-                    setQuestionForm
+                    setQuestionForm,
                   }}
                 />
               )}
 
               <button
                 className="dialog-form-submit"
-                onClick={onSubmitMultipleChoice}
+                onClick={() => {
+                  questionType === QUESTION_TYPES["MULT_CHOICE"].id
+                    ? onSubmitMultipleChoice()
+                    : onSubmitFilling();
+                }}
               >
                 <b>{submitButtonText}</b>
               </button>
