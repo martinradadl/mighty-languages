@@ -58,8 +58,14 @@
 .text-statement {
   border: 0;
   border-bottom: 1px solid var(--dark-blue);
+  height: 20px;
 }
 
 .fill-statement {
   border: 1px solid var(--dark-blue);
+  height: 20px;
+}
+
+.select-statement {
+  height: 20px;
 }
