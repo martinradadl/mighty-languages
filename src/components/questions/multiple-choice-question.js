@@ -1,8 +1,6 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import "../../styles/questions.css";
-import { EditQuestionDialog } from "./question-dialogs/edit-question-dialog";
-import { DeleteQuestionDialog } from "./question-dialogs/delete-question-dialog";
 import { AiFillCheckCircle } from "react-icons/ai";
 
 export const MultipleChoiceQuestion = (props) => {
