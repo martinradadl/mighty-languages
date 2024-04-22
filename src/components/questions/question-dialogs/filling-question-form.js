@@ -17,17 +17,6 @@ export const FillingQuestionForm = (props) => {
     (state) => state.questions.statementTypes
   );
 
-  const multipleChoiceFormInitialState = [
-    {
-      statementType: STATEMENT_TYPES["TEXT"],
-      value: "",
-      options: [
-        { value: "", isAnswer: true },
-        { value: "", isAnswer: false },
-      ],
-    },
-  ];
-
   const addInput = (statementType) => {
     setQuestionForm([
       ...questionForm,

@@ -39,13 +39,6 @@ export const AddQuestionDialog = () => {
     setIsOpen(true);
   }
 
-  const handleStatementChange = (e) => {
-    const questionFormCopy = [...questionForm];
-    const statementIndex = e.target.name.split("-")[1];
-    questionFormCopy[statementIndex].value = e.target.value;
-    setQuestionForm(questionFormCopy);
-  };
-
   const addStatement = () => {
     setQuestionForm([
       ...questionForm,
@@ -53,45 +46,6 @@ export const AddQuestionDialog = () => {
         type: "",
         value: "",
         options: [],
-      },
-    ]);
-  };
-
-  const handleOptionsChange = (e) => {
-    const optionsCopy = [...questionForm[0].options];
-    const optionIndex = e.target.name.split("-")[1];
-    optionsCopy[optionIndex].value = e.target.value;
-    setQuestionForm([
-      {
-        ...questionForm[0],
-        options: optionsCopy,
-      },
-    ]);
-  };
-
-  const handleRadioButtonChange = (e) => {
-    const optionsCopy = [...questionForm[0].options];
-    const lastAnswerIndex = questionForm[0].options.findIndex(
-      (elem) => elem.isAnswer === true
-    );
-    if (lastAnswerIndex !== -1) optionsCopy[lastAnswerIndex].isAnswer = false;
-    const newAnswerIndex = e.target.name.split("-")[1];
-    optionsCopy[newAnswerIndex].isAnswer = true;
-    setQuestionForm([
-      {
-        ...questionForm[0],
-        options: optionsCopy,
-      },
-    ]);
-  };
-
-  const handleDeleteOption = (i) => {
-    let optionsCopy = [...questionForm[0].options];
-    optionsCopy = [...optionsCopy.slice(0, i), ...optionsCopy.slice(i + 1)];
-    setQuestionForm([
-      {
-        ...questionForm[0],
-        options: optionsCopy,
       },
     ]);
   };
@@ -124,7 +78,8 @@ export const AddQuestionDialog = () => {
   const onSubmitFilling = () => {
     if (
       questionForm.some(
-        (statement) => statement.type !== "SELECT" && statement.value === ""
+        (statement) =>
+          statement.statementType !== "SELECT" && statement.value === ""
       )
     ) {
       return alert("Faltan campos por llenar");
@@ -147,12 +102,7 @@ export const AddQuestionDialog = () => {
   return (
     <QuestionDialog
       {...{
-        openModal,
         closeModal,
-        handleStatementChange,
-        handleOptionsChange,
-        handleRadioButtonChange,
-        handleDeleteOption,
         isOpen,
         questionForm,
         setQuestionForm,

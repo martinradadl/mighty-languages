@@ -22,63 +22,6 @@ export const EditQuestionDialog = (props) => {
     setIsOpen(true);
   }
 
-  const handleStatementChange = (e) => {
-    const questionFormCopy = [...questionForm];
-    const statementIndex = e.target.name.split("-")[1];
-    questionFormCopy[statementIndex] = {
-      ...questionFormCopy[statementIndex],
-      value: e.target.value,
-    };
-    setQuestionForm(questionFormCopy);
-  };
-
-  const handleOptionsChange = (e) => {
-    const optionsCopy = [...questionForm[0].options];
-    const optionIndex = e.target.name.split("-")[1];
-    optionsCopy[optionIndex] = {
-      ...optionsCopy[optionIndex],
-      value: e.target.value,
-    };
-
-    setQuestionForm([
-      {
-        ...questionForm[0],
-        options: optionsCopy,
-      },
-    ]);
-  };
-
-  const handleRadioButtonChange = (e) => {
-    const optionsCopy = [...questionForm[0].options];
-    const lastAnswerIndex = questionForm[0].options.findIndex(
-      (elem) => elem.isAnswer === true
-    );
-    if (lastAnswerIndex !== -1) {
-      const optionCopy = { ...optionsCopy[lastAnswerIndex], isAnswer: false };
-      optionsCopy[lastAnswerIndex] = optionCopy;
-    }
-    const newAnswerIndex = e.target.name.split("-")[1];
-    const optionCopy = { ...optionsCopy[newAnswerIndex], isAnswer: true };
-    optionsCopy[newAnswerIndex] = optionCopy;
-    setQuestionForm([
-      {
-        ...questionForm[0],
-        options: optionsCopy,
-      },
-    ]);
-  };
-
-  const handleDeleteOption = (i) => {
-    let optionsCopy = [...questionForm[0].options];
-    optionsCopy = [...optionsCopy.slice(0, i), ...optionsCopy.slice(i + 1)];
-    setQuestionForm([
-      {
-        ...questionForm[0],
-        options: optionsCopy,
-      },
-    ]);
-  };
-
   const onSubmitMultipleChoice = () => {
     if (
       questionForm[0].value === "" ||
@@ -108,16 +51,10 @@ export const EditQuestionDialog = (props) => {
   return (
     <QuestionDialog
       {...{
-        openModal,
         closeModal,
-        handleStatementChange,
-        handleOptionsChange,
-        handleRadioButtonChange,
-        handleDeleteOption,
         isOpen,
         questionForm,
         setQuestionForm,
-        selectedQuestionType: selectedQuestion.type,
         onSubmitMultipleChoice,
         dialogTrigger: (
           <div

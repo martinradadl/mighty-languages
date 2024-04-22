@@ -10,14 +10,9 @@ import questionsActions from "../../../redux/actions/questions";
 export const QuestionDialog = (props) => {
   const {
     closeModal,
-    handleStatementChange,
-    handleOptionsChange,
-    handleRadioButtonChange,
-    handleDeleteOption,
     isOpen,
     questionForm,
     setQuestionForm,
-    selectedQuestionType,
     onSubmitMultipleChoice,
     onSubmitFilling,
     dialogTrigger,
@@ -44,7 +39,7 @@ export const QuestionDialog = (props) => {
 
   const fillingQuestionFormInitialState = [
     {
-      type: "",
+      statementType: "",
       value: "",
     },
   ];
@@ -54,6 +49,66 @@ export const QuestionDialog = (props) => {
     event.target.value === QUESTION_TYPES["MULT_CHOICE"].id
       ? setQuestionForm(multipleChoiceFormInitialState)
       : setQuestionForm(fillingQuestionFormInitialState);
+  };
+
+  const handleStatementChange = (e) => {
+    const questionFormCopy = [...questionForm];
+    const statementIndex = e.target.name.split("-")[1];
+    questionFormCopy[statementIndex] = {
+      ...questionFormCopy[statementIndex],
+      value: e.target.value,
+    };
+    setQuestionForm(questionFormCopy);
+  };
+
+  const handleOptionsChange = (e) => {
+    const optionsCopy = [...questionForm[0].options];
+    const optionIndex = e.target.name.split("-")[1];
+    optionsCopy[optionIndex] = {
+      ...optionsCopy[optionIndex],
+      value: e.target.value,
+    };
+    setQuestionForm([
+      {
+        ...questionForm[0],
+        options: optionsCopy,
+      },
+    ]);
+  };
+
+  const handleRadioButtonChange = (e) => {
+    const optionsCopy = [...questionForm[0].options];
+    const lastAnswerIndex = questionForm[0].options.findIndex(
+      (elem) => elem.isAnswer === true
+    );
+    if (lastAnswerIndex !== -1) {
+      optionsCopy[lastAnswerIndex] = {
+        ...optionsCopy[lastAnswerIndex],
+        isAnswer: false,
+      };
+    }
+    const newAnswerIndex = e.target.name.split("-")[1];
+    optionsCopy[newAnswerIndex] = {
+      ...optionsCopy[newAnswerIndex],
+      isAnswer: true,
+    };
+    setQuestionForm([
+      {
+        ...questionForm[0],
+        options: optionsCopy,
+      },
+    ]);
+  };
+
+  const handleDeleteOption = (i) => {
+    let optionsCopy = [...questionForm[0].options];
+    optionsCopy = [...optionsCopy.slice(0, i), ...optionsCopy.slice(i + 1)];
+    setQuestionForm([
+      {
+        ...questionForm[0],
+        options: optionsCopy,
+      },
+    ]);
   };
 
   return (
