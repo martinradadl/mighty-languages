@@ -90,6 +90,7 @@ button {
 
 .open-dialog-button {
   height: 32px;
+  margin: 1px 0px;
   background-color: var(--dark-blue);
   color: var(--light-gray);
   border: none;
