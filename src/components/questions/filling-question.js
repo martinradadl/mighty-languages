@@ -19,11 +19,16 @@ export const FillingQuestion = (props) => {
       <b>{index}. </b>
       {selectedQuestion.statements.map((statement, i) => {
         if (statement.statementType.id === "TEXT") {
-          return <p style={{margin: "0px"}}>{statement.value}</p>;
+          return (
+            <p key={i} style={{ margin: "0px" }}>
+              {statement.value}
+            </p>
+          );
         }
         if (statement.statementType.id === "FILL") {
           return (
             <input
+              key={i}
               className="fill-statement-input"
               name={`$input-text-${i}`}
               value={userResponses[i]}
@@ -32,15 +37,17 @@ export const FillingQuestion = (props) => {
           );
         }
         if (statement.statementType.id === "SELECT") {
-          <select>
-            {statement.options.map((option, i) => {
-              return (
-                <option key={i} value={option.value}>
-                  {option.value}
-                </option>
-              );
-            })}
-          </select>;
+          return (
+            <select key={i}>
+              {statement.options.map((option, i) => {
+                return (
+                  <option key={i} value={i}>
+                    {option.value}
+                  </option>
+                );
+              })}
+            </select>
+          );
         }
       })}
     </div>
