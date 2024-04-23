@@ -13,6 +13,7 @@ export const QuestionDialog = (props) => {
     isOpen,
     questionForm,
     setQuestionForm,
+    selectedQuestionType,
     onSubmitMultipleChoice,
     onSubmitFilling,
     dialogTrigger,
@@ -23,7 +24,9 @@ export const QuestionDialog = (props) => {
     (state) => state.questions.statementTypes
   );
   const [questionType, setQuestionType] = useState(
-    QUESTION_TYPES["MULT_CHOICE"].id
+    selectedQuestionType?.id === "MULT_CHOICE"
+      ? QUESTION_TYPES["MULT_CHOICE"].id
+      : QUESTION_TYPES["FILLING"].id
   );
 
   const multipleChoiceFormInitialState = [
@@ -37,12 +40,7 @@ export const QuestionDialog = (props) => {
     },
   ];
 
-  const fillingQuestionFormInitialState = [
-    {
-      statementType: "",
-      value: "",
-    },
-  ];
+  const fillingQuestionFormInitialState = [];
 
   const handleChangeQuestionType = (event) => {
     setQuestionType(event.target.value);

@@ -8,22 +8,21 @@ import "../../styles/questions.css";
 
 export const Question = (props) => {
   const { selectedQuestion, index } = props;
-  const dispatch = useDispatch();
 
-  if (selectedQuestion.type.id === "MULT_CHOICE") {
-    return (
-      <div className="question-container">
+  return (
+    <div className="question-container">
+      {selectedQuestion.type.id === "MULT_CHOICE" ? (
         <MultipleChoiceQuestion
           selectedQuestion={selectedQuestion}
           index={index}
         />
-        <div style={{ display: "flex", marginLeft: "auto", gap: "4px" }}>
-          <EditQuestionDialog selectedQuestion={selectedQuestion} />
-          <DeleteQuestionDialog id={selectedQuestion._id} />
-        </div>
+      ) : (
+        <FillingQuestion selectedQuestion={selectedQuestion} index={index} />
+      )}
+      <div style={{ display: "flex", marginLeft: "auto", gap: "4px" }}>
+        <EditQuestionDialog selectedQuestion={selectedQuestion} />
+        <DeleteQuestionDialog id={selectedQuestion._id} />
       </div>
-    );
-  } else {
-    return <FillingQuestion selectedQuestion={selectedQuestion} />;
-  }
+    </div>
+  );
 };

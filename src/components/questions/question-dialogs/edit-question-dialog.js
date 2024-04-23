@@ -7,12 +7,10 @@ import questionsActions from "../../../redux/actions/questions";
 
 export const EditQuestionDialog = (props) => {
   const { selectedQuestion } = props;
-  const a = useSelector((state) => state.questions.questionsList);
   const [isOpen, setIsOpen] = useState(false);
   const [questionForm, setQuestionForm] = useState(selectedQuestion.statements);
   const params = useParams();
   const dispatch = useDispatch();
-  const QUESTION_TYPES = useSelector((state) => state.questions.questionTypes);
 
   function closeModal() {
     setIsOpen(false);
@@ -34,7 +32,32 @@ export const EditQuestionDialog = (props) => {
     }
     const updatedQuestion = {
       _id: selectedQuestion._id,
-      type: QUESTION_TYPES["MULT_CHOICE"],
+      type: selectedQuestion.type,
+      statements: questionForm,
+      lessonId: params.id,
+    };
+    dispatch(questionsActions.editQuestion(updatedQuestion))
+      .unwrap()
+      .then(() => {
+        closeModal();
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
+  const onSubmitFilling = () => {
+    if (
+      questionForm.some(
+        (statement) =>
+          statement.statementType !== "SELECT" && statement.value === ""
+      )
+    ) {
+      return alert("Faltan campos por llenar");
+    }
+    const updatedQuestion = {
+      _id: selectedQuestion._id,
+      type: selectedQuestion.type,
       statements: questionForm,
       lessonId: params.id,
     };
@@ -56,6 +79,8 @@ export const EditQuestionDialog = (props) => {
         questionForm,
         setQuestionForm,
         onSubmitMultipleChoice,
+        onSubmitFilling,
+        selectedQuestionType: selectedQuestion.type,
         dialogTrigger: (
           <div
             className="clickable-container"
