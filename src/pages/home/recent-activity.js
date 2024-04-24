@@ -48,7 +48,13 @@ export const RecentActivity = () => {
                   {enrollment.currentLesson.title}
                 </h4>
                 <div className="course-progress-details">
-                  <div className="progress-label">
+                  <div
+                    style={{
+                      height: "32px",
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                  >
                     <p>
                       <b>Progreso:</b>{" "}
                     </p>
@@ -68,7 +74,9 @@ export const RecentActivity = () => {
                       }}
                     />
                   </div>
-                  <h4>{`${enrollment.finishedLessonsIds.length}/${enrollment.numberOfLessons}`}</h4>
+                  <h4
+                    style={{ margin: "0px" }}
+                  >{`${enrollment.finishedLessonsIds.length}/${enrollment.numberOfLessons}`}</h4>
                   <button
                     id="resume-button"
                     onClick={() => {
