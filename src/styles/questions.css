@@ -29,6 +29,8 @@
 
 .selected-option {
   border: 2px solid var(--dark-blue);
+  border-radius: 4px;
+  padding-right: 4px;
 }
 
 .multiple-choice-option-input {

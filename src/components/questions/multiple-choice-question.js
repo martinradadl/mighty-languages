@@ -25,16 +25,18 @@ export const MultipleChoiceQuestion = (props) => {
         return (
           <div
             key={i}
-            className={
-              option.value === selectedOption
-                ? "mult-choice-option-container selected-option"
-                : "mult-choice-option-container"
-            }
+            className={"mult-choice-option-container"}
             onClick={() => {
               handleChangeSelectedOption(option.value);
             }}
           >
-            <p className="mult-choice-option">
+            <p
+              className={
+                option.value === selectedOption
+                  ? "mult-choice-option selected-option"
+                  : "mult-choice-option"
+              }
+            >
               <b>{String.fromCharCode(97 + i)}. </b>
               {option.value}
             </p>
