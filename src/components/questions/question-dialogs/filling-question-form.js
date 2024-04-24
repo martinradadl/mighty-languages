@@ -80,7 +80,9 @@ export const FillingQuestionForm = (props) => {
             value={statement.value}
             onChange={handleTextInputChange}
             className={
-              statement.statementType.id === "TEXT" ? "form-text-statement" : "form-fill-statement"
+              statement.statementType.id === "TEXT"
+                ? "form-text-statement"
+                : "form-fill-statement"
             }
           />
           <AiFillDelete
@@ -122,6 +124,7 @@ export const FillingQuestionForm = (props) => {
               initialState: statement.options,
               editSelectStatement,
               submitText: "Editar Menú",
+              index: i,
             }}
           />
 

@@ -9,11 +9,13 @@ import { AiFillDelete, AiFillPlusSquare, AiOutlineClose } from "react-icons/ai";
 
 export const SelectStatementDialog = (props) => {
   const {
+    key,
     dialogTrigger,
     initialState,
     addSelectStatement,
     editSelectStatement,
     submitText,
+    index,
   } = props;
   const [isOpen, setIsOpen] = useState(false);
   const [selectForm, setSelectForm] = useState(initialState);
@@ -73,7 +75,7 @@ export const SelectStatementDialog = (props) => {
     }
     submitText === "Agregar Menú"
       ? addSelectStatement(selectForm)
-      : editSelectStatement(selectForm);
+      : editSelectStatement(selectForm, index);
     closeModal();
   };
 
