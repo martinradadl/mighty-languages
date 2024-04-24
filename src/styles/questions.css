@@ -62,16 +62,17 @@
   width: fit-content;
 }
 
-.fill-statement {
+.form-fill-statement {
   border: 1px solid var(--dark-blue);
   height: 20px;
   width: fit-content;
 }
 
-.select-statement {
+.form-select-statement {
   height: 20px;
 }
 
 .fill-statement-input {
   height: 12px;
+  margin-right: 2px;
 }

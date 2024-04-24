@@ -80,7 +80,7 @@ export const FillingQuestionForm = (props) => {
             value={statement.value}
             onChange={handleTextInputChange}
             className={
-              statement.statementType.id === "TEXT" ? "text-statement" : "fill-statement"
+              statement.statementType.id === "TEXT" ? "form-text-statement" : "form-fill-statement"
             }
           />
           <AiFillDelete
