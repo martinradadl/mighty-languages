@@ -16,7 +16,7 @@ export const FillingQuestion = (props) => {
 
   return (
     <div style={{ display: "flex", alignItems: "center" }}>
-      <b>{index}. </b>
+      <b>{index}.&nbsp;</b>
       {selectedQuestion.statements.map((statement, i) => {
         if (statement.statementType.id === "TEXT") {
           return (
