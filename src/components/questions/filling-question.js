@@ -20,7 +20,7 @@ export const FillingQuestion = (props) => {
       {selectedQuestion.statements.map((statement, i) => {
         if (statement.statementType.id === "TEXT") {
           return (
-            <p key={i} style={{ margin: "0px" }}>
+            <p key={i} style={{ margin: "0px 3px 0px 0px" }}>
               {statement.value}
             </p>
           );
@@ -38,7 +38,7 @@ export const FillingQuestion = (props) => {
         }
         if (statement.statementType.id === "SELECT") {
           return (
-            <select key={i}>
+            <select key={i} style={{ marginRight: "3px" }}>
               {statement.options.map((option, i) => {
                 return (
                   <option key={i} value={i}>
