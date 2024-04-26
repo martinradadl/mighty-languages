@@ -9,7 +9,6 @@ import { AiFillDelete, AiFillPlusSquare, AiOutlineClose } from "react-icons/ai";
 
 export const SelectStatementDialog = (props) => {
   const {
-    key,
     dialogTrigger,
     initialState,
     addSelectStatement,
