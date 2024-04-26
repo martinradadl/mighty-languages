@@ -24,7 +24,8 @@ export const QuestionDialog = (props) => {
     (state) => state.questions.statementTypes
   );
   const [questionType, setQuestionType] = useState(
-    selectedQuestionType?.id === "MULT_CHOICE"
+    selectedQuestionType?.id === "MULT_CHOICE" ||
+      selectedQuestionType === undefined
       ? QUESTION_TYPES["MULT_CHOICE"].id
       : QUESTION_TYPES["FILLING"].id
   );
