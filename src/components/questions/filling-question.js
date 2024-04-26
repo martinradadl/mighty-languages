@@ -4,7 +4,7 @@ import "../../styles/questions.css";
 import { AiFillCheckCircle } from "react-icons/ai";
 
 export const FillingQuestion = (props) => {
-  const { selectedQuestion, index, isInstructor } = props;
+  const { question, index, isInstructor } = props;
   const dispatch = useDispatch();
   const [userResponses, setUserResponses] = useState([]);
 
@@ -20,12 +20,12 @@ export const FillingQuestion = (props) => {
       style={{
         display: "flex",
         alignItems: "center",
-        gap: "2px",
+        gap: "4px",
         flexWrap: "wrap",
       }}
     >
-      <b>{index}.&nbsp;</b>
-      {selectedQuestion.statements.map((statement, i) => {
+      <b>{index}.</b>
+      {question.statements.map((statement, i) => {
         if (statement.statementType.id === "TEXT") {
           return (
             <p key={i} style={{ margin: "0px" }}>
