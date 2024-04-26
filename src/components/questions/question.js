@@ -7,7 +7,7 @@ import { DeleteQuestionDialog } from "./question-dialogs/delete-question-dialog"
 import "../../styles/questions.css";
 
 export const Question = (props) => {
-  const { selectedQuestion, index } = props;
+  const { selectedQuestion, index, isInstructor } = props;
 
   return (
     <div className="question-container">
@@ -15,9 +15,14 @@ export const Question = (props) => {
         <MultipleChoiceQuestion
           selectedQuestion={selectedQuestion}
           index={index}
+          isInstructor={isInstructor}
         />
       ) : (
-        <FillingQuestion selectedQuestion={selectedQuestion} index={index} />
+        <FillingQuestion
+          selectedQuestion={selectedQuestion}
+          index={index}
+          isInstructor={isInstructor}
+        />
       )}
       <div style={{ display: "flex", marginLeft: "auto", gap: "4px" }}>
         <EditQuestionDialog selectedQuestion={selectedQuestion} />

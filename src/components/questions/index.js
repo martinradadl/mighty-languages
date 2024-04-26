@@ -7,12 +7,12 @@ import { Question } from "./question";
 import debounce from "lodash.debounce";
 import questionsActions from "../../redux/actions/questions";
 
-
 export const QuizTab = (props) => {
-  const { handleCompleteLesson } = props;
+  const { handleCompleteLesson, isInstructor } = props;
   const params = useParams();
   const dispatch = useDispatch();
   const { status, questionsList } = useSelector((state) => state.questions);
+  const user = useSelector((state) => state.users.selectedUser);
 
   // Get Questions
   const handleGetQuestions = useCallback(() => {
@@ -32,18 +32,38 @@ export const QuizTab = (props) => {
         isLoading={questionsList === null || status === "loading"}
       >
         {questionsList.map((question, i) => {
-          return <Question key={i} selectedQuestion={question} index={i + 1} />;
+          return (
+            <Question
+              key={i}
+              selectedQuestion={question}
+              index={i + 1}
+              isInstructor={isInstructor}
+            />
+          );
         })}
-        <button
-          type="button"
-          className="open-dialog-button"
-          onClick={(event) => {
-            handleCompleteLesson();
-          }}
-        >
-          Terminar
-        </button>
+        {questionsList.length > 0 && !isInstructor ? (
+          <button
+            type="button"
+            className="open-dialog-button"
+            onClick={(event) => {
+              handleCompleteLesson();
+            }}
+          >
+            Terminar
+          </button>
+        ) : null}
       </LoadingWrapper>
     </div>
   );
 };
+
+// [
+//   {
+//     _id:gfhgfghfgh,
+//     results:[
+//       {
+//         answer: "fsdgdsgsdg",statementIndex:1
+//       }
+//     ]
+//   }
+// ]

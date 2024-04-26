@@ -5,7 +5,9 @@ import { useSelector, useDispatch } from "react-redux";
 import lessonsActions from "../../redux/actions/lessons";
 import debounce from "lodash.debounce";
 import { AiFillRightCircle, AiFillLeftCircle } from "react-icons/ai";
-import courseEnrollmentActions, { EDIT_OPERATIONS } from "../../redux/actions/course-enrollment";
+import courseEnrollmentActions, {
+  EDIT_OPERATIONS,
+} from "../../redux/actions/course-enrollment";
 import { handleEnrollInCourse } from "../helpers";
 import { TabsContent } from "../../components/tabs-content";
 
@@ -156,7 +158,10 @@ export const Lesson = () => {
         );
       })}
 
-      <TabsContent handleCompleteLesson={debouncedHandleCompleteLesson} />
+      <TabsContent
+        handleCompleteLesson={debouncedHandleCompleteLesson}
+        isInstructor={selectedLesson.course.instructor === user?._id}
+      />
     </div>
   );
 };

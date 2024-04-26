@@ -4,12 +4,17 @@ import { CommentsTab } from "./comments";
 import { QuizTab } from "./questions";
 
 export const TabsContent = (props) => {
-  const { handleCompleteLesson } = props;
+  const { handleCompleteLesson, isInstructor } = props;
 
   const tabs = [
     {
       title: "Quiz",
-      content: <QuizTab handleCompleteLesson={handleCompleteLesson} />,
+      content: (
+        <QuizTab
+          handleCompleteLesson={handleCompleteLesson}
+          isInstructor={isInstructor}
+        />
+      ),
     },
     { title: "Comentarios", content: <CommentsTab /> },
   ];
