@@ -39,17 +39,6 @@ export const AddQuestionDialog = () => {
     setIsOpen(true);
   }
 
-  const addStatement = () => {
-    setQuestionForm([
-      ...questionForm,
-      {
-        type: "",
-        value: "",
-        options: [],
-      },
-    ]);
-  };
-
   const onSubmitMultipleChoice = () => {
     if (
       questionForm[0].value === "" ||
