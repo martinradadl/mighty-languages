@@ -4,7 +4,7 @@ import "../../styles/questions.css";
 import { AiFillCheckCircle } from "react-icons/ai";
 
 export const MultipleChoiceQuestion = (props) => {
-  const { selectedQuestion, index, isInstructor } = props;
+  const { question, index, isInstructor } = props;
   const dispatch = useDispatch();
   const [selectedOption, setSelectedOption] = useState();
 
@@ -17,11 +17,11 @@ export const MultipleChoiceQuestion = (props) => {
       <div className="mult-choice-statement-container">
         <p className="mult-choice-statement">
           <b>{index}. </b>
-          {selectedQuestion.statements[0].value}
+          {question.statements[0].value}
         </p>
       </div>
 
-      {selectedQuestion.statements[0].options.map((option, i) => {
+      {question.statements[0].options.map((option, i) => {
         return (
           <div
             key={i}

@@ -7,26 +7,26 @@ import { DeleteQuestionDialog } from "./question-dialogs/delete-question-dialog"
 import "../../styles/questions.css";
 
 export const Question = (props) => {
-  const { selectedQuestion, index, isInstructor } = props;
+  const { question, index, isInstructor } = props;
 
   return (
     <div className="question-container">
-      {selectedQuestion.type.id === "MULT_CHOICE" ? (
+      {question.type.id === "MULT_CHOICE" ? (
         <MultipleChoiceQuestion
-          selectedQuestion={selectedQuestion}
+          question={question}
           index={index}
           isInstructor={isInstructor}
         />
       ) : (
         <FillingQuestion
-          selectedQuestion={selectedQuestion}
+          question={question}
           index={index}
           isInstructor={isInstructor}
         />
       )}
       <div style={{ display: "flex", marginLeft: "auto", gap: "4px" }}>
-        <EditQuestionDialog selectedQuestion={selectedQuestion} />
-        <DeleteQuestionDialog id={selectedQuestion._id} />
+        <EditQuestionDialog question={question} />
+        <DeleteQuestionDialog id={question._id} />
       </div>
     </div>
   );

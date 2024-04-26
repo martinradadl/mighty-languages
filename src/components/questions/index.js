@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { LoadingWrapper } from "../loading";
@@ -13,6 +13,9 @@ export const QuizTab = (props) => {
   const dispatch = useDispatch();
   const { status, questionsList } = useSelector((state) => state.questions);
   const user = useSelector((state) => state.users.selectedUser);
+  const [userResponses, setUserResponses] = useState([]);
+
+  const userResponseInitialState = { questionIndex: null, reponse: null };
 
   // Get Questions
   const handleGetQuestions = useCallback(() => {
@@ -34,10 +37,14 @@ export const QuizTab = (props) => {
         {questionsList.map((question, i) => {
           return (
             <Question
-              key={i}
-              selectedQuestion={question}
-              index={i + 1}
-              isInstructor={isInstructor}
+              {...{
+                key: i,
+                question,
+                index: i + 1,
+                isInstructor: isInstructor,
+                userResponses,
+                setUserResponses,
+              }}
             />
           );
         })}
