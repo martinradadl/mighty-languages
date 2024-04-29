@@ -13,9 +13,7 @@ export const QuizTab = (props) => {
   const dispatch = useDispatch();
   const { status, questionsList } = useSelector((state) => state.questions);
   const user = useSelector((state) => state.users.selectedUser);
-  const [userResponses, setUserResponses] = useState([]);
-
-  const userResponseInitialState = { questionIndex: null, reponse: null };
+  const [userAnswers, setUserAnswers] = useState([]);
 
   // Get Questions
   const handleGetQuestions = useCallback(() => {
@@ -42,8 +40,8 @@ export const QuizTab = (props) => {
                 question,
                 index: i + 1,
                 isInstructor: isInstructor,
-                userResponses,
-                setUserResponses,
+                userAnswers,
+                setUserAnswers,
               }}
             />
           );
@@ -64,13 +62,3 @@ export const QuizTab = (props) => {
   );
 };
 
-// [
-//   {
-//     _id:gfhgfghfgh,
-//     results:[
-//       {
-//         answer: "fsdgdsgsdg",statementIndex:1
-//       }
-//     ]
-//   }
-// ]

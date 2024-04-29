@@ -4,15 +4,51 @@ import "../../styles/questions.css";
 import { AiFillCheckCircle } from "react-icons/ai";
 
 export const FillingQuestion = (props) => {
-  const { question, index, isInstructor } = props;
+  const { question, index, isInstructor, userAnswers, setUserAnswers } = props;
   const dispatch = useDispatch();
-  const [userResponses, setUserResponses] = useState([]);
 
-  const handleChangeSelectedResponse = (event) => {
-    const temp = [...userResponses];
-    const index = event.target.name.split("-")[2];
-    temp[index] = { ...temp[index], value: event.target.value };
-    setUserResponses(temp);
+  const handleChangeAnswer = (event) => {
+    const statementIndex = event.target.name.split("-")[2];
+    const i = userAnswers.findIndex((elem) => elem.questionIndex === index);
+    if (i === -1) {
+      console.log("antes de setear:", userAnswers);
+      const newAnswer = {
+        questionIndex: index,
+        answers: [{ statementIndex, value: event.target.value }],
+      };
+      setUserAnswers([...userAnswers, newAnswer]);
+      console.log("después de setear:", userAnswers);
+    } else {
+      const j = userAnswers[i].answers.findIndex(
+        (elem) => elem.statementIndex === statementIndex
+      );
+      if (j === -1) {
+        setUserAnswers([
+          ...userAnswers.slice(0, i),
+          {
+            questionIndex: index,
+            answers: [
+              ...userAnswers[i].answers,
+              { statementIndex, value: event.target.value },
+            ],
+          },
+          ...userAnswers.slice(i + 1),
+        ]);
+      } else {
+        setUserAnswers([
+          ...userAnswers.slice(0, i),
+          {
+            questionIndex: index,
+            answers: [
+              ...userAnswers[i].answers.slice(0, j),
+              { statementIndex, value: event.target.value },
+              ...userAnswers[i].answers.slice(j + 1),
+            ],
+          },
+          ...userAnswers.slice(i + 1),
+        ]);
+      }
+    }
   };
 
   return (
@@ -39,8 +75,14 @@ export const FillingQuestion = (props) => {
               key={i}
               className="fill-statement-input"
               name={`$input-text-${i}`}
-              value={isInstructor ? statement.value : userResponses[i]}
-              onChange={handleChangeSelectedResponse}
+              value={
+                isInstructor
+                  ? statement.value
+                  : userAnswers
+                      .find((elem) => elem.questionIndex === index)
+                      ?.answers.find((elem) => elem.statementIndex === i)?.value
+              }
+              onChange={handleChangeAnswer}
               disabled={isInstructor}
             />
           );
@@ -53,8 +95,9 @@ export const FillingQuestion = (props) => {
                 return (
                   <option
                     key={i}
-                    value={i}
+                    value={option.value}
                     selected={isInstructor && option.isAnswer === true}
+                    disabled={isInstructor}
                   >
                     {option.value}
                   </option>

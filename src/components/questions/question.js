@@ -7,21 +7,30 @@ import { DeleteQuestionDialog } from "./question-dialogs/delete-question-dialog"
 import "../../styles/questions.css";
 
 export const Question = (props) => {
-  const { question, index, isInstructor } = props;
+  const { question, index, isInstructor, userAnswers, setUserAnswers } =
+    props;
 
   return (
     <div className="question-container">
       {question.type.id === "MULT_CHOICE" ? (
         <MultipleChoiceQuestion
-          question={question}
-          index={index}
-          isInstructor={isInstructor}
+          {...{
+            question,
+            index,
+            isInstructor,
+            userAnswers,
+            setUserAnswers,
+          }}
         />
       ) : (
         <FillingQuestion
-          question={question}
-          index={index}
-          isInstructor={isInstructor}
+          {...{
+            question,
+            index,
+            isInstructor,
+            userAnswers,
+            setUserAnswers,
+          }}
         />
       )}
       <div style={{ display: "flex", marginLeft: "auto", gap: "4px" }}>
