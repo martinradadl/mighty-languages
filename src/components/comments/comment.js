@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import commentsActions from "../../redux/actions/comments";
 import feedbacksActions from "../../redux/actions/feedbacks";
 import { DeleteCommentDialog } from "./delete-comment-dialog";
-import debounce from 'lodash.debounce';
+import debounce from "lodash.debounce";
 
 export const Comment = (props) => {
   const { comment } = props;
@@ -33,7 +33,6 @@ export const Comment = (props) => {
   const handleFeedback = (feedback) => {
     if (user !== null) {
       if (!comment.hasFeedback) {
-        
         dispatch(
           feedbacksActions.addFeedback({
             userId: user._id,
@@ -61,7 +60,7 @@ export const Comment = (props) => {
     }
   };
 
-  const debouncedHandleFeedback = debounce(handleFeedback,500)
+  const debouncedHandleFeedback = debounce(handleFeedback, 500);
 
   const handleChange = (event) => {
     setEditedComment(event.target.value);
@@ -86,29 +85,42 @@ export const Comment = (props) => {
 
         <div className="comment-options">
           {comment.hasFeedback === "like" ? (
-            <AiFillLike onClick={() => debouncedHandleFeedback("like")} />
+            <AiFillLike
+              className="clickable-container"
+              onClick={() => debouncedHandleFeedback("like")}
+            />
           ) : (
-            <AiOutlineLike onClick={() => debouncedHandleFeedback("like")} />
+            <AiOutlineLike
+              className="clickable-container"
+              onClick={() => debouncedHandleFeedback("like")}
+            />
           )}
           <p>{comment.likes}</p>
           {comment.hasFeedback === "dislike" ? (
-            <AiFillDislike onClick={() => debouncedHandleFeedback("dislike")} />
+            <AiFillDislike
+              className="clickable-container"
+              onClick={() => debouncedHandleFeedback("dislike")}
+            />
           ) : (
-            <AiOutlineDislike onClick={() => debouncedHandleFeedback("dislike")} />
+            <AiOutlineDislike
+              className="clickable-container"
+              onClick={() => debouncedHandleFeedback("dislike")}
+            />
           )}
 
           <p>{comment.dislikes}</p>
-          <p>Reply</p>
-          <p>Report</p>
+          <p className="clickable-container">Reply</p>
+          <p className="clickable-container">Report</p>
           {user !== null && user._id === comment.user._id ? (
             <Fragment>
               <AiFillEdit
-                style={{ cursor: "pointer" }}
+                className="clickable-container"
                 onClick={() => {
                   setEditedComment(comment.comment);
                 }}
               />
               <AiFillDelete
+                className="clickable-container"
                 onClick={() => {
                   setIsDeleteDialogOpen(true);
                 }}
