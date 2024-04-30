@@ -11,13 +11,11 @@ export const FillingQuestion = (props) => {
     const statementIndex = event.target.name.split("-")[2];
     const i = userAnswers.findIndex((elem) => elem.questionIndex === index);
     if (i === -1) {
-      console.log("antes de setear:", userAnswers);
       const newAnswer = {
         questionIndex: index,
         answers: [{ statementIndex, value: event.target.value }],
       };
       setUserAnswers([...userAnswers, newAnswer]);
-      console.log("después de setear:", userAnswers);
     } else {
       const j = userAnswers[i].answers.findIndex(
         (elem) => elem.statementIndex === statementIndex
@@ -89,14 +87,28 @@ export const FillingQuestion = (props) => {
         }
         if (statement.statementType.id === "SELECT") {
           return (
-            <select key={i}>
+            <select
+              key={i}
+              name={`$input-select-${i}`}
+              value={
+                isInstructor
+                  ? statement.options.find((elem) => elem.isAnswer === true)
+                      ?.value
+                  : userAnswers
+                      .find((elem) => elem.questionIndex === index)
+                      ?.answers.find((elem) => elem.statementIndex === i)?.value
+              }
+              onChange={handleChangeAnswer}
+            >
               <option style={{ display: "none" }}></option>
               {statement.options.map((option, i) => {
                 return (
                   <option
                     key={i}
+                    className={
+                      isInstructor && option.isAnswer ? "select-answer" : ""
+                    }
                     value={option.value}
-                    selected={isInstructor && option.isAnswer === true}
                     disabled={isInstructor}
                   >
                     {option.value}
