@@ -81,3 +81,25 @@
   background-color: var(--dark-blue);
   color: var(--light-gray);
 }
+
+.switch {
+  background-color: var(--light-blue);
+  height: 40px;
+  width: 80px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+}
+
+.switch-active {
+  background-color: var(--dark-blue);
+}
+
+.switch-ball {
+  height: 36px;
+  width: 36px;
+  background-color: var(--light-gray);
+}
+
+.switch-ball-active {
+
+}

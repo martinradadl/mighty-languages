@@ -6,16 +6,27 @@ import { AddQuestionDialog } from "./question-dialogs/add-question-dialog";
 import { Question } from "./question";
 import debounce from "lodash.debounce";
 import questionsActions from "../../redux/actions/questions";
+import { Switch } from "@headlessui/react";
+import lessonsActions from "../../redux/actions/lessons";
+import "../../styles/questions.css";
 
 export const QuizTab = (props) => {
-  const { handleCompleteLesson, isInstructor } = props;
+  const { handleCompleteLesson, isInstructor, isQuizActive } = props;
   const params = useParams();
   const dispatch = useDispatch();
   const { status, questionsList } = useSelector((state) => state.questions);
   const user = useSelector((state) => state.users.selectedUser);
   const [userAnswers, setUserAnswers] = useState([]);
 
-  // Get Questions
+  const handleChangeIsQuizActive = () => {
+    dispatch(
+      lessonsActions.editLesson({
+        _id: params.id,
+        isQuizActive: !isQuizActive,
+      })
+    );
+  };
+
   const handleGetQuestions = useCallback(() => {
     dispatch(questionsActions.getQuestions(params.id));
   }, [dispatch, params.id]);
@@ -28,7 +39,26 @@ export const QuizTab = (props) => {
 
   return (
     <div>
-      <AddQuestionDialog />
+      <div
+        style={{
+          display: "flex",
+          gap: "12px",
+          alignItems: "center",
+          margin: "10px 0px",
+        }}
+      >
+        <AddQuestionDialog />
+        <Switch
+          checked={isQuizActive}
+          onChange={handleChangeIsQuizActive}
+          className={isQuizActive ? "switch switch-active" : "switch"}
+        >
+          <span
+            aria-hidden="true"
+            className={isQuizActive ? "switch-ball switch-ball-active" : "switch-ball"}
+          />
+        </Switch>
+      </div>
       <LoadingWrapper
         isLoading={questionsList === null || status === "loading"}
       >
@@ -52,6 +82,7 @@ export const QuizTab = (props) => {
             className="open-dialog-button"
             onClick={(event) => {
               handleCompleteLesson();
+              console.log(userAnswers);
             }}
           >
             Terminar
@@ -61,4 +92,3 @@ export const QuizTab = (props) => {
     </div>
   );
 };
-

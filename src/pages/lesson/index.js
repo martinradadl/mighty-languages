@@ -161,6 +161,7 @@ export const Lesson = () => {
       <TabsContent
         handleCompleteLesson={debouncedHandleCompleteLesson}
         isInstructor={selectedLesson.course.instructor === user?._id}
+        isQuizActive={selectedLesson.isQuizActive}
       />
     </div>
   );
