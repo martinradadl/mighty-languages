@@ -54,7 +54,7 @@ const quizResultsSlice = createSlice({
         state.quizResults = null;
         state.status = "idle";
       })
-      .addCase(actions.deleteQuestion.rejected, (state, action) => {
+      .addCase(actions.deleteQuizResults.rejected, (state, action) => {
         state.error = action.payload;
         state.status = "idle";
         state.questionsList = null;
