@@ -98,7 +98,7 @@ export const AddQuestionDialog = () => {
         onSubmitMultipleChoice,
         onSubmitFilling,
         dialogTrigger: (
-          <div className="open-dialog-button-container">
+          <div>
             <button
               type="button"
               className="open-dialog-button"
