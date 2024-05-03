@@ -21,8 +21,11 @@ export const QuizTab = (props) => {
   const handleChangeIsQuizActive = () => {
     dispatch(
       lessonsActions.editLesson({
-        _id: params.id,
-        isQuizActive: !isQuizActive,
+        updatedLesson: {
+          _id: params.id,
+          isQuizActive: !isQuizActive,
+        },
+        changeQuizActiveness: true,
       })
     );
   };
@@ -42,22 +45,30 @@ export const QuizTab = (props) => {
       <div
         style={{
           display: "flex",
-          gap: "12px",
           alignItems: "center",
+          justifyContent: "space-between",
           margin: "10px 0px",
         }}
       >
         <AddQuestionDialog />
-        <Switch
-          checked={isQuizActive}
-          onChange={handleChangeIsQuizActive}
-          className={isQuizActive ? "switch switch-active" : "switch"}
+        <div
+          style={{
+            display: "flex",
+            gap: "12px",
+            alignItems: "center",
+          }}
         >
-          <span
-            aria-hidden="true"
-            className={isQuizActive ? "switch-ball switch-ball-active" : "switch-ball"}
-          />
-        </Switch>
+          <p>Activar Quiz:</p>
+          <Switch
+            checked={isQuizActive}
+            onChange={handleChangeIsQuizActive}
+            className={isQuizActive ? "switch active" : "switch"}
+          >
+            <div
+              className={isQuizActive ? "switch-ball active" : "switch-ball"}
+            />
+          </Switch>
+        </div>
       </div>
       <LoadingWrapper
         isLoading={questionsList === null || status === "loading"}

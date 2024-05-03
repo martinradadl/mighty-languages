@@ -84,22 +84,32 @@
 
 .switch {
   background-color: var(--light-blue);
-  height: 40px;
-  width: 80px;
-  border-radius: 50%;
-  border: 2px solid transparent;
+  height: 22px;
+  width: 42px;
+  border-radius: 9999px;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: 0px;
+  border: none;
 }
 
-.switch-active {
+.switch.active {
   background-color: var(--dark-blue);
 }
 
 .switch-ball {
-  height: 36px;
-  width: 36px;
+  margin: 0px;
+  transform: translateX(0.14rem);
+  display: inline-block;
+  height: 18px;
+  width: 18px;
+  border-radius: 9999px;
   background-color: var(--light-gray);
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
 }
 
-.switch-ball-active {
-
+.switch-ball.active {
+  transform: translateX(1.4rem);
 }
