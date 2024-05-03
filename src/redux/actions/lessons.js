@@ -33,21 +33,6 @@ const addLesson = createAsyncThunk("lessons/add", async (newLesson) => {
   }
 });
 
-const editLesson = createAsyncThunk(
-  "lessons/edit",
-  async (updatedLesson) => {
-    try {
-      const response = await axios.put(
-        `http://localhost:3001/lessons/${updatedLesson._id}`,
-        updatedLesson
-      );
-      return response.data;
-    } catch (error) {
-      return error.message;
-    }
-  }
-);
-
 const deleteLesson = createAsyncThunk("lessons/delete", async (id) => {
   try {
     const response = await axios.delete(`http://localhost:3001/lessons/${id}`);
@@ -56,6 +41,21 @@ const deleteLesson = createAsyncThunk("lessons/delete", async (id) => {
     return error.message;
   }
 });
+
+const editLesson = createAsyncThunk(
+  "lessons/edit_selected_lesson",
+  async ({updatedLesson, changeQuizActiveness}) => {
+    try {
+      const response = await axios.put(
+        `http://localhost:3001/lessons/${updatedLesson._id}`,
+        updatedLesson
+      );
+      return {...response.data, changeQuizActiveness}
+    } catch (error) {
+      return error.message;
+    }
+  }
+);
 
 const lessonsActions = {
   getLesson,

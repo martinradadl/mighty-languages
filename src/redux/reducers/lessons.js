@@ -37,21 +37,30 @@ const lessonsSlice = createSlice({
           status: "idle",
         };
       })
-      .addCase(actions.editLesson.pending, (state) => {
-        state.status = "loading";
-      })
-      .addCase(actions.editLesson.fulfilled, (state, action) => {
-        const foundIndex = (elem) => action.payload._id === elem._id;
-        const i = state.lessonsList.findIndex(foundIndex);
+      .addCase(actions.editLesson.pending, (state, { meta }) => {
         return {
           ...state,
-          lessonsList: [
-            ...state.lessonsList.slice(0, i),
-            action.payload,
-            ...state.lessonsList.slice(i + 1),
-          ],
-          status: "idle",
+          status: !meta.arg.changeQuizActiveness ? "loading" : "idle",
         };
+      })
+      .addCase(actions.editLesson.fulfilled, (state, action) => {
+        if (!action.payload.changeQuizActiveness) {
+          const i = state.lessonsList.findIndex(
+            (elem) => action.payload._id === elem._id
+          );
+          return {
+            ...state,
+            lessonsList: [
+              ...state.lessonsList.slice(0, i),
+              action.payload,
+              ...state.lessonsList.slice(i + 1),
+            ],
+            status: "idle",
+          };
+        } else {
+          state.selectedLesson = action.payload;
+          state.status = "idle";
+        }
       })
       .addCase(actions.deleteLesson.pending, (state) => {
         state.status = "loading";
