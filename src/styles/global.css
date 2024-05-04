@@ -28,7 +28,7 @@ button {
 
 .text-on-hover:hover {
   transition: 0.2s;
-  color: var(--pink);
+  color: var(--red);
 }
 
 /* Badges */

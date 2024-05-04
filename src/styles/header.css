@@ -15,3 +15,8 @@ nav {
     margin: 10px;
 }
 
+.links:hover {
+    color: var(--pink);
+    transition: 0.2s;
+}
+
