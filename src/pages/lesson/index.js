@@ -106,15 +106,15 @@ export const Lesson = () => {
     <div className="lesson-container" style={{ margin: "5px 20px" }}>
       <div className="lesson-title-container">
         <div>
-          <h4
-            className="clickable-container"
+          <h3
+            className="clickable-container text-on-hover"
             onClick={() => {
               navigate(`/courses/${selectedLesson.course._id}`);
             }}
             style={{ margin: "20px 0px 2px" }}
           >
             {selectedLesson.course.title}
-          </h4>
+          </h3>
           <h1 style={{ margin: "2px 0px 30px" }}>
             {`${selectedLesson.index + 1}. ${selectedLesson.title}`}
           </h1>

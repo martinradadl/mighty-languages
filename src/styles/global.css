@@ -26,6 +26,11 @@ button {
   cursor: not-allowed;
 }
 
+.text-on-hover:hover {
+  transition: 0.2s;
+  color: var(--pink);
+}
+
 /* Badges */
 
 .badge {
@@ -207,6 +212,7 @@ button {
 .tab-title:hover {
   background-color: var(--light-blue);
   color: var(--dark-blue);
+  transition: 0.4s;
 }
 
 .tab-title-selected {
