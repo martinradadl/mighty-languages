@@ -44,13 +44,13 @@ const deleteLesson = createAsyncThunk("lessons/delete", async (id) => {
 
 const editLesson = createAsyncThunk(
   "lessons/edit_selected_lesson",
-  async ({updatedLesson, changeQuizActiveness}) => {
+  async ({ updatedLesson, changeQuizActiveness }) => {
     try {
       const response = await axios.put(
         `http://localhost:3001/lessons/${updatedLesson._id}`,
         updatedLesson
       );
-      return {...response.data, changeQuizActiveness}
+      return { ...response.data, changeQuizActiveness };
     } catch (error) {
       return error.message;
     }
