@@ -1,5 +1,5 @@
-.lesson-preview-container {
-  position: relative;
+.lesson-preview-container > .clickable-container {
+  border-radius: inherit;
 }
 
 .lesson-preview-container:first-child {
@@ -14,6 +14,7 @@
   display: flex;
   align-items: center;
   background-color: var(--light-blue);
+  border-radius: inherit;
 }
 
 .lesson-preview:hover {
