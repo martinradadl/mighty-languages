@@ -18,12 +18,22 @@ const usersSlice = createSlice({
         state.selectedUser = action.payload;
         state.status = "idle";
       })
+      .addCase(actions.register.rejected, (state, action) => {
+        state.error = action.payload;
+        state.selectedUser = null;
+        state.status = "idle";
+      })
       .addCase(actions.login.pending, (state) => {
         state.status = "loading";
       })
       .addCase(actions.login.fulfilled, (state, action) => {
         cookies.set("user", JSON.stringify(action.payload),{path:'/'});
         state.selectedUser = action.payload;
+        state.status = "idle";
+      })
+      .addCase(actions.login.rejected, (state, action) => {
+        state.error = action.payload;
+        state.selectedUser = null;
         state.status = "idle";
       })
       .addCase(actions.logout, (state) => {

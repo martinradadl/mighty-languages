@@ -55,6 +55,11 @@ const coursesSlice = createSlice({
           status: "idle",
         };
       })
+      .addCase(actions.addCourse.rejected, (state, action) => {
+        state.error = action.payload;
+        state.coursesList = null;
+        state.status = "idle";
+      })
       .addCase(actions.editCourse.pending, (state) => {
         state.status = "loading";
       })
@@ -71,6 +76,11 @@ const coursesSlice = createSlice({
           status: "idle",
         };
       })
+      .addCase(actions.editCourse.rejected, (state, action) => {
+        state.error = action.payload;
+        state.coursesList = null;
+        state.status = "idle";
+      })
       .addCase(actions.deleteCourse.pending, (state) => {
         state.status = "loading";
       })
@@ -85,6 +95,11 @@ const coursesSlice = createSlice({
           ],
           status: "idle",
         };
+      })
+      .addCase(actions.deleteCourse.rejected, (state, action) => {
+        state.error = action.payload;
+        state.coursesList = null;
+        state.status = "idle";
       })
       .addCase(ratingsActions.addRating.fulfilled, (state, action) => {
         return {

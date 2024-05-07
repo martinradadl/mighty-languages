@@ -25,6 +25,11 @@ const commentsSlice = createSlice({
         state.commentsList = action.payload;
         state.status = "idle";
       })
+      .addCase(actions.getComments.rejected, (state, action) => {
+        state.error = action.payload;
+        state.commentsList = null;
+        state.status = "idle";
+      })
       .addCase(actions.addComment.pending, (state) => {
         state.status = "loading";
       })
@@ -34,6 +39,11 @@ const commentsSlice = createSlice({
           commentsList: [...state.commentsList, action.payload],
           status: "idle",
         };
+      })
+      .addCase(actions.addComment.rejected, (state, action) => {
+        state.error = action.payload;
+        state.commentsList = null;
+        state.status = "idle";
       })
       .addCase(actions.deleteComment.pending, (state) => {
         state.status = "loading";
@@ -49,6 +59,11 @@ const commentsSlice = createSlice({
           status: "idle",
         };
       })
+      .addCase(actions.deleteComment.rejected, (state, action) => {
+        state.error = action.payload;
+        state.commentsList = null;
+        state.status = "idle";
+      })
       .addCase(actions.editComment.pending, (state) => {
         state.status = "loading";
       })
@@ -63,6 +78,11 @@ const commentsSlice = createSlice({
           ],
           status: "idle",
         };
+      })
+      .addCase(actions.editComment.rejected, (state, action) => {
+        state.error = action.payload;
+        state.commentsList = null;
+        state.status = "idle";
       })
       .addCase(feedbacksActions.addFeedback.fulfilled, (state, action) => {
         const i = findIndex(state, action.payload.commentId);

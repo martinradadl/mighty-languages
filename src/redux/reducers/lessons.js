@@ -20,11 +20,21 @@ const lessonsSlice = createSlice({
         state.selectedLesson = action.payload;
         state.status = "idle";
       })
+      .addCase(actions.getLesson.rejected, (state, action) => {
+        state.error = action.payload;
+        state.selectedLesson = null;
+        state.status = "idle";
+      })
       .addCase(actions.getLessons.pending, (state) => {
         state.status = "loading";
       })
       .addCase(actions.getLessons.fulfilled, (state, action) => {
         state.lessonsList = action.payload;
+        state.status = "idle";
+      })
+      .addCase(actions.getLessons.rejected, (state, action) => {
+        state.error = action.payload;
+        state.lessonsList = null;
         state.status = "idle";
       })
       .addCase(actions.addLesson.pending, (state) => {
@@ -37,10 +47,15 @@ const lessonsSlice = createSlice({
           status: "idle",
         };
       })
+      .addCase(actions.addLesson.rejected, (state, action) => {
+        state.error = action.payload;
+        state.lessonsList = null;
+        state.status = "idle";
+      })
       .addCase(actions.editLesson.pending, (state, { meta }) => {
         return {
           ...state,
-          status: !meta.arg.changeQuizActiveness ? "loading" : "idle",
+          status: meta.arg.changeQuizActiveness ? "idle" : "loading",
         };
       })
       .addCase(actions.editLesson.fulfilled, (state, action) => {
@@ -62,6 +77,11 @@ const lessonsSlice = createSlice({
           state.status = "idle";
         }
       })
+      .addCase(actions.editLesson.rejected, (state, action) => {
+        state.error = action.payload;
+        state.lessonsList = null;
+        state.status = "idle";
+      })
       .addCase(actions.deleteLesson.pending, (state) => {
         state.status = "loading";
       })
@@ -76,6 +96,11 @@ const lessonsSlice = createSlice({
           ],
           status: "idle",
         };
+      })
+      .addCase(actions.deleteLesson.rejected, (state, action) => {
+        state.error = action.payload;
+        state.lessonsList = null;
+        state.status = "idle";
       });
   },
 });
