@@ -51,24 +51,26 @@ export const QuizTab = (props) => {
         }}
       >
         <AddQuestionDialog />
-        <div
-          style={{
-            display: "flex",
-            gap: "12px",
-            alignItems: "center",
-          }}
-        >
-          <p>Activar Quiz:</p>
-          <Switch
-            checked={isQuizActive}
-            onChange={handleChangeIsQuizActive}
-            className={isQuizActive ? "switch active" : "switch"}
+        {user?.type === "instructor" || user?.type === "admin" ? (
+          <div
+            style={{
+              display: "flex",
+              gap: "12px",
+              alignItems: "center",
+            }}
           >
-            <div
-              className={isQuizActive ? "switch-ball active" : "switch-ball"}
-            />
-          </Switch>
-        </div>
+            <p>Activar Quiz:</p>
+            <Switch
+              checked={isQuizActive}
+              onChange={handleChangeIsQuizActive}
+              className={isQuizActive ? "switch active" : "switch"}
+            >
+              <div
+                className={isQuizActive ? "switch-ball active" : "switch-ball"}
+              />
+            </Switch>
+          </div>
+        ) : null}
       </div>
       <LoadingWrapper
         isLoading={questionsList === null || status === "loading"}
