@@ -58,6 +58,7 @@ export const Lesson = () => {
 
   useEffect(() => {
     if (
+      user &&
       selectedEnrollment &&
       selectedLesson?._id !== selectedEnrollment?.currentLesson._id
     ) {
@@ -118,11 +119,6 @@ export const Lesson = () => {
           <h1 style={{ margin: "2px 0px 30px" }}>
             {`${selectedLesson.index + 1}. ${selectedLesson.title}`}
           </h1>
-          {selectedEnrollment?.finishedLessonsIds.includes(
-            selectedLesson?._id
-          ) ? (
-            <div className="badge success-badge">Completado</div>
-          ) : null}
         </div>
         <div className="change-lesson-buttons">
           {selectedLesson.prevLesson ? (
@@ -145,6 +141,10 @@ export const Lesson = () => {
           ) : null}
         </div>
       </div>
+
+      {selectedEnrollment?.finishedLessonsIds.includes(selectedLesson?._id) ? (
+        <div className="badge success-badge">Completado</div>
+      ) : null}
 
       {selectedLesson.videos.map((video, index) => {
         return (
