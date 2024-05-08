@@ -7,8 +7,14 @@ import { DeleteQuestionDialog } from "./question-dialogs/delete-question-dialog"
 import "../../styles/questions.css";
 
 export const Question = (props) => {
-  const { question, index, isInstructor, userAnswers, setUserAnswers } =
-    props;
+  const {
+    question,
+    index,
+    isInstructor,
+    isAdmin,
+    userAnswers,
+    setUserAnswers,
+  } = props;
 
   return (
     <div className="question-container">
@@ -33,10 +39,12 @@ export const Question = (props) => {
           }}
         />
       )}
-      <div style={{ display: "flex", marginLeft: "auto", gap: "4px" }}>
-        <EditQuestionDialog question={question} />
-        <DeleteQuestionDialog id={question._id} />
-      </div>
+      {isInstructor || isAdmin ? (
+        <div style={{ display: "flex", marginLeft: "auto", gap: "4px" }}>
+          <EditQuestionDialog question={question} />
+          <DeleteQuestionDialog id={question._id} />
+        </div>
+      ) : null}
     </div>
   );
 };
