@@ -72,8 +72,15 @@ export const AddLessonDialog = () => {
         lessonForm,
         setLessonForm,
         dialogTrigger: (
-          <div className="open-dialog-button-container">
-            <button type="button" className="open-dialog-button" onClick={openModal}>
+          <div
+            className="open-dialog-button-container"
+            style={{ marginTop: "10px" }}
+          >
+            <button
+              type="button"
+              className="open-dialog-button"
+              onClick={openModal}
+            >
               Agregar Lección
             </button>
           </div>
