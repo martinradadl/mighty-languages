@@ -38,7 +38,7 @@ export const CommentInput = () => {
   return (
     <div className="new-comment-container">
       <h3>Escribe un Comentario</h3>
-      <textarea rows={4} onChange={handleChange} value={comment} />
+      <textarea rows={5} onChange={handleChange} value={comment} />
       <button onClick={handleAddComment}>Enviar</button>
     </div>
   );
