@@ -34,11 +34,13 @@ export const CommentsTab = () => {
   }, [handleGetComments]);
 
   return (
-    <div>
+    <div style={{ display: "flex", flexDirection: "column"}}>
       {user !== null ? (
         <CommentInput />
       ) : (
-        <span>Si quieres comentar por favor inicia sesión</span>
+        <h4 style={{ margin: "20px auto" }}>
+          Si quieres comentar, por favor inicia sesión.
+        </h4>
       )}
       <LoadingWrapper isLoading={commentsList === null || status === "loading"}>
         {commentsList?.map((comment, index) => {
