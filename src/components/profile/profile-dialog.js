@@ -4,6 +4,7 @@ import "../../styles/profile/profile-dialog.css";
 import { AiOutlineClose } from "react-icons/ai";
 import { useDispatch } from "react-redux";
 import usersActions from "../../redux/actions/users";
+import courseEnrollmentActions from "../../redux/actions/course-enrollment";
 
 export const ProfileDialog = (props) => {
   const { user } = props;
@@ -20,6 +21,7 @@ export const ProfileDialog = (props) => {
 
   const handleLogout = () => {
     dispatch(usersActions.logout());
+    dispatch(courseEnrollmentActions.clearEnrollmentList());
   };
 
   return (

@@ -77,6 +77,9 @@ const courseEnrollmentSlice = createSlice({
         state.error = action.payload;
         state.status = "idle";
         state.enrollmentsList = null;
+      })
+      .addCase(actions.clearEnrollmentList, (state, action) => {
+        state.enrollmentsList = null;
       });
   },
 });

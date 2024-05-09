@@ -4,8 +4,8 @@ import axios from "axios";
 export const EDIT_OPERATIONS = {
   SET_CURRENT_LESSON: "SET_CURRENT_LESSON",
   ADD_FINISHED_LESSON: "ADD_FINISHED_LESSON",
-  LEAVE_COURSE:"LEAVE_COURSE",
-}
+  LEAVE_COURSE: "LEAVE_COURSE",
+};
 
 const addCourseEnrollment = createAsyncThunk(
   "course_enrollment/add",
@@ -45,15 +45,17 @@ const editCourseEnrollmentOptions = {
       return error.message;
     }
   },
-  LEAVE_COURSE: async ({ userId, courseId}) => {
+  LEAVE_COURSE: async ({ userId, courseId }) => {
     try {
-      const response = await axios.put(`http://localhost:3001/course_enrollment/leave_course`,
-      { userId, courseId });
+      const response = await axios.put(
+        `http://localhost:3001/course_enrollment/leave_course`,
+        { userId, courseId }
+      );
       return response.data;
     } catch (error) {
       return error.message;
     }
-  }
+  },
 };
 
 const editCourseEnrollment = createAsyncThunk(
@@ -85,9 +87,14 @@ const getCourseEnrollments = createAsyncThunk(
   }
 );
 
+const clearEnrollmentList = createAction(
+  "course_enrollment/clear_enrollments_list"
+);
+
 const courseEnrollmentActions = {
   addCourseEnrollment,
   editCourseEnrollment,
   getCourseEnrollments,
+  clearEnrollmentList,
 };
 export default courseEnrollmentActions;
