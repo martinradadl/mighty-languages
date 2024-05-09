@@ -112,7 +112,7 @@ export const Lesson = () => {
             onClick={() => {
               navigate(`/courses/${selectedLesson.course._id}`);
             }}
-            style={{ margin: "20px 0px 2px" }}
+            style={{ width: "fit-content", margin: "20px 0px 2px" }}
           >
             {selectedLesson.course.title}
           </h3>
