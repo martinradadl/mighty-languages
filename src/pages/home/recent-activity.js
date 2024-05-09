@@ -24,7 +24,7 @@ export const RecentActivity = () => {
   );
 
   useEffect(() => {
-    if (user !== null) {
+    if (user) {
       debouncedHandleGetCourseEnrollments();
     }
   }, [user]);
