@@ -1,8 +1,6 @@
-import React, { useCallback, useEffect } from "react";
+import React from "react";
 import "../../styles/home/recent-activity.css";
-import { useSelector, useDispatch } from "react-redux";
-import debounce from "lodash.debounce";
-import courseEnrollmentActions from "../../redux/actions/course-enrollment";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { LoadingWrapper } from "../../components/loading";
 
@@ -11,23 +9,7 @@ export const RecentActivity = () => {
   const { status, enrollmentsList } = useSelector(
     (state) => state.course_enrollment
   );
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const handleGetCourseEnrollments = useCallback(() => {
-    dispatch(courseEnrollmentActions.getCourseEnrollments(user._id));
-  }, [user, dispatch]);
-
-  const debouncedHandleGetCourseEnrollments = debounce(
-    handleGetCourseEnrollments,
-    500
-  );
-
-  useEffect(() => {
-    if (user) {
-      debouncedHandleGetCourseEnrollments();
-    }
-  }, [user]);
 
   return (
     <div className="recent-activity-container">

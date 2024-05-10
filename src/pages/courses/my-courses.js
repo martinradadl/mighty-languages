@@ -1,32 +1,15 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import { CoursePreview } from "./course-preview";
-import { AddCourseDialog } from "./add-course-dialog";
-import { useSelector, useDispatch } from "react-redux";
-import courseEnrollmentActions from "../../redux/actions/course-enrollment";
-import debounce from "lodash.debounce";
+import { useSelector } from "react-redux";
 import { LoadingWrapper } from "../../components/loading";
 
 export const MyCourses = () => {
-  const dispatch = useDispatch();
   const { status, enrollmentsList } = useSelector(
     (state) => state.course_enrollment
   );
   const user = useSelector((state) => state.users.selectedUser);
   const navigate = useNavigate();
-
-  const handleGetCourseEnrollments = useCallback(() => {
-    dispatch(courseEnrollmentActions.getCourseEnrollments(user._id));
-  }, [user, dispatch]);
-
-  const debouncedHandleGetCourseEnrollments = debounce(
-    handleGetCourseEnrollments,
-    500
-  );
-
-  useEffect(() => {
-    debouncedHandleGetCourseEnrollments();
-  }, [handleGetCourseEnrollments]);
 
   return (
     <div
