@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { MainLayout } from "../components/main-layout";
 import { PageNotFound } from "../components/page-not-found";
@@ -13,6 +13,7 @@ import usersActions from "../redux/actions/users";
 import { LoadingWrapper } from "../components/loading";
 import courseEnrollmentActions from "../redux/actions/course-enrollment";
 import questionsActions from "../redux/actions/questions";
+import debounce from "lodash.debounce";
 
 export const MainRouter = () => {
   const dispatch = useDispatch();
@@ -20,29 +21,56 @@ export const MainRouter = () => {
   const [loading, setLoading] = useState(true);
   const user = useSelector((state) => state.users.selectedUser);
 
-  useEffect(() => {
+  const handleLogin = useCallback(() => {
     if (cookie.user) {
       dispatch(usersActions.setUser(cookie.user));
     } else {
       setLoading(false);
     }
-  }, [cookie]);
+  }, [cookie, dispatch]);
+
+  const debouncedHandleLogin = debounce(handleLogin, 500);
 
   useEffect(() => {
+    debouncedHandleLogin();
+  }, [handleLogin]);
+
+  const handleGetQuestionHelpers = useCallback(() => {
     dispatch(questionsActions.getQuestionTypes());
     dispatch(questionsActions.getStatementTypes());
+  }, []);
+
+  const debouncedHandleGetQuestionHelpers = debounce(
+    handleGetQuestionHelpers,
+    500
+  );
+
+  useEffect(() => {
+    debouncedHandleGetQuestionHelpers();
+  }, [handleGetQuestionHelpers]);
+
+  const handleGetCourseEnrollments = useCallback(() => {
+    dispatch(courseEnrollmentActions.getCourseEnrollments(user._id))
+      .unwrap()
+      .then(() => {
+        setLoading(false);
+      })
+      .catch((e) => {
+        alert(e.message);
+        setLoading(false);
+      });
+  }, [user, dispatch]);
+
+  const debouncedHandleGetCourseEnrollments = debounce(
+    handleGetCourseEnrollments,
+    500
+  );
+
+  useEffect(() => {
     if (user) {
-      dispatch(courseEnrollmentActions.getCourseEnrollments(user._id))
-        .unwrap()
-        .then(() => {
-          setLoading(false);
-        })
-        .catch((e) => {
-          alert(e.message);
-          setLoading(false);
-        });
+      debouncedHandleGetCourseEnrollments();
     }
-  }, [user]);
+  }, [user, handleGetCourseEnrollments]);
 
   return (
     <LoadingWrapper isLoading={loading}>
