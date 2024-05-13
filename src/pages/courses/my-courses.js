@@ -17,9 +17,11 @@ export const MyCourses = () => {
         width: "100%",
         display: "flex",
         flexDirection: "column",
+        maxWidth: "1000px",
+        margin: "auto",
       }}
     >
-      <h1 style={{ marginLeft: "20px" }}>Mis Cursos</h1>
+      <h1 style={{ marginLeft: "20px", fontSize: "2rem" }}>Mis Cursos</h1>
       <LoadingWrapper
         isLoading={status === "loading" || enrollmentsList === null}
       >

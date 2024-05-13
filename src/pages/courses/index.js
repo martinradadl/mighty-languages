@@ -34,13 +34,13 @@ export const Courses = () => {
   const debouncedHandleChangeSearchbar = debounce(handleChangeSearchbar, 500);
 
   return (
-    <div>
+    <div style={{ maxWidth: "1000px", margin: "auto" }}>
       <div style={{ width: "100%", display: "flex", flexDirection: "column" }}>
         <input
           className="search-bar"
           placeholder="Buscar cursos"
           onChange={debouncedHandleChangeSearchbar}
-          style={{ margin: "20px", height: "20px" }}
+          style={{ margin: "20px", height: "24px" }}
         />
         {user?.type === "admin" || user?.type === "instructor" ? (
           <AddCourseDialog />

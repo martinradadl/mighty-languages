@@ -1,4 +1,9 @@
 
+.home-container {
+    max-width: 1000px;
+    margin: auto;
+}
+
 .home-container > h2 { 
     margin-left: 20px;
 }
