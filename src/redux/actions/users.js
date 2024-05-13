@@ -17,14 +17,17 @@ const register = createAsyncThunk("users/register", async (newUser) => {
   }
 });
 
-const login = createAsyncThunk("users/login", async (user) => {
-  try {
-    const response = await axios.post("http://localhost:3001/login", user);
-    return response.data;
-  } catch (error) {
-    return error.message;
+const login = createAsyncThunk(
+  "users/login",
+  async (user, { rejectWithValue }) => {
+    try {
+      const response = await axios.post("http://localhost:3001/login", user);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
   }
-});
+);
 
 const usersActions = {
   register,
