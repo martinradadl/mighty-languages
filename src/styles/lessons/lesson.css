@@ -1,3 +1,14 @@
+.lesson-container {
+  margin: 5px 20px;
+}
+
+@media (min-width: 700px) {
+  .lesson-container {
+    width: 660px;
+    margin: auto;
+  }
+}
+
 .lesson-title-container {
   display: flex;
   align-items: center;
@@ -34,5 +45,3 @@
 .lesson-tab button.active {
   background-color: #ccc;
 }
-
-
