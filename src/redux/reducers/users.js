@@ -14,7 +14,7 @@ const usersSlice = createSlice({
         state.status = "loading";
       })
       .addCase(actions.register.fulfilled, (state, action) => {
-        cookies.set("user", JSON.stringify(action.payload),{path:'/'});
+        cookies.set("user", JSON.stringify(action.payload), { path: "/" });
         state.selectedUser = action.payload;
         state.status = "idle";
       })
@@ -27,7 +27,7 @@ const usersSlice = createSlice({
         state.status = "loading";
       })
       .addCase(actions.login.fulfilled, (state, action) => {
-        cookies.set("user", JSON.stringify(action.payload),{path:'/'});
+        cookies.set("user", JSON.stringify(action.payload), { path: "/" });
         state.selectedUser = action.payload;
         state.status = "idle";
       })
@@ -37,7 +37,7 @@ const usersSlice = createSlice({
         state.status = "idle";
       })
       .addCase(actions.logout, (state) => {
-        cookies.remove("user",{path:'/'});
+        cookies.remove("user", { path: "/" });
         state.selectedUser = null;
       })
       .addCase(actions.setUser, (state, action) => {
