@@ -35,12 +35,13 @@ export const Home = () => {
           display: "flex",
           justifyContent: "center",
           marginBottom: "30px",
+          fontSize: "2.6rem",
         }}
       >
         Mighty Languages
       </h1>
       {user !== null ? <RecentActivity /> : null}
-      <h2>Cursos</h2>
+      <h2 style={{fontSize: "2rem"}}>Cursos</h2>
       <LoadingWrapper isLoading={status === "loading" || coursesList === null}>
         {coursesList?.map((course, index) => {
           return (

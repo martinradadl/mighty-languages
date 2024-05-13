@@ -83,8 +83,8 @@ export const Course = () => {
       }
     >
       <div className="course-container">
-        <h2>{selectedCourse?.title}</h2>
-        <p>{selectedCourse?.description}</p>
+        <h2 style={{fontSize: "2rem"}}>{selectedCourse?.title}</h2>
+        <p style={{fontSize: "1.3rem"}}>{selectedCourse?.description}</p>
         {user !== null ? (
           <div
             style={{ marginTop: "10px" }}
@@ -145,7 +145,7 @@ export const Course = () => {
           {user !== null ? <RateCourseDialog course={selectedCourse} /> : null}
         </div>
 
-        <h3 style={{ marginBottom: "10px" }}>Lecciones</h3>
+        <h3 style={{ marginBottom: "10px", fontSize: "1.4rem" }}>Lecciones</h3>
         <div className="lessons-list-container">
           <LoadingWrapper
             isLoading={lessonsList === null || lessonStatus === "loading"}

@@ -12,7 +12,8 @@ nav {
 .links {
     color: var(--light-gray);
     text-decoration: none;
-    margin: 10px;
+    margin: 10px 20px;
+    font-size: 1.2rem;
 }
 
 .links:hover {

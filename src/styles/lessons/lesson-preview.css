@@ -20,6 +20,7 @@
   align-items: center;
   background-color: var(--light-blue);
   border-radius: inherit;
+  font-size: 1.2rem;
 }
 
 .lesson-preview:hover {
@@ -47,6 +48,7 @@
   color: var(--dark-blue);
   border: solid var(--dark-blue) 1px;
   border-radius: 4px;
+  font-size: 1rem;
 }
 
 #more-options-icon {

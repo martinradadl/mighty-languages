@@ -13,7 +13,7 @@ export const RecentActivity = () => {
 
   return (
     <div className="recent-activity-container">
-      <h2>Mi Actividad Reciente</h2>
+      <h2 style={{ fontSize: "2rem" }}>Mi Actividad Reciente</h2>
 
       <LoadingWrapper
         isLoading={status === "loading" || enrollmentsList === null}
@@ -23,10 +23,16 @@ export const RecentActivity = () => {
             const progressBarWidth = 200;
             return (
               <div key={index} className="course-progress-container">
-                <h2 style={{ marginTop: "2px", marginBottom: "2px" }}>
+                <h2
+                  style={{
+                    marginTop: "2px",
+                    marginBottom: "6px",
+                    fontSize: "1.6rem",
+                  }}
+                >
                   {enrollment.course.title}
                 </h2>
-                <h4 style={{ marginTop: "2px", marginBottom: "2px" }}>
+                <h4 style={{ marginTop: "2px", marginBottom: "2px", fontSize: "1.2rem" }}>
                   {enrollment.currentLesson.title}
                 </h4>
                 <div className="course-progress-details">
@@ -35,6 +41,7 @@ export const RecentActivity = () => {
                       height: "32px",
                       display: "flex",
                       alignItems: "center",
+                      fontSize: "1rem"
                     }}
                   >
                     <p>
@@ -64,6 +71,7 @@ export const RecentActivity = () => {
                     onClick={() => {
                       navigate(`/lessons/${enrollment.currentLesson._id}`);
                     }}
+                    style={{fontSize: "1rem"}}
                   >
                     <b>Continuar</b>
                   </button>

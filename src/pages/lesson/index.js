@@ -104,7 +104,7 @@ export const Lesson = () => {
     return <p>Loading...</p>;
   }
   return (
-    <div className="lesson-container" style={{ margin: "5px 20px" }}>
+    <div className="lesson-container">
       <div className="lesson-title-container">
         <div>
           <h3
@@ -112,11 +112,15 @@ export const Lesson = () => {
             onClick={() => {
               navigate(`/courses/${selectedLesson.course._id}`);
             }}
-            style={{ width: "fit-content", margin: "20px 0px 2px" }}
+            style={{
+              width: "fit-content",
+              margin: "20px 0px 2px",
+              fontSize: "1.2rem",
+            }}
           >
             {selectedLesson.course.title}
           </h3>
-          <h1 style={{ margin: "2px 0px 30px" }}>
+          <h1 style={{ margin: "2px 0px 30px", fontSize: "2rem" }}>
             {`${selectedLesson.index + 1}. ${selectedLesson.title}`}
           </h1>
         </div>

@@ -17,8 +17,8 @@ export const CoursePreview = (props) => {
         className="course-preview-img"
       ></img>
       <div className="course-preview-details">
-        <h3 style={{ fontSize: "3.6vw" }}>{course.title}</h3>
-        <p style={{ fontSize: "2.6vw" }}>{course.description}</p>
+        <h3 style={{ fontSize: "2rem" }}>{course.title}</h3>
+        <p style={{ fontSize: "1.6rem" }}>{course.description}</p>
         {user?.type === "admin" || user?._id === course.instructor ? (
           <div className="admin-course-options">
             <EditCourseDialog selectedCourse={course} />

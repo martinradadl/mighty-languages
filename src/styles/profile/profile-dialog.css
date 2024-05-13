@@ -10,4 +10,5 @@
   color: var(--light-gray);
   border: none;
   border-radius: 4px;
+  font-size: 1rem;
 }
