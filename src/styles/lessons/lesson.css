@@ -18,6 +18,12 @@
   margin-left: auto;
   display: flex;
   gap: 20px;
+  font-size: 3rem;
+}
+
+.change-lesson-icon:hover {
+  color: var(--pink);
+  transition: 0.8s;
 }
 
 .lesson-tab {

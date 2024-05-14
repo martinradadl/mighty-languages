@@ -35,6 +35,14 @@ button {
   color: var(--red);
 }
 
+.icon {
+  color: var(--dark-blue);
+}
+
+.icon:hover {
+  color: var(--red);
+}
+
 /* Badges */
 
 .badge {
@@ -100,11 +108,19 @@ button {
 .open-dialog-button {
   height: 32px;
   margin: 1px 0px;
+  padding: 4px 6px;
   background-color: var(--dark-blue);
   color: var(--light-gray);
   border: none;
   border-radius: 4px;
   font-size: 1rem;
+}
+
+.open-dialog-button:hover {
+  background-color: var(--light-blue);
+  color: var(--dark-blue);
+  border: 1px solid var(--dark-blue);
+  transition: 0.4s;
 }
 
 .dialog-form-select {

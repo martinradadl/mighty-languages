@@ -12,3 +12,8 @@
   border-radius: 4px;
   font-size: 1rem;
 }
+
+#view-profile-button:hover {
+  border: 1px solid var(--light-gray);
+  transition: 0.8s;
+}

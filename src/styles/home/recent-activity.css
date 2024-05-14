@@ -43,3 +43,10 @@
     border: none;
     border-radius: 4px;
 }
+
+#resume-button:hover {
+    background-color: var(--light-gray);
+    color:var(--dark-blue);
+    border: 1px solid var(--dark-blue);
+    transition: 0.8s;
+}

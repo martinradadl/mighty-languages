@@ -127,8 +127,7 @@ export const Lesson = () => {
         <div className="change-lesson-buttons">
           {selectedLesson.prevLesson ? (
             <AiFillLeftCircle
-              className="clickable-container"
-              size={40}
+              className="clickable-container change-lesson-icon"
               onClick={() => {
                 navigate(`/lessons/${selectedLesson.prevLesson}`);
               }}
@@ -136,8 +135,7 @@ export const Lesson = () => {
           ) : null}
           {selectedLesson.nextLesson ? (
             <AiFillRightCircle
-              className="clickable-container"
-              size={40}
+              className="clickable-container change-lesson-icon"
               onClick={() => {
                 navigate(`/lessons/${selectedLesson.nextLesson}`);
               }}

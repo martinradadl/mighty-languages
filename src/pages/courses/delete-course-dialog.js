@@ -32,6 +32,7 @@ export const DeleteCourseDialog = (props) => {
   return (
     <Fragment>
       <div
+        className="icon"
         onClick={(e) => {
           openModal();
           e.stopPropagation();

@@ -8,6 +8,11 @@
   font-size: 1rem;
 }
 
+#login-form-button:hover {
+  border: 1px solid var(--light-gray);
+  transition: 0.8s;
+}
+
 .dialog {
   position: relative;
   background-color: var(--light-gray);

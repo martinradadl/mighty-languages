@@ -60,6 +60,7 @@ export const EditCourseDialog = (props) => {
         courseForm,
         dialogTrigger: (
           <div
+            className="icon"
             onClick={(e) => {
               e.stopPropagation();
               openModal();

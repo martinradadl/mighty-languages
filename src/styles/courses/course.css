@@ -20,6 +20,13 @@
   border-radius: 4px;
 }
 
+#rate-course-button:hover {
+  background-color: var(--light-blue);
+  color: var(--dark-blue);
+  border: 1px solid var(--dark-blue);
+  transition: 0.4s;
+}
+
 .rate-dialog-container {
   display: flex;
   flex-direction: column;
