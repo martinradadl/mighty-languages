@@ -22,6 +22,7 @@
 .admin-course-options {
   display: flex;
   margin: 5px 20px;
+  font-size: 1.2rem;
 }
 
 .course-preview-img {
