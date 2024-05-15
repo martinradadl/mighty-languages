@@ -14,6 +14,7 @@
 }
 
 #view-profile-button:hover {
-  border: 1px solid var(--light-gray);
+  color: var(--dark-blue);
+  background-color: var(--pink);
   transition: 0.8s;
 }

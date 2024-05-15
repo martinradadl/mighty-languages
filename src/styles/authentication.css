@@ -9,7 +9,8 @@
 }
 
 #login-form-button:hover {
-  border: 1px solid var(--light-gray);
+  background-color: var(--pink);
+  color: var(--dark-blue);
   transition: 0.8s;
 }
 
