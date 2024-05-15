@@ -80,7 +80,7 @@ export const RecentActivity = () => {
             );
           })
         ) : (
-          <p>No hay actividad reciente</p>
+          <p style={{fontSize: "1.2rem"}}>No hay actividad reciente</p>
         )}
       </LoadingWrapper>
     </div>
