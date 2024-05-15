@@ -2,9 +2,9 @@
   margin: 5px 20px;
 }
 
-@media (min-width: 700px) {
+@media (min-width: 970px) {
   .lesson-container {
-    width: 660px;
+    width: 930px;
     margin: auto;
   }
 }
