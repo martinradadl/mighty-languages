@@ -150,13 +150,7 @@ export const Lesson = () => {
 
       {selectedLesson.videos.map((video, index) => {
         return (
-          <iframe
-            key={index}
-            width="100%"
-            height="350px"
-            style={{ border: "none" }}
-            src={video}
-          ></iframe>
+          <iframe key={index} style={{ border: "none" }} src={video}></iframe>
         );
       })}
 
