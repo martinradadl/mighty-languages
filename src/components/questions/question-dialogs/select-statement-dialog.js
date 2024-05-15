@@ -1,11 +1,9 @@
 import React, { Fragment, useState } from "react";
-import { useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import lessonsActions from "../../../redux/actions/lessons";
-import questionsActions from "../../../redux/actions/questions";
 import "../../../styles/questions.css";
 import { Dialog } from "@headlessui/react";
 import { AiFillDelete, AiFillPlusSquare, AiOutlineClose } from "react-icons/ai";
+import Toastify from "toastify-js";
+import "toastify-js/src/toastify.css";
 
 export const SelectStatementDialog = (props) => {
   const {
@@ -67,10 +65,16 @@ export const SelectStatementDialog = (props) => {
 
   const onSubmit = () => {
     if (selectForm.some((option) => option.value === "")) {
-      return alert("Faltan campos por llenar");
+      return Toastify({
+        text: "Faltan campos por llenar",
+        duration: 3000,
+      }).showToast();
     }
     if (!selectForm.some((option) => option.isAnswer === true)) {
-      return alert("Falta elegir la respuesta");
+      return Toastify({
+        text: "Falta elegir la respuesta",
+        duration: 3000,
+      }).showToast();
     }
     submitText === "Agregar Menú"
       ? addSelectStatement(selectForm)

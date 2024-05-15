@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import { LessonDialog } from "./lesson-dialog";
 import { useDispatch } from "react-redux";
 import lessonsActions from "../../redux/actions/lessons";
+import Toastify from "toastify-js";
+import "toastify-js/src/toastify.css";
 
 const lessonFormInitialState = {
   title: "",
@@ -42,7 +44,10 @@ export const AddLessonDialog = () => {
 
   const onSubmit = () => {
     if (lessonForm.title === "" || lessonForm.videos.length === 0) {
-      alert("Faltan campos por llenar");
+      Toastify({
+        text: "Faltan campos por llenar",
+        duration: 3000,
+      }).showToast();
     } else {
       dispatch(
         lessonsActions.addLesson({

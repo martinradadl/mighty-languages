@@ -2,6 +2,8 @@ import { React, useState } from "react";
 import "../../styles/authentication.css";
 import { useDispatch } from "react-redux";
 import usersActions from "../../redux/actions/users";
+import Toastify from "toastify-js";
+import "toastify-js/src/toastify.css";
 
 const signUpFormInitialState = {
   name: "",
@@ -28,7 +30,10 @@ export const SignUpForm = (props) => {
       signUpForm.password === "" ||
       signUpForm.name === ""
     ) {
-      alert("Faltan campos por llenar");
+      Toastify({
+        text: "Faltan campos por llenar",
+        duration: 3000,
+      }).showToast();
     } else {
       dispatch(
         usersActions.register({

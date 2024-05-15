@@ -4,6 +4,8 @@ import { AiFillEdit } from "react-icons/ai";
 import { useParams } from "react-router-dom";
 import { QuestionDialog } from "./question-dialog";
 import questionsActions from "../../../redux/actions/questions";
+import Toastify from "toastify-js";
+import "toastify-js/src/toastify.css";
 
 export const EditQuestionDialog = (props) => {
   const { question } = props;
@@ -25,10 +27,16 @@ export const EditQuestionDialog = (props) => {
       questionForm[0].value === "" ||
       questionForm[0].options.some((option) => option.value === "")
     ) {
-      return alert("Faltan campos por llenar");
+      return Toastify({
+        text: "Faltan campos por llenar",
+        duration: 3000,
+      }).showToast();
     }
     if (!questionForm[0].options.some((option) => option.isAnswer === true)) {
-      return alert("Falta elegir la respuesta");
+      return Toastify({
+        text: "Falta elegir la respuesta",
+        duration: 3000,
+      }).showToast();
     }
     const updatedQuestion = {
       _id: question._id,
@@ -53,7 +61,10 @@ export const EditQuestionDialog = (props) => {
           statement.statementType !== "SELECT" && statement.value === ""
       )
     ) {
-      return alert("Faltan campos por llenar");
+      return Toastify({
+        text: "Faltan campos por llenar",
+        duration: 3000,
+      }).showToast();
     }
     const updatedQuestion = {
       _id: question._id,

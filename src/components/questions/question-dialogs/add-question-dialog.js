@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import lessonsActions from "../../../redux/actions/lessons";
 import { QuestionDialog } from "./question-dialog";
 import questionsActions from "../../../redux/actions/questions";
-import { type } from "@testing-library/user-event/dist/type";
+import Toastify from "toastify-js";
+import "toastify-js/src/toastify.css";
 
 export const AddQuestionDialog = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -44,10 +44,16 @@ export const AddQuestionDialog = () => {
       questionForm[0].value === "" ||
       questionForm[0].options.some((option) => option.value === "")
     ) {
-      return alert("Faltan campos por llenar");
+      return Toastify({
+        text: "Faltan campos por llenar",
+        duration: 3000,
+      }).showToast();
     }
     if (!questionForm[0].options.some((option) => option.isAnswer === true)) {
-      return alert("Falta elegir la respuesta");
+      return Toastify({
+        text: "Falta elegir la respuesta",
+        duration: 3000,
+      }).showToast();
     }
     const newQuestion = {
       type: QUESTION_TYPES["MULT_CHOICE"],
@@ -71,7 +77,10 @@ export const AddQuestionDialog = () => {
           statement.statementType !== "SELECT" && statement.value === ""
       )
     ) {
-      return alert("Faltan campos por llenar");
+      return Toastify({
+        text: "Faltan campos por llenar",
+        duration: 3000,
+      }).showToast();
     }
     const newQuestion = {
       type: QUESTION_TYPES["FILLING"],

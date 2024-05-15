@@ -4,6 +4,8 @@ import { CourseDialog } from "./course-dialog";
 import { AiFillEdit } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import coursesActions from "../../redux/actions/courses";
+import Toastify from "toastify-js";
+import "toastify-js/src/toastify.css";
 
 export const EditCourseDialog = (props) => {
   const { selectedCourse } = props;
@@ -26,7 +28,10 @@ export const EditCourseDialog = (props) => {
 
   const onSubmit = () => {
     if (courseForm.title === "" || courseForm.description === "") {
-      alert("Faltan campos por llenar");
+      Toastify({
+        text: "Faltan campos por llenar",
+        duration: 3000,
+      }).showToast();
     } else {
       dispatch(
         coursesActions.editCourse({

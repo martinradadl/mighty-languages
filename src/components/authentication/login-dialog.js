@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import "../../styles/authentication.css";
 import { useDispatch } from "react-redux";
 import usersActions from "../../redux/actions/users";
+import Toastify from "toastify-js";
+import "toastify-js/src/toastify.css";
 
 const loginFormInitialState = {
   email: "",
@@ -22,7 +24,10 @@ export const LoginForm = (props) => {
 
   const handleLogin = () => {
     if (loginForm.email === "" || loginForm.password === "") {
-      alert("Faltan campos por llenar");
+      Toastify({
+        text: "Faltan campos por llenar",
+        duration: 3000,
+      }).showToast();
     } else {
       dispatch(
         usersActions.login({
@@ -36,7 +41,10 @@ export const LoginForm = (props) => {
           closeModal();
         })
         .catch((e) => {
-          alert(e.error);
+          Toastify({
+            text: e.error,
+            duration: 3000,
+          }).showToast();
         });
     }
   };

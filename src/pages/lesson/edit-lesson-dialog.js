@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { LessonDialog } from "./lesson-dialog";
 import { useDispatch } from "react-redux";
 import lessonsActions from "../../redux/actions/lessons";
+import Toastify from "toastify-js";
+import "toastify-js/src/toastify.css";
 
 export const EditLessonDialog = (props) => {
   const { selectedLesson, isOpen, setIsOpen } = props;
@@ -33,7 +35,10 @@ export const EditLessonDialog = (props) => {
 
   const onSubmit = () => {
     if (lessonForm.title === "" || lessonForm.videos.length === 0) {
-      alert("Faltan campos por llenar");
+      Toastify({
+        text: "Faltan campos por llenar",
+        duration: 3000,
+      }).showToast();
     } else {
       dispatch(
         lessonsActions.editLesson({

@@ -3,6 +3,9 @@ import "../../styles/comments/comment-input.css";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import commentsActions from "../../redux/actions/comments";
+import Toastify from "toastify-js";
+import "toastify-js/src/toastify.css";
+
 
 export const CommentInput = () => {
   const params = useParams();
@@ -16,7 +19,10 @@ export const CommentInput = () => {
 
   const handleAddComment = () => {
     if (comment === "") {
-      alert("El comentario no debe estar vacío");
+      Toastify({
+        text: "El comentario no debe estar vacío",
+        duration: 3000,
+      }).showToast();
     } else {
       dispatch(
         commentsActions.addComment({
@@ -30,7 +36,10 @@ export const CommentInput = () => {
           setComment("");
         })
         .catch((e) => {
-          alert(e.message);
+          Toastify({
+            text: e.message,
+            duration: 3000,
+          }).showToast();
         });
     }
   };

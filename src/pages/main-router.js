@@ -14,6 +14,8 @@ import { LoadingWrapper } from "../components/loading";
 import courseEnrollmentActions from "../redux/actions/course-enrollment";
 import questionsActions from "../redux/actions/questions";
 import debounce from "lodash.debounce";
+import Toastify from "toastify-js";
+import "toastify-js/src/toastify.css";
 
 export const MainRouter = () => {
   const dispatch = useDispatch();
@@ -56,7 +58,10 @@ export const MainRouter = () => {
         setLoading(false);
       })
       .catch((e) => {
-        alert(e.message);
+        Toastify({
+          text: e.message,
+          duration: 3000,
+        }).showToast();
         setLoading(false);
       });
   }, [user, dispatch]);

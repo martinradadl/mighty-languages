@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { CourseDialog } from "./course-dialog";
 import { useDispatch, useSelector } from "react-redux";
 import coursesActions from "../../redux/actions/courses";
+import Toastify from "toastify-js";
+import "toastify-js/src/toastify.css";
 
 const courseFormInitialState = {
   title: "",
@@ -30,7 +32,10 @@ export const AddCourseDialog = () => {
 
   const onSubmit = () => {
     if (courseForm.title === "" || courseForm.description === "") {
-      alert("Faltan campos por llenar");
+      Toastify({
+        text: "Faltan campos por llenar",
+        duration: 3000,
+      }).showToast();
     } else {
       dispatch(
         coursesActions.addCourse({
@@ -59,7 +64,11 @@ export const AddCourseDialog = () => {
         courseForm,
         dialogTrigger: (
           <div className="open-dialog-button-container">
-            <button type="button" className="open-dialog-button" onClick={openModal}>
+            <button
+              type="button"
+              className="open-dialog-button"
+              onClick={openModal}
+            >
               Agregar Curso
             </button>
           </div>
