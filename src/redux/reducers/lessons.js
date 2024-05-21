@@ -82,6 +82,17 @@ const lessonsSlice = createSlice({
         state.lessonsList = null;
         state.status = "idle";
       })
+      .addCase(actions.changeLessonIndex.fulfilled, (state, action) => {
+        return {
+          ...state,
+          lessonsList: action.payload,
+        };
+      })
+      .addCase(actions.changeLessonIndex.rejected, (state, action) => {
+        state.error = action.payload;
+        state.lessonsList = null;
+        state.status = "idle";
+      })
       .addCase(actions.deleteLesson.pending, (state) => {
         state.status = "loading";
       })

@@ -57,11 +57,27 @@ const editLesson = createAsyncThunk(
   }
 );
 
+const changeLessonIndex = createAsyncThunk(
+  "lessons/change_lesson_index",
+  async ({ draggingLessonIndex, targetLessonIndex, courseId }) => {
+    try {
+      const response = await axios.put(
+        `http://localhost:3001/lessons/change_lesson_index`,
+        { draggingLessonIndex, targetLessonIndex, courseId }
+      );
+      return response.data;
+    } catch (error) {
+      return error.message;
+    }
+  }
+);
+
 const lessonsActions = {
   getLesson,
   getLessons,
   addLesson,
   editLesson,
   deleteLesson,
+  changeLessonIndex,
 };
 export default lessonsActions;
