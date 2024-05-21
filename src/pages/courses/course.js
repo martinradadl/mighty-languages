@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { LessonPreview } from "../lesson/lesson-preview";
 import "../../styles/courses/course.css";
@@ -23,6 +23,7 @@ export const Course = () => {
   const { status: lessonStatus, lessonsList } = useSelector(
     (state) => state.lessons
   );
+  const [draggingLessonIndex, setDragginglessonIndex] = useState(null);
 
   const selectedEnrollment = useSelector((state) => {
     if (
@@ -74,6 +75,38 @@ export const Course = () => {
 
   const debouncedhandleLeaveCourse = debounce(handleLeaveCourse, 500);
 
+  // Drag and Drop Functions
+
+  const handleDragStart = (e, lessonIndex) => {
+    setDragginglessonIndex(lessonIndex);
+    e.dataTransfer.setData("text", "");
+  };
+
+  const handleDragEnd = () => {
+    setDragginglessonIndex(null);
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+  };
+
+  const handleDrop = (e, targetLessonIndex) => {
+    if (draggingLessonIndex === null) return;
+
+    dispatch(
+      lessonsActions.changeLessonIndex({
+        draggingLessonIndex,
+        targetLessonIndex,
+        courseId: params.id,
+      })
+    )
+      .unwrap()
+      .then(() => {})
+      .catch((e) => {
+        console.log(e.message);
+      });
+  };
+
   return (
     <LoadingWrapper
       isLoading={
@@ -83,8 +116,8 @@ export const Course = () => {
       }
     >
       <div className="course-container">
-        <h2 style={{fontSize: "2rem"}}>{selectedCourse?.title}</h2>
-        <p style={{fontSize: "1.3rem"}}>{selectedCourse?.description}</p>
+        <h2 style={{ fontSize: "2rem" }}>{selectedCourse?.title}</h2>
+        <p style={{ fontSize: "1.3rem" }}>{selectedCourse?.description}</p>
         {user !== null ? (
           <div
             style={{ marginTop: "10px" }}
@@ -159,6 +192,16 @@ export const Course = () => {
                     e.stopPropagation();
                     navigate(`/lessons/${lesson._id}`);
                   }}
+                  draggable={
+                    selectedCourse.instructor === user?._id ||
+                    user?.type === "admin"
+                  }
+                  onDragStart={(e) => {
+                    handleDragStart(e, lesson.index);
+                  }}
+                  onDragEnd={handleDragEnd}
+                  onDragOver={handleDragOver}
+                  onDrop={(e) => handleDrop(e, lesson.index)}
                 >
                   <LessonPreview
                     isCurrentLesson={
