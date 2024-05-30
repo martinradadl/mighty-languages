@@ -3,6 +3,7 @@ import actions from "../actions/quiz-results";
 
 const initialState = {
   quizResults: null,
+  userAnswers: [],
 };
 
 const quizResultsSlice = createSlice({
@@ -11,6 +12,9 @@ const quizResultsSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+      .addCase(actions.setUserAnswers, (state, action) => {
+        state.userAnswers = action.payload;
+      })
       .addCase(actions.getQuizResults.pending, (state) => {
         state.status = "loading";
       })
