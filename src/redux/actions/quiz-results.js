@@ -1,5 +1,7 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+
+const setUserAnswers = createAction("quiz_results/set_user_answers");
 
 const getQuizResults = createAsyncThunk(
   "quiz_results/get",
@@ -45,7 +47,9 @@ const editQuizResults = createAsyncThunk(
   }
 );
 
-const deleteQuizResults = createAsyncThunk("quiz_results/delete", async (id) => {
+const deleteQuizResults = createAsyncThunk(
+  "quiz_results/delete",
+  async (id) => {
     try {
       const response = await axios.delete(
         `http://localhost:3001//quiz_results/${id}`
@@ -54,8 +58,15 @@ const deleteQuizResults = createAsyncThunk("quiz_results/delete", async (id) => 
     } catch (error) {
       return error.message;
     }
-  });
+  }
+);
 
-const quizResultsActions = { getQuizResults, addQuizResults, editQuizResults, deleteQuizResults };
+const quizResultsActions = {
+  getQuizResults,
+  addQuizResults,
+  editQuizResults,
+  deleteQuizResults,
+  setUserAnswers,
+};
 
 export default quizResultsActions;
