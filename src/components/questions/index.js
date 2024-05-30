@@ -9,6 +9,7 @@ import questionsActions from "../../redux/actions/questions";
 import { Switch } from "@headlessui/react";
 import lessonsActions from "../../redux/actions/lessons";
 import "../../styles/questions.css";
+import quizResultsActions from "../../redux/actions/quiz-results";
 
 export const QuizTab = (props) => {
   const { handleCompleteLesson, isInstructor, isQuizActive } = props;
@@ -16,7 +17,8 @@ export const QuizTab = (props) => {
   const dispatch = useDispatch();
   const { status, questionsList } = useSelector((state) => state.questions);
   const user = useSelector((state) => state.users.selectedUser);
-  const [userAnswers, setUserAnswers] = useState([]);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const userAnswers = useSelector((state) => state.quiz_results.userAnswers);
 
   const handleChangeIsQuizActive = () => {
     dispatch(
@@ -39,6 +41,65 @@ export const QuizTab = (props) => {
   useEffect(() => {
     debouncedHandleGetQuestions();
   }, [handleGetQuestions]);
+
+  const handleSubmitQuiz = () => {
+    let correctAnswers = 0;
+    let totalAnswers = 0;
+    setIsSubmitted(true);
+
+    // questionsList.map((question, i) => {
+    //   if (question.type.id === "MULT_CHOICE") {
+    //     if (checkAnswerMultQuestion(question, i + 1)) correctAnswers++;
+    //     totalAnswers++;
+    //   } else {
+    //     question.statements.map((statement, j) => {
+    //       if (statement.statementType.id !== "TEXT") {
+    //         if (checkAnswerFillingQuestion(question, i + 1, j))
+    //           correctAnswers++;
+    //         totalAnswers++;
+    //       }
+    //     });
+    //   }
+    // });
+  };
+
+  const checkAnswerMultQuestion = (question, index) => {
+    const userAnswer = userAnswers.find((elem) => elem.questionIndex === index);
+    return question.statements[0].options.find(
+      (elem) => elem.value === userAnswer.answers[0].value
+    )?.isAnswer;
+  };
+
+  const checkAnswerFillingQuestion = (
+    question,
+    questionIndex,
+    statementIndex
+  ) => {
+    const userQuestionAnswer = userAnswers.find(
+      (elem) => elem.questionIndex === questionIndex
+    );
+    const userStatementAnswer = userQuestionAnswer.answers.find(
+      (elem) => elem.statementIndex === statementIndex
+    );
+
+    if (question.statements[statementIndex].statementType.id === "SELECT") {
+      return question.statements[statementIndex].options.find(
+        (elem) =>
+          elem.value ===
+          userQuestionAnswer.answers[userStatementAnswer.statementIndex].value
+      )?.isAnswer;
+    } else {
+      return (
+        userQuestionAnswer.answers[userStatementAnswer.statementIndex].value ===
+        question.statements[statementIndex].value
+      );
+    }
+  };
+
+  const handleRestartQuiz = () => {
+    dispatch(quizResultsActions.setUserAnswers([]));
+    setIsSubmitted(false);
+  };
 
   return (
     <div style={{ marginTop: "20px" }}>
@@ -87,10 +148,9 @@ export const QuizTab = (props) => {
                 key: i,
                 question,
                 index: i + 1,
+                isSubmitted,
                 isInstructor: isInstructor,
                 isAdmin: user?.type === "admin",
-                userAnswers,
-                setUserAnswers,
               }}
             />
           );
@@ -107,17 +167,23 @@ export const QuizTab = (props) => {
               Por el momento no hay preguntas disponibles
             </h4>
           </div>
-        ) : !isInstructor ? (
+        ) : !(isInstructor || isSubmitted) ? (
           <button
             type="button"
             className="open-dialog-button"
             style={{ marginTop: "10px" }}
-            onClick={(event) => {
-              handleCompleteLesson();
-              console.log(userAnswers);
-            }}
+            onClick={handleSubmitQuiz}
           >
             Terminar
+          </button>
+        ) : !isInstructor && isSubmitted ? (
+          <button
+            type="button"
+            className="open-dialog-button"
+            style={{ marginTop: "10px" }}
+            onClick={handleRestartQuiz}
+          >
+            Reiniciar
           </button>
         ) : null}
       </LoadingWrapper>
