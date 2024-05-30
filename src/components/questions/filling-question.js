@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import "../../styles/questions.css";
 import { AiFillCheckCircle, AiFillCloseCircle } from "react-icons/ai";
 import quizResultsActions from "../../redux/actions/quiz-results";
+import { isAnswerCorrect } from "../../pages/helpers";
 
 export const FillingQuestion = (props) => {
   const { question, index, isInstructor, isSubmitted } = props;
@@ -55,24 +56,6 @@ export const FillingQuestion = (props) => {
     }
   };
 
-  const isAnswerCorrect = (statementIndex, statementType) => {
-    const userQuestionAnswer = userAnswers.find(
-      (elem) => elem.questionIndex === index
-    );
-    const userStatementAnswer = userQuestionAnswer?.answers.find(
-      (elem) => elem.statementIndex === statementIndex
-    );
-    if (statementType === "FILL") {
-      return (
-        userStatementAnswer?.value === question.statements[statementIndex].value
-      );
-    } else {
-      return question.statements[statementIndex].options.find(
-        (elem) => elem.value === userStatementAnswer?.value
-      )?.isAnswer;
-    }
-  };
-
   return (
     <div
       style={{
@@ -116,14 +99,27 @@ export const FillingQuestion = (props) => {
                 onChange={handleChangeAnswer}
                 disabled={isInstructor || isSubmitted}
               />
-              {isSubmitted && isAnswerCorrect(i, statement.statementType.id) ? (
+              {isSubmitted &&
+              isAnswerCorrect({
+                statementIndex: i,
+                statementType: statement.statementType.id,
+                question,
+                userAnswers,
+                index,
+              }) ? (
                 <AiFillCheckCircle
                   size={16}
                   style={{ color: "darkgreen", marginLeft: "2px" }}
                 />
               ) : null}
               {isSubmitted &&
-              !isAnswerCorrect(i, statement.statementType.id) ? (
+              !isAnswerCorrect({
+                statementIndex: i,
+                statementType: statement.statementType.id,
+                question,
+                userAnswers,
+                index,
+              }) ? (
                 <div
                   style={{
                     display: "flex",
@@ -183,14 +179,27 @@ export const FillingQuestion = (props) => {
                   );
                 })}
               </select>
-              {isSubmitted && isAnswerCorrect(i, statement.statementType.id) ? (
+              {isSubmitted &&
+              isAnswerCorrect({
+                statementIndex: i,
+                statementType: statement.statementType.id,
+                question,
+                userAnswers,
+                index,
+              }) ? (
                 <AiFillCheckCircle
                   size={16}
                   style={{ color: "darkgreen", marginLeft: "2px" }}
                 />
               ) : null}
               {isSubmitted &&
-              !isAnswerCorrect(i, statement.statementType.id) ? (
+              !isAnswerCorrect({
+                statementIndex: i,
+                statementType: statement.statementType.id,
+                question,
+                userAnswers,
+                index,
+              }) ? (
                 <div
                   style={{
                     display: "flex",
