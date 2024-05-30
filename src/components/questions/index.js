@@ -10,6 +10,7 @@ import { Switch } from "@headlessui/react";
 import lessonsActions from "../../redux/actions/lessons";
 import "../../styles/questions.css";
 import quizResultsActions from "../../redux/actions/quiz-results";
+import { isAnswerCorrect } from "../../pages/helpers";
 
 export const QuizTab = (props) => {
   const { handleCompleteLesson, isInstructor, isQuizActive } = props;
@@ -17,8 +18,9 @@ export const QuizTab = (props) => {
   const dispatch = useDispatch();
   const { status, questionsList } = useSelector((state) => state.questions);
   const user = useSelector((state) => state.users.selectedUser);
-  const [isSubmitted, setIsSubmitted] = useState(false);
   const userAnswers = useSelector((state) => state.quiz_results.userAnswers);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [answersCount, setAnswersCount] = useState();
 
   const handleChangeIsQuizActive = () => {
     dispatch(
@@ -45,59 +47,47 @@ export const QuizTab = (props) => {
   const handleSubmitQuiz = () => {
     let correctAnswers = 0;
     let totalAnswers = 0;
-    setIsSubmitted(true);
 
-    // questionsList.map((question, i) => {
-    //   if (question.type.id === "MULT_CHOICE") {
-    //     if (checkAnswerMultQuestion(question, i + 1)) correctAnswers++;
-    //     totalAnswers++;
-    //   } else {
-    //     question.statements.map((statement, j) => {
-    //       if (statement.statementType.id !== "TEXT") {
-    //         if (checkAnswerFillingQuestion(question, i + 1, j))
-    //           correctAnswers++;
-    //         totalAnswers++;
-    //       }
-    //     });
-    //   }
-    // });
-  };
-
-  const checkAnswerMultQuestion = (question, index) => {
-    const userAnswer = userAnswers.find((elem) => elem.questionIndex === index);
-    return question.statements[0].options.find(
-      (elem) => elem.value === userAnswer.answers[0].value
-    )?.isAnswer;
-  };
-
-  const checkAnswerFillingQuestion = (
-    question,
-    questionIndex,
-    statementIndex
-  ) => {
-    const userQuestionAnswer = userAnswers.find(
-      (elem) => elem.questionIndex === questionIndex
-    );
-    const userStatementAnswer = userQuestionAnswer.answers.find(
-      (elem) => elem.statementIndex === statementIndex
-    );
-
-    if (question.statements[statementIndex].statementType.id === "SELECT") {
-      return question.statements[statementIndex].options.find(
-        (elem) =>
-          elem.value ===
-          userQuestionAnswer.answers[userStatementAnswer.statementIndex].value
-      )?.isAnswer;
-    } else {
-      return (
-        userQuestionAnswer.answers[userStatementAnswer.statementIndex].value ===
-        question.statements[statementIndex].value
-      );
-    }
+    questionsList.map((question, i) => {
+      if (question.type.id === "MULT_CHOICE") {
+        if (
+          isAnswerCorrect({
+            statementIndex: 0,
+            statementType: "",
+            question,
+            userAnswers,
+            index: i + 1,
+          })
+        ) {
+          correctAnswers++;
+        }
+        totalAnswers++;
+      } else {
+        question.statements.map((statement, j) => {
+          if (statement.statementType.id !== "TEXT") {
+            if (
+              isAnswerCorrect({
+                statementIndex: j,
+                statementType: statement.statementType.id,
+                question,
+                userAnswers,
+                index: i + 1,
+              })
+            ) {
+              correctAnswers++;
+            }
+            totalAnswers++;
+          }
+        });
+      }
+      setAnswersCount({ correctAnswers, totalAnswers });
+      setIsSubmitted(true);
+    });
   };
 
   const handleRestartQuiz = () => {
     dispatch(quizResultsActions.setUserAnswers([]));
+    setAnswersCount();
     setIsSubmitted(false);
   };
 
@@ -177,14 +167,25 @@ export const QuizTab = (props) => {
             Terminar
           </button>
         ) : !isInstructor && isSubmitted ? (
-          <button
-            type="button"
-            className="open-dialog-button"
-            style={{ marginTop: "10px" }}
-            onClick={handleRestartQuiz}
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "12px",
+              marginTop: "10px",
+            }}
           >
-            Reiniciar
-          </button>
+            <button
+              type="button"
+              className="open-dialog-button"
+              onClick={handleRestartQuiz}
+            >
+              Reiniciar
+            </button>
+            <p
+              style={{ margin: "0px" }}
+            >{`Resultado: ${answersCount.correctAnswers}/${answersCount.totalAnswers}`}</p>
+          </div>
         ) : null}
       </LoadingWrapper>
     </div>
