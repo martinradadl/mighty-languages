@@ -20,6 +20,7 @@
 .mult-choice-option-container {
   display: flex;
   margin: 5px 0;
+  align-items: center;
 }
 
 .mult-choice-option {
