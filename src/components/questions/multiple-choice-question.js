@@ -6,7 +6,9 @@ import quizResultsActions from "../../redux/actions/quiz-results";
 
 export const MultipleChoiceQuestion = (props) => {
   const { question, index, isInstructor, isSubmitted } = props;
-  const userAnswers = useSelector((state) => state.quiz_results.userAnswers);
+  const userAnswers = useSelector(
+    (state) => state.quiz_results.quizResults.userAnswers
+  );
   const dispatch = useDispatch();
 
   const handleChangeSelectedOption = (optionValue) => {

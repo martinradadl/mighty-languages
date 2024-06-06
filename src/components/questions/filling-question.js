@@ -8,7 +8,7 @@ import { isAnswerCorrect } from "../../pages/helpers";
 export const FillingQuestion = (props) => {
   const { question, index, isInstructor, isSubmitted } = props;
   const dispatch = useDispatch();
-  const userAnswers = useSelector((state) => state.quiz_results.userAnswers);
+  const userAnswers = useSelector((state) => state.quiz_results.quizResults.userAnswers);
 
   const handleChangeAnswer = (event) => {
     const statementIndex = parseInt(event.target.name.split("-")[2]);

@@ -2,8 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import actions from "../actions/quiz-results";
 
 const initialState = {
-  quizResults: null,
-  userAnswers: [],
+  quizResults: { userAnswers: [] },
 };
 
 const quizResultsSlice = createSlice({
@@ -13,13 +12,16 @@ const quizResultsSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(actions.setUserAnswers, (state, action) => {
-        state.userAnswers = action.payload;
+        return {
+          ...state,
+          quizResults: { ...state.quizResults, userAnswers: action.payload },
+        };
       })
       .addCase(actions.getQuizResults.pending, (state) => {
         state.status = "loading";
       })
       .addCase(actions.getQuizResults.fulfilled, (state, action) => {
-        state.quizResults = action.payload;
+        state.quizResults = action.payload || { userAnswers: [] };
         state.status = "idle";
       })
       .addCase(actions.getQuizResults.rejected, (state, action) => {
