@@ -18,7 +18,7 @@ export const QuizTab = (props) => {
   const dispatch = useDispatch();
   const { status, questionsList } = useSelector((state) => state.questions);
   const user = useSelector((state) => state.users.selectedUser);
-  const userAnswers = useSelector((state) => state.quiz_results.userAnswers);
+  const quizResults = useSelector((state) => state.quiz_results.quizResults);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [answersCount, setAnswersCount] = useState();
 
@@ -34,6 +34,7 @@ export const QuizTab = (props) => {
     );
   };
 
+  // Get Questions
   const handleGetQuestions = useCallback(() => {
     dispatch(questionsActions.getQuestions(params.id));
   }, [dispatch, params.id]);
@@ -44,7 +45,42 @@ export const QuizTab = (props) => {
     debouncedHandleGetQuestions();
   }, [handleGetQuestions]);
 
-  const handleSubmitQuiz = () => {
+  // Get User Answers
+  const handleGetUserAnswers = useCallback(() => {
+    if (user) {
+      console.log("eee");
+      dispatch(
+        quizResultsActions.getQuizResults({
+          lessonId: params.id,
+          userId: user._id,
+        })
+      );
+    }
+  }, [user]);
+
+  const debouncedHandleGetUserAnswers = debounce(handleGetUserAnswers, 500);
+
+  useEffect(() => {
+    debouncedHandleGetUserAnswers();
+  }, [handleGetUserAnswers]);
+
+  const handleSetUserResults = () => {
+    if (quizResults.userAnswers.length > 0) {
+      countCorrectAnswers();
+      setIsSubmitted(true);
+    }
+  };
+
+  const debouncedHandleSetUserResults = debounce(handleSetUserResults, 500);
+
+  useEffect(() => {
+    if (answersCount === undefined && quizResults.user) {
+      debouncedHandleSetUserResults();
+    }
+  }, [answersCount, quizResults]);
+
+  //Count Correct Answers
+  const countCorrectAnswers = () => {
     let correctAnswers = 0;
     let totalAnswers = 0;
 
@@ -55,7 +91,7 @@ export const QuizTab = (props) => {
             statementIndex: 0,
             statementType: "",
             question,
-            userAnswers,
+            userAnswers: quizResults.userAnswers,
             index: i + 1,
           })
         ) {
@@ -70,7 +106,7 @@ export const QuizTab = (props) => {
                 statementIndex: j,
                 statementType: statement.statementType.id,
                 question,
-                userAnswers,
+                userAnswers: quizResults.userAnswers,
                 index: i + 1,
               })
             ) {
@@ -81,13 +117,25 @@ export const QuizTab = (props) => {
         });
       }
       setAnswersCount({ correctAnswers, totalAnswers });
-      setIsSubmitted(true);
     });
+  };
+
+  // Submit Quiz
+  const handleSubmitQuiz = () => {
+    countCorrectAnswers();
+    setIsSubmitted(true);
+    if (user) {
+      const currentQuizResults = {
+        userId: user._id,
+        lessonId: params.id,
+        answers: quizResults.userAnswers,
+      };
+      dispatch(quizResultsActions.addQuizResults(currentQuizResults));
+    }
   };
 
   const handleRestartQuiz = () => {
     dispatch(quizResultsActions.setUserAnswers([]));
-    setAnswersCount();
     setIsSubmitted(false);
   };
 
