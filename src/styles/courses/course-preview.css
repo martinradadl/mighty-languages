@@ -1,6 +1,6 @@
 .course-preview-container {
   display: flex;
-  margin: 10px 20px;
+  margin: 10px 0px;
   border: 1px solid gray;
   background-color: var(--light-blue);
   border-radius: 4px;
