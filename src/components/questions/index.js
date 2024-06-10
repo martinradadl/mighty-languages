@@ -11,6 +11,8 @@ import lessonsActions from "../../redux/actions/lessons";
 import "../../styles/questions.css";
 import quizResultsActions from "../../redux/actions/quiz-results";
 import { isAnswerCorrect } from "../../pages/helpers";
+import Toastify from "toastify-js";
+import "toastify-js/src/toastify.css";
 
 export const QuizTab = (props) => {
   const { handleCompleteLesson, isInstructor, isQuizActive } = props;
@@ -134,9 +136,14 @@ export const QuizTab = (props) => {
     }
   };
 
+  // Restart Quiz
   const handleRestartQuiz = () => {
     dispatch(quizResultsActions.setUserAnswers([]));
     setIsSubmitted(false);
+    Toastify({
+      text: "El quiz ha sido reiniciado. Los resultados no se guardarán hasta volver a enviar el quiz",
+      duration: 3000,
+    }).showToast();
   };
 
   return (
