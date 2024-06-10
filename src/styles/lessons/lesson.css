@@ -1,10 +1,10 @@
 .lesson-container {
-  margin: 5px 20px;
+  padding: 0px 20px 4px;
 }
 
-@media (min-width: 970px) {
+@media (min-width: 1000px) {
   .lesson-container {
-    width: 930px;
+    width: 960px;
     margin: auto;
   }
 }
