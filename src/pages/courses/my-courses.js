@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { CoursePreview } from "./course-preview";
 import { useSelector } from "react-redux";
 import { LoadingWrapper } from "../../components/loading";
+import "../../styles/courses/course.css";
 
 export const MyCourses = () => {
   const { status, enrollmentsList } = useSelector(
@@ -12,16 +13,8 @@ export const MyCourses = () => {
   const navigate = useNavigate();
 
   return (
-    <div
-      style={{
-        width: "100%",
-        display: "flex",
-        flexDirection: "column",
-        maxWidth: "1000px",
-        margin: "auto",
-      }}
-    >
-      <h1 style={{ marginLeft: "20px", fontSize: "2rem" }}>Mis Cursos</h1>
+    <div className="my-courses-container">
+      <h1 style={{ fontSize: "2rem" }}>Mis Cursos</h1>
       <LoadingWrapper
         isLoading={status === "loading" || enrollmentsList === null}
       >
