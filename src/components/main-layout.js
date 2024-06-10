@@ -5,7 +5,7 @@ export const MainLayout = (props) => {
   const { children } = props;
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
-      <Header></Header>
+      <Header />
       {children}
     </div>
   );
