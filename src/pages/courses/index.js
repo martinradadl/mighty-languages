@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import coursesActions from "../../redux/actions/courses";
 import debounce from "lodash.debounce";
 import { LoadingWrapper } from "../../components/loading";
+import "../../styles/courses/course.css";
 
 export const Courses = () => {
   const dispatch = useDispatch();
@@ -28,40 +29,41 @@ export const Courses = () => {
   }, [handleGetCourses]);
 
   const handleChangeSearchbar = (event) => {
-    dispatch(coursesActions.getCourses({ title: event.target.value }));
+    dispatch(
+      coursesActions.getCourses({
+        userId: user?._id,
+        title: event.target.value,
+      })
+    );
   };
 
   const debouncedHandleChangeSearchbar = debounce(handleChangeSearchbar, 500);
 
   return (
-    <div style={{ maxWidth: "1000px", margin: "auto" }}>
-      <div style={{ width: "100%", display: "flex", flexDirection: "column" }}>
-        <input
-          className="search-bar"
-          placeholder="Buscar cursos"
-          onChange={debouncedHandleChangeSearchbar}
-          style={{ margin: "20px", height: "24px" }}
-        />
-        {user?.type === "admin" || user?.type === "instructor" ? (
-          <AddCourseDialog />
-        ) : null}
-        <LoadingWrapper
-          isLoading={status === "loading" || coursesList === null}
-        >
-          {coursesList?.map((course, i) => {
-            return (
-              <div
-                key={i}
-                onClick={() => {
-                  navigate(`/courses/${course._id}`);
-                }}
-              >
-                <CoursePreview course={course} showRating={true} user={user} />
-              </div>
-            );
-          })}
-        </LoadingWrapper>
-      </div>
+    <div className="courses-container">
+      <input
+        className="search-bar"
+        placeholder="Buscar cursos"
+        onChange={debouncedHandleChangeSearchbar}
+        style={{ margin: "20px 0px", height: "24px" }}
+      />
+      {user?.type === "admin" || user?.type === "instructor" ? (
+        <AddCourseDialog />
+      ) : null}
+      <LoadingWrapper isLoading={status === "loading" || coursesList === null}>
+        {coursesList?.map((course, i) => {
+          return (
+            <div
+              key={i}
+              onClick={() => {
+                navigate(`/courses/${course._id}`);
+              }}
+            >
+              <CoursePreview course={course} showRating={true} user={user} />
+            </div>
+          );
+        })}
+      </LoadingWrapper>
     </div>
   );
 };
