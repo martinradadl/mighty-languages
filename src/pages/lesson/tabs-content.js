@@ -1,7 +1,7 @@
 import React from "react";
-import { Tabs } from "./tabs";
-import { CommentsTab } from "./comments";
-import { QuizTab } from "./questions";
+import { Tabs } from "../../components/tabs";
+import { CommentsTab } from "../../components/comments";
+import { QuizTab } from "../../components/questions";
 
 export const TabsContent = (props) => {
   const { handleCompleteLesson, isInstructor, isQuizActive } = props;

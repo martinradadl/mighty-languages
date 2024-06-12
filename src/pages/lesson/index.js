@@ -9,7 +9,7 @@ import courseEnrollmentActions, {
   EDIT_OPERATIONS,
 } from "../../redux/actions/course-enrollment";
 import { handleEnrollInCourse } from "../helpers";
-import { TabsContent } from "../../components/tabs-content";
+import { TabsContent } from "./tabs-content";
 
 export const Lesson = () => {
   const params = useParams();
