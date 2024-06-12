@@ -3,22 +3,34 @@ import React, { Fragment } from "react";
 import "../styles/global.css";
 
 export function Tabs(props) {
-  const { tabs } = props;
+  const { tabs, isTags } = props;
   return (
     <Tab.Group>
-      <Tab.List className="tabs-titles-container">
+      <Tab.List
+        className={isTags ? "tags-titles-container" : "tabs-titles-container"}
+      >
         {tabs.map((tab, i) => {
           return (
             <Tab as={Fragment} key={i} className="tab-title">
-              {({ selected }) => (
-                <button
-                  className={
-                    selected ? "tab-title tab-title-selected" : "tab-title"
-                  }
-                >
-                  {tab.title}
-                </button>
-              )}
+              {({ selected }) =>
+                !isTags ? (
+                  <button
+                    className={
+                      selected ? "tab-title tab-title-selected" : "tab-title"
+                    }
+                  >
+                    {tab.title}
+                  </button>
+                ) : (
+                  <div
+                    className={
+                      selected ? "tag-title tag-title-selected" : "tag-title"
+                    }
+                  >
+                    {tab.title}
+                  </div>
+                )
+              }
             </Tab>
           );
         })}
