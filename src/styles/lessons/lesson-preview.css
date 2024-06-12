@@ -24,7 +24,7 @@
 }
 
 .lesson-preview:hover {
-  background-color: var(--pink);
+  background-color: var(--mid-blue);
   transition: 0.8s;
 }
 
@@ -84,7 +84,7 @@
 
 .lesson-preview-dropdown-item:hover {
   transition: 0.5s;
-  background-color: var(--pink);
+  background-color: var(--light-blue);
 }
 
 .lesson-dialog-trigger {

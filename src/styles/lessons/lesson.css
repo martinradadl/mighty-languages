@@ -22,7 +22,7 @@
 }
 
 .change-lesson-icon:hover {
-  color: var(--pink);
+  color: var(--light-blue);
   transition: 0.8s;
 }
 
