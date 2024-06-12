@@ -3,9 +3,10 @@ import "../../styles/courses/course-preview.css";
 import { EditCourseDialog } from "./edit-course-dialog";
 import { DeleteCourseDialog } from "./delete-course-dialog";
 import { AiOutlineStar, AiFillStar } from "react-icons/ai";
+import { ProgressBar } from "../../components/progress-bar";
 
 export const CoursePreview = (props) => {
-  const { course, showRating, user } = props;
+  const { course, showRating, user, enrollment, showProgress } = props;
 
   return (
     <div className="course-preview-container clickable-container">
@@ -19,6 +20,13 @@ export const CoursePreview = (props) => {
       <div className="course-preview-details">
         <h3 style={{ fontSize: "2rem" }}>{course.title}</h3>
         <p style={{ fontSize: "1.4rem" }}>{course.description}</p>
+        {showProgress ? (
+          <ProgressBar
+            progressBarWidth={200}
+            numOfFinishedLessons={enrollment.finishedLessonsIds.length}
+            numOfLessons={enrollment.numberOfLessons}
+          />
+        ) : null}
         {user?.type === "admin" || user?._id === course.instructor ? (
           <div className="admin-course-options">
             <EditCourseDialog selectedCourse={course} />
