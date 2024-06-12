@@ -9,19 +9,20 @@
 .course-preview-details {
   display: flex;
   flex-direction: column;
+  padding: 8px 20px;
+  gap: 12px;
 }
 
 .course-preview-details > h3 {
-  margin: 5px 20px;
+  margin: 0px;
 }
 
 .course-preview-details > p {
-  margin: 5px 20px;
+  margin: 0px;
 }
 
 .admin-course-options {
   display: flex;
-  margin: 5px 20px;
   font-size: 1.2rem;
 }
 
@@ -32,8 +33,7 @@
 
 .right-side-course-preview {
   margin-left: auto;
-  margin-right: 10px;
-  margin-top: 10px;
+  padding: 12px 12px 12px 0px;
   min-width: 110px;
   display: flex;
   flex-direction: column;
