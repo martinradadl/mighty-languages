@@ -3,6 +3,7 @@ import "../../styles/home/recent-activity.css";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { LoadingWrapper } from "../../components/loading";
+import { ProgressBar } from "../../components/progress-bar";
 
 export const RecentActivity = () => {
   const user = useSelector((state) => state.users.selectedUser);
@@ -20,7 +21,6 @@ export const RecentActivity = () => {
       >
         {enrollmentsList?.length ? (
           enrollmentsList?.map((enrollment, index) => {
-            const progressBarWidth = 200;
             return (
               <div key={index} className="course-progress-container">
                 <h2
@@ -32,46 +32,27 @@ export const RecentActivity = () => {
                 >
                   {enrollment.course.title}
                 </h2>
-                <h4 style={{ marginTop: "2px", marginBottom: "2px", fontSize: "1.2rem" }}>
+                <h4
+                  style={{
+                    marginTop: "2px",
+                    marginBottom: "2px",
+                    fontSize: "1.2rem",
+                  }}
+                >
                   {enrollment.currentLesson.title}
                 </h4>
                 <div className="course-progress-details">
-                  <div
-                    style={{
-                      height: "32px",
-                      display: "flex",
-                      alignItems: "center",
-                      fontSize: "1rem"
-                    }}
-                  >
-                    <p>
-                      <b>Progreso:</b>{" "}
-                    </p>
-                  </div>
-                  <div
-                    className="progress-bar"
-                    style={{ width: `${progressBarWidth}px` }}
-                  >
-                    <div
-                      className="current-progress"
-                      style={{
-                        width: `${
-                          progressBarWidth *
-                          (enrollment.finishedLessonsIds.length /
-                            enrollment.numberOfLessons)
-                        }px`,
-                      }}
-                    />
-                  </div>
-                  <h4
-                    style={{ margin: "0px" }}
-                  >{`${enrollment.finishedLessonsIds.length}/${enrollment.numberOfLessons}`}</h4>
+                  <ProgressBar
+                    progressBarWidth={200}
+                    numOfFinishedLessons={enrollment.finishedLessonsIds.length}
+                    numOfLessons={enrollment.numberOfLessons}
+                  />
                   <button
                     id="resume-button"
                     onClick={() => {
                       navigate(`/lessons/${enrollment.currentLesson._id}`);
                     }}
-                    style={{fontSize: "1rem"}}
+                    style={{ fontSize: "1rem" }}
                   >
                     <b>Continuar</b>
                   </button>
@@ -80,7 +61,7 @@ export const RecentActivity = () => {
             );
           })
         ) : (
-          <p style={{fontSize: "1.2rem"}}>No hay actividad reciente</p>
+          <p style={{ fontSize: "1.2rem" }}>No hay actividad reciente</p>
         )}
       </LoadingWrapper>
     </div>
