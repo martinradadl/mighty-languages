@@ -191,22 +191,8 @@ export const QuizTab = (props) => {
             ) : null}
           </div>
         ) : null}
-
-        {questionsList.map((question, i) => {
-          return (
-            <Question
-              {...{
-                key: i,
-                question,
-                index: i + 1,
-                isSubmitted,
-                isInstructor: isInstructor,
-                isAdmin: user?.type === "admin",
-              }}
-            />
-          );
-        })}
-        {questionsList.length === 0 ? (
+        {questionsList.length === 0 ||
+        !(isQuizActive || isInstructor || user?.type === "admin") ? (
           <div
             style={{
               display: "flex",
@@ -229,36 +215,54 @@ export const QuizTab = (props) => {
               </button>
             ) : null}
           </div>
-        ) : !(isInstructor || isSubmitted) ? (
-          <button
-            type="button"
-            className="open-dialog-button"
-            style={{ marginTop: "10px" }}
-            onClick={handleSubmitQuiz}
-          >
-            Terminar
-          </button>
-        ) : !isInstructor && isSubmitted ? (
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "12px",
-              marginTop: "10px",
-            }}
-          >
-            <button
-              type="button"
-              className="open-dialog-button"
-              onClick={handleRestartQuiz}
-            >
-              Reiniciar
-            </button>
-            <p
-              style={{ margin: "0px" }}
-            >{`Resultado: ${answersCount.correctAnswers}/${answersCount.totalAnswers}`}</p>
+        ) : (
+          <div>
+            {questionsList.map((question, i) => {
+              return (
+                <Question
+                  {...{
+                    key: i,
+                    question,
+                    index: i + 1,
+                    isSubmitted,
+                    isInstructor: isInstructor,
+                    isAdmin: user?.type === "admin",
+                  }}
+                />
+              );
+            })}
+            {!(isInstructor || isSubmitted) ? (
+              <button
+                type="button"
+                className="open-dialog-button"
+                style={{ marginTop: "10px" }}
+                onClick={handleSubmitQuiz}
+              >
+                Terminar
+              </button>
+            ) : !isInstructor && isSubmitted ? (
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "12px",
+                  marginTop: "10px",
+                }}
+              >
+                <button
+                  type="button"
+                  className="open-dialog-button"
+                  onClick={handleRestartQuiz}
+                >
+                  Reiniciar
+                </button>
+                <p
+                  style={{ margin: "0px" }}
+                >{`Resultado: ${answersCount.correctAnswers}/${answersCount.totalAnswers}`}</p>
+              </div>
+            ) : null}
           </div>
-        ) : null}
+        )}
       </LoadingWrapper>
     </div>
   );
