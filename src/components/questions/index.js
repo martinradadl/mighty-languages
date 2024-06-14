@@ -133,6 +133,7 @@ export const QuizTab = (props) => {
         answers: quizResults.userAnswers,
       };
       dispatch(quizResultsActions.addQuizResults(currentQuizResults));
+      handleCompleteLesson();
     }
   };
 
