@@ -158,6 +158,9 @@ export const Lesson = () => {
         handleCompleteLesson={debouncedHandleCompleteLesson}
         isInstructor={selectedLesson.course.instructor === user?._id}
         isQuizActive={selectedLesson.isQuizActive}
+        isLessonCompleted={selectedEnrollment?.finishedLessonsIds?.includes(
+          selectedLesson._id
+        )}
       />
     </div>
   );

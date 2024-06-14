@@ -15,7 +15,12 @@ import Toastify from "toastify-js";
 import "toastify-js/src/toastify.css";
 
 export const QuizTab = (props) => {
-  const { handleCompleteLesson, isInstructor, isQuizActive } = props;
+  const {
+    handleCompleteLesson,
+    isInstructor,
+    isQuizActive,
+    isLessonCompleted,
+  } = props;
   const params = useParams();
   const dispatch = useDispatch();
   const { status, questionsList } = useSelector((state) => state.questions);
@@ -205,13 +210,24 @@ export const QuizTab = (props) => {
           <div
             style={{
               display: "flex",
-              justifyContent: "center",
-              margin: "10px 0px",
+              flexDirection: "column",
+              alignItems: "center",
+              padding: "12px 0px",
+              gap: "12px",
             }}
           >
             <h4 style={{ margin: "0px" }}>
               Por el momento no hay preguntas disponibles
             </h4>
+            {user && !isLessonCompleted ? (
+              <button
+                type="button"
+                className="open-dialog-button"
+                onClick={handleCompleteLesson}
+              >
+                Completar Lección
+              </button>
+            ) : null}
           </div>
         ) : !(isInstructor || isSubmitted) ? (
           <button

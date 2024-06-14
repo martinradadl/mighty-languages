@@ -4,7 +4,12 @@ import { CommentsTab } from "../../components/comments";
 import { QuizTab } from "../../components/questions";
 
 export const TabsContent = (props) => {
-  const { handleCompleteLesson, isInstructor, isQuizActive } = props;
+  const {
+    handleCompleteLesson,
+    isInstructor,
+    isQuizActive,
+    isLessonCompleted,
+  } = props;
 
   const tabs = [
     {
@@ -15,6 +20,7 @@ export const TabsContent = (props) => {
             handleCompleteLesson,
             isInstructor,
             isQuizActive,
+            isLessonCompleted,
           }}
         />
       ),
