@@ -11,7 +11,7 @@ export function Tabs(props) {
       >
         {tabs.map((tab, i) => {
           return (
-            <Tab as={Fragment} key={i} className="tab-title">
+            <Tab as={Fragment} key={i}>
               {({ selected }) =>
                 !isTags ? (
                   <button
