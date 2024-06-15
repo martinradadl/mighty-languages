@@ -1,18 +1,15 @@
 import React from "react";
 import "../../styles/courses/course.css";
 import { Tabs } from "../../components/tabs";
-import { CommentsTab } from "../../components/comments";
-import { QuizTab } from "../../components/questions";
-import { OnProgressTab } from "./on-progress-tab";
-import { CompletedTab } from "./completed-tab";
+import { MyCoursesTab } from "./my-courses-tab";
 
 export const MyCourses = () => {
   const tabs = [
     {
       title: "En progreso",
-      content: <OnProgressTab />,
+      content: <MyCoursesTab />,
     },
-    { title: "Completados", content: <CompletedTab /> },
+    { title: "Completados", content: <MyCoursesTab isCompleted /> },
   ];
 
   return (

@@ -4,7 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { CoursePreview } from "./course-preview";
 import { useSelector } from "react-redux";
 
-export const OnProgressTab = () => {
+export const MyCoursesTab = (props) => {
+  const { isCompleted } = props;
   const user = useSelector((state) => state.users.selectedUser);
   const { status, enrollmentsList } = useSelector(
     (state) => state.course_enrollment
@@ -17,7 +18,7 @@ export const OnProgressTab = () => {
         isLoading={status === "loading" || enrollmentsList === null}
       >
         {enrollmentsList?.map((enrollment, i) => {
-          if (!enrollment.isCompleted) {
+          if (isCompleted ? enrollment.isCompleted : !enrollment.isCompleted) {
             return (
               <div
                 key={i}
@@ -30,7 +31,7 @@ export const OnProgressTab = () => {
                     course: enrollment.course,
                     user,
                     enrollment,
-                    showProgress: true,
+                    showProgress: !isCompleted,
                   }}
                 />
               </div>
