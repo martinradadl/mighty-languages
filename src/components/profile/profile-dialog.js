@@ -5,6 +5,7 @@ import { AiOutlineClose } from "react-icons/ai";
 import { useDispatch } from "react-redux";
 import usersActions from "../../redux/actions/users";
 import courseEnrollmentActions from "../../redux/actions/course-enrollment";
+import { ProfilePicDialog } from "./profile-pic-dialog";
 
 export const ProfileDialog = (props) => {
   const { user } = props;
@@ -36,18 +37,7 @@ export const ProfileDialog = (props) => {
               className="close-modal-button"
               onClick={closeModal}
             />
-            <div
-              className="profile-img"
-              style={{
-                height: "80px",
-                width: "80px",
-                borderRadius: "50%",
-                backgroundColor: getComputedStyle(
-                  document.body
-                ).getPropertyValue("--dark-blue"),
-                margin: "auto",
-              }}
-            />
+            <ProfilePicDialog/>
             <p className="profile-item">
               <b>Nombre:</b> {user.name}
             </p>
