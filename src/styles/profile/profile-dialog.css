@@ -18,3 +18,35 @@
   background-color: var(--pink);
   transition: 0.8s;
 }
+
+.edit-profile-photo-icon {
+  cursor: pointer;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  background-color: var(--light-blue);
+}
+
+.edit-profile-photo-icon:hover {
+  opacity: 0.7;
+}
+
+.upload-photo-container {
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 8px);
+  justify-content: center;
+  align-items: center;
+  border: 4px dashed var(--light-blue);
+  margin-top: 24px;
+  padding: 20px 0px;
+}
